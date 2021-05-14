@@ -31,24 +31,3 @@ function create_user($username, $password, $email) {
         return 0;
     }
 }
-
-/*
-sql injection
-https://developer.okta.com/blog/2020/06/15/sql-injection-in-php
-** bad **
-$id           = $_GET['id'];
-$delete_query = 'DELETE FROM students where id = ' . $id;
-$result = $pdo->exec( $delete_query );
-
-** good **
-$id           = $_GET['id'];
-$delete_query = 'DELETE FROM students where id = :id';
-$prepared_statement = $pdo->prepare( $delete_query );
-$prepared_statement->bindParam( 'id', $id );
-$prepared_statement->execute();
-$result = $prepared_statement->rowCount();
-
-
-
-
- */

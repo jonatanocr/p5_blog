@@ -1,7 +1,7 @@
 <?php
 require('controller/frontend_controller.php');
 require('controller/backend_controller.php');
-
+session_start();
 try {
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
@@ -11,14 +11,25 @@ try {
         $action = null;
     }
 
-    if ($action === 'sign_up') {
-        sign_up_page();
-    } elseif ($action === 'submit_sign_up') {
-        if (isset($_POST['username_input']) && isset($_POST['password_input']) && isset($_POST['password2_input']) && isset($_POST['email_input'])) {
-            submit_sign_up($_POST['username_input'], $_POST['password_input'], $_POST['password2_input'], $_POST['email_input']);
+    if ($action === 'signup') {
+        signup_page();
+    } elseif ($action === 'submit_signup') {
+        if (!empty($_POST['username_input']) && !empty($_POST['password_input']) && !empty($_POST['password2_input']) && !empty($_POST['email_input'])) {
+            submit_signup($_POST['username_input'], $_POST['password_input'], $_POST['password2_input'], $_POST['email_input']);
         } else {
-            sign_up_page();
+            signup_page();
         }
+    } elseif ($action === 'login') {
+        // todo add error (fields required)
+        login_page();
+    } elseif ($action === 'submit_login') {
+        if (!empty($_POST['username_input']) && !empty($_POST['password_input'])) {
+            submit_login($_POST['username_input'], $_POST['password_input']);
+        } else {
+            login_page();
+        }
+    } elseif ($action === 'logout') {
+        logout();
     } else {
         main_page();
     }
