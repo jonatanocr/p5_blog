@@ -31,3 +31,37 @@ function create_user($username, $password, $email) {
         return 0;
     }
 }
+
+function update_user($settings) {
+    try {
+        $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+        $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+    } catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+    }
+    $update_query = 'UPDATE users SET';
+    $update_query.= ' username = :username,';
+    $update_query.= ' password = :password,';
+    $update_query.= ' email = :email';
+    $update_query.= ' WHERE id = :id';
+    $query = $db->prepare($update_query);
+    $query->bindParam( 'username', $settings['username'],PDO::PARAM_STR);
+    $query->bindParam( 'password', $settings['hashed_psw'],PDO::PARAM_STR);
+    $query->bindParam( 'email', $settings['email'],PDO::PARAM_STR);
+    $query->bindParam( 'id', $settings['id'] );
+    $query->execute();
+    return 1;
+}
+
+function delete_user($id) {
+    try {
+        $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
+        //$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+    } catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+    }
+    $delete_query = 'DELETE FROM users WHERE id = ' . $id;
+    $query = $db->prepare($delete_query);
+    $query->execute();
+    return 1;
+}

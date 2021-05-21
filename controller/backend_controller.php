@@ -15,7 +15,7 @@ function submit_signup($username, $password, $password2, $email) {
     }
 }
 
-function submit_login($username_post, $password_post) {
+function submit_login($username_post, $password_post, $remember_me = 0) {
     try {
         $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     } catch (Exception $e) {
@@ -31,6 +31,11 @@ function submit_login($username_post, $password_post) {
             session_start();
             $_SESSION['id'] = $result['id'];
             $_SESSION['username'] = $result['username'];
+            if ($remember_me == 1) {
+                // todo upgrade remember me logic and security
+                setcookie('username', $result['username'], time() + 365 * 24 * 3600, null, null, false, true);
+                setcookie('password', $result['password'], time() + 365 * 24 * 3600, null, null, false, true);
+            }
             header('Location: index.php');
         } else {
             header('Location: index.php?action=login&wrg_cred=1');
@@ -40,8 +45,33 @@ function submit_login($username_post, $password_post) {
     }
 }
 
+function submit_settings($settings) {
+    if (isset($settings['password1'])) {
+        if ($settings['password1'] === $settings['password2']) {
+            $hashed_psw = password_hash($settings['password1'], PASSWORD_DEFAULT);
+            $settings['hashed_psw'] = $hashed_psw;
+        } else {
+            header('Location: index.php?action=settings&pswnomatch=1');
+        }
+    }
+    $update = update_user($settings);
+    if ($update > 0) {
+        header('Location: index.php?update=1');
+    } else {
+        header('Location: index.php?action=settings&accountexist=1');
+    }
+
+}
+
 function logout() {
     session_destroy();
     header('Location: index.php');
 }
+
+function delete_account($id) {
+    delete_user($id);
+    session_destroy();
+    header('Location: index.php');
+}
+
 

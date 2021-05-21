@@ -28,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">CV</a>
                     </li>
+                    <?php if (isset($_SESSION['username'])) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?action=settings">Settings</a>
+                    </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>

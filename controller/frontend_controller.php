@@ -11,3 +11,7 @@ function signup_page() {
 function login_page() {
     require('view/frontend/login.php');
 }
+
+function settings_page() {
+    require('view/frontend/settings.php');
+}
