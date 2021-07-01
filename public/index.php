@@ -1,8 +1,23 @@
 <?php
-require('controller/frontend_controller.php');
-require('controller/backend_controller.php');
-session_start();
+define('ROOT', dirname(__DIR__));
+require ROOT.'/App/App.php';
+$app = new \App\App;
+$app->run();
+
+
+
+
+require('../App/Controller/frontend_controller.php');
+//require('../App/Controller/BackendController.php');
 try {
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+    } else {
+        $action = 'post-index';
+    }
+    $action = explode('-', $action);
+
+    /*
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
     } elseif (isset($_GET['action'])) {
@@ -10,12 +25,13 @@ try {
     } else {
         $action = null;
     }
-
+*/
     if ($action === 'signup') {
         signup_page();
-    } elseif ($action === 'submit_signup') {
+    } elseif ($action === 'submitSignup') {
         if (!empty($_POST['username_input']) && !empty($_POST['password_input']) && !empty($_POST['password2_input']) && !empty($_POST['email_input'])) {
-            submit_signup($_POST['username_input'], $_POST['password_input'], $_POST['password2_input'], $_POST['email_input']);
+            $back = new BackendController;
+            $back->submitSignup($_POST['username_input'], $_POST['password_input'], $_POST['password2_input'], $_POST['email_input']);
         } else {
             signup_page();
         }
@@ -30,7 +46,7 @@ try {
         }
     } elseif ($action === 'settings') {
         settings_page();
-    } elseif ($action === 'submit_settings') {
+    } elseif ($action === 'submitSettings') {
         if (isset($_POST['username_input'])) {
             $new_settings['username'] = $_POST['username_input'];
             $new_settings['id'] = $_SESSION['id'];
@@ -43,7 +59,8 @@ try {
             if (isset($_POST['email_input'])) {
                 $new_settings['email'] = $_POST['email_input'];
             }
-            submit_settings($new_settings);
+            $backendController = new BackendController;
+            $backendController->submitSettings($new_settings);
         } else {
             // todo add error ?
             settings_page();
@@ -58,6 +75,6 @@ try {
 
 }
 catch (Exception $e) {
-    // todo create view for error display
+    // todo create View for error display
     echo 'Error: ' . $error_msg = $e->getMessage();
 }
