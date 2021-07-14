@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS  `comments`
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     created_date DATETIME NOT NULL,
     fk_user_create INT NOT NULL,
+    fk_post INT NOT NULL,
     verified TINYINT NOT NULL DEFAULT 0,
     content TEXT NOT NULL
 );

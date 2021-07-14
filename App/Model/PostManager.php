@@ -6,7 +6,6 @@ namespace App\Model;
 
 class PostManager
 {
-
     public function fetch_all($db) {
         $sql = 'SELECT id, DATE_FORMAT(post_updated_date, "%d.%m.%Y") date, title FROM posts';
         $query = $db->prepare($sql);

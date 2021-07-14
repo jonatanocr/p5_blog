@@ -17,6 +17,8 @@ class PostController
 
     public function display($id) {
         $post = $this->manager->fetch_one($this->db, $id);
+        $comments_manager = new Model\CommentManager();
+        $comments = $comments_manager->fetch_all_from_post($this->db, $id);
         require(ROOT.'/App/View/frontend/post.php');
     }
 }
