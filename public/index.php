@@ -1,21 +1,25 @@
 <?php
 define('ROOT', dirname(__DIR__));
 require ROOT.'/App/App.php';
-$app = new \App\App;
+
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+} else {
+    $action = 'post-index';
+}
+$action = explode('-', $action);
+
+$app = new \App\App($action);
 $app->run();
 
 
 
 
-require('../App/Controller/frontend_controller.php');
+
+//require('../App/Controller/frontend_controller.php');
 //require('../App/Controller/BackendController.php');
-try {
-    if (isset($_GET['action'])) {
-        $action = $_GET['action'];
-    } else {
-        $action = 'post-index';
-    }
-    $action = explode('-', $action);
+
+
 
     /*
     if (isset($_POST['action'])) {
@@ -26,6 +30,7 @@ try {
         $action = null;
     }
 */
+    /*
     if ($action === 'signup') {
         signup_page();
     } elseif ($action === 'submitSignup') {
@@ -70,11 +75,8 @@ try {
     } elseif ($action === 'delete_account') {
         delete_account($_SESSION['id']);
     } else {
+
         main_page();
     }
+    */
 
-}
-catch (Exception $e) {
-    // todo create View for error display
-    echo 'Error: ' . $error_msg = $e->getMessage();
-}
