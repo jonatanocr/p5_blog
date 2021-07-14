@@ -41,7 +41,7 @@ class Comment
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId(int $id)
     {
         $this->id = $id;
     }
@@ -55,9 +55,9 @@ class Comment
     }
 
     /**
-     * @param string $createdDate
+     * @param string
      */
-    public function setCreatedDate(string $createdDate): void
+    public function setCreatedDate(string $createdDate)
     {
         $this->createdDate = $createdDate;
     }
@@ -71,9 +71,9 @@ class Comment
     }
 
     /**
-     * @param int $fkUserCreate
+     * @param int
      */
-    public function setFkUserCreate(int $fkUserCreate): void
+    public function setFkUserCreate(int $fkUserCreate)
     {
         $this->fkUserCreate = $fkUserCreate;
     }
@@ -87,9 +87,9 @@ class Comment
     }
 
     /**
-     * @param int $verified
+     * @param int
      */
-    public function setVerified(int $verified): void
+    public function setVerified(int $verified)
     {
         $this->verified = $verified;
     }
@@ -103,9 +103,9 @@ class Comment
     }
 
     /**
-     * @param string $content
+     * @param string
      */
-    public function setContent(string $content): void
+    public function setContent(string $content)
     {
         $this->content = $content;
     }

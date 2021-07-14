@@ -11,7 +11,7 @@ if (isset($_GET['add']) && $_GET['add'] == 1) {
 }
 foreach ($posts as $post) {
     echo '<div class="container">';
-    echo '<p>[' . $post['date'] . '] <a href="index.php?action=post-display&id=' . $post['id'] . '" style="text-decoration: none">'  . $post['title'] . '</a></p>';
+    echo '<p>[' . $post->getUpdatedDate() . '] <a href="index.php?action=post-display&id=' . $post->getId() . '" style="text-decoration: none">'  . $post->getTitle() . '</a></p>';
     echo '</div>';
 }
 

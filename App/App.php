@@ -7,6 +7,7 @@ use Autoloader;
 class App
 {
     protected $action;
+    protected $db;
 
     public function __construct($action) {
         $this->action = $action;
