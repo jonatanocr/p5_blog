@@ -9,7 +9,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center">
         <div class="container" id="navbar_container">
-            <a href="#" class="navbar-brand d-flex w-50 me-auto">Jonatan Buzek</a>
+            <a href="index.php" class="navbar-brand d-flex w-50 me-auto">Jonatan Buzek</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbar3">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -17,7 +17,7 @@
                 <span id="navbar_span"></span>
                 <ul class="navbar-nav w-100 justify-content-center">
                     <li class="nav-item active" id="navitem_home">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Blog</a>

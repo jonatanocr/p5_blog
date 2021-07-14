@@ -10,6 +10,8 @@ class App
 
     public function __construct($action) {
         $this->action = $action;
+        $this->db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+
     }
 
     public function run() {
@@ -20,7 +22,8 @@ class App
 
         $controllerName = 'App\Controller\\'.ucfirst($this->action[0]).'Controller';
         $controllerAction = $this->action[1];
-        $controller = new $controllerName;
-        $controller->$controllerAction();
+        $controller = new $controllerName($this->db);
+        $id = !empty($_GET['id'])?$_GET['id']:null;
+        $controller->$controllerAction($id);
     }
 }
