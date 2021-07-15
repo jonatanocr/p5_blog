@@ -1,5 +1,5 @@
 <?php
-require('../App/Model/UsersManager.php');
+require('../App/Model/UserManager.php');
 require('../App/Entity/User.php');
 
 class BackendController {

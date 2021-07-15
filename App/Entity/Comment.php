@@ -21,6 +21,11 @@ class Comment
     protected $fkUserCreate;
 
     /**
+     * @var object
+     */
+    protected $userCreate;
+
+    /**
      * @var int
      */
     protected $verified;
@@ -76,6 +81,16 @@ class Comment
     public function setFkUserCreate(int $fkUserCreate)
     {
         $this->fkUserCreate = $fkUserCreate;
+    }
+
+    /**
+     * @param int
+     */
+    public function setUserCreate(object $userCreate)
+    {
+        if ($userCreate instanceof User) {
+            $this->UserCreate = $userCreate;
+        }
     }
 
     /**

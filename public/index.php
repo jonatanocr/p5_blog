@@ -4,10 +4,10 @@ require ROOT.'/App/App.php';
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
+    $action = explode('-', $action);
 } else {
-    $action = 'post-index';
+    $action = 'homepage';
 }
-$action = explode('-', $action);
 
 $app = new \App\App($action);
 $app->run();

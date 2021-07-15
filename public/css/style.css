@@ -1,17 +1,123 @@
+/* General */
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+#page_bloc {
+    margin-bottom: 4em;
+}
+
 .nav-link {
     color: #999;
 }
 
-#page_bloc {
-    border-top: 1px solid #999999;
-}
-
-#login_link {
+.login_link {
     margin-left: 2em;
     text-decoration: none;
     color: #999;
 }
 
+.login_link:hover {
+    color: dodgerblue;
+}
+
 #logout_link {
     color: #a80707;
+}
+
+#navbar_container {
+    border-bottom: 1px solid #999;
+}
+
+footer {
+    position: fixed;
+    height: 4em;
+    background-color: red !important;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+
+#footer_bloc {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog_post_title:hover {
+    color: dodgerblue;
+}
+
+/* homepage */
+#homepage_picture {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+/* blog list of posts */
+.container.blog_post_div {
+    font-size: 0.9em;
+}
+
+.blog_line_title, .blog_line_description {
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.blog_line_title {
+    margin-bottom: 0;
+}
+
+.blog_line_description {
+    color: #999;
+}
+
+.blog_post_title {
+    margin-left: 1em;
+    font-size: 1.4em;
+    text-decoration: none;
+    color: black;
+}
+
+.blog_post_title:hover {
+    color: dodgerblue;
+}
+
+/* blog list display post */
+h1 {
+    font-size: 2em;
+}
+
+h1, h3, .comments_separator {
+    text-align: center;
+}
+
+.post_line_header, .post_line_content {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.post_line_header {
+    margin-bottom: 0;
+    color: #999;
+}
+
+.comments_div {
+    margin-top: 4em;
+}
+
+.comments_line {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.comment_infos, .comments_symbol {
+    color: #999;
 }

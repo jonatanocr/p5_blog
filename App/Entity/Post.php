@@ -178,4 +178,14 @@ class Post
         var_dump('index ok');
     }
 
+    /**
+     * @return int
+     */
+    public function getReadingTime(): int
+    {
+        //Average reading speed for an adult is 200words/min
+        $readingTime = str_word_count($this->content)>200?(str_word_count($this->content)/200):1;
+        return $readingTime;
+    }
+
 }

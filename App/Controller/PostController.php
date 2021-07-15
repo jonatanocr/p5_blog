@@ -12,13 +12,19 @@ class PostController
 
     public function index() {
         $posts = $this->manager->fetch_all($this->db);
-        require(ROOT.'/App/View/frontend/main_page.php');
+        require(ROOT . '/App/View/frontend/blog.php');
     }
 
     public function display($id) {
         $post = $this->manager->fetch_one($this->db, $id);
-        $comments_manager = new Model\CommentManager();
-        $comments = $comments_manager->fetch_all_from_post($this->db, $id);
+        $user_manager = new Model\UserManager();
+        $post_author = $user_manager->fetch_one($this->db, $post->getFkUserCreate());
+        $comment_manager = new Model\CommentManager();
+        $comments = $comment_manager->fetch_all_from_post($this->db, $id);
+        foreach ($comments as $comment) {
+            $comment_author = $user_manager->fetch_one($this->db, $comment->getFkUserCreate());
+            $comment->setUserCreate($comment_author);
+        }
         require(ROOT.'/App/View/frontend/post.php');
     }
 }

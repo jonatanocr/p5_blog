@@ -1,7 +1,8 @@
 <?php
 
+namespace App\Model;
 
-class UsersManager {
+class UserManager {
 
     public function create_user($user) {
         try {
@@ -32,6 +33,18 @@ class UsersManager {
             }
         } else {
             return 0;
+        }
+    }
+
+    public function fetch_one($db, $id) {
+        $sql = 'SELECT id, username, password, email, user_verified FROM users WHERE id = ' . $id;
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetchObject('App\Entity\User');
+        if ($result) {
+            return $result;
+        } else {
+            return -1;
         }
     }
 

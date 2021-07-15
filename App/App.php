@@ -17,14 +17,18 @@ class App
 
     public function run() {
         session_start();
-        require ROOT.'/core/Autoloader.php';
-        $autoloader = new Autoloader();
-        $autoloader->register();
+        if ($this->action === 'homepage') {
+            require(ROOT.'/App/View/frontend/homepage.php');
+        } else {
+            require ROOT.'/core/Autoloader.php';
+            $autoloader = new Autoloader();
+            $autoloader->register();
 
-        $controllerName = 'App\Controller\\'.ucfirst($this->action[0]).'Controller';
-        $controllerAction = $this->action[1];
-        $controller = new $controllerName($this->db);
-        $id = !empty($_GET['id'])?$_GET['id']:null;
-        $controller->$controllerAction($id);
+            $controllerName = 'App\Controller\\'.ucfirst($this->action[0]).'Controller';
+            $controllerAction = $this->action[1];
+            $controller = new $controllerName($this->db);
+            $id = !empty($_GET['id'])?$_GET['id']:null;
+            $controller->$controllerAction($id);
+        }
     }
 }

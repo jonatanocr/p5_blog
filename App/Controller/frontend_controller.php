@@ -1,7 +1,7 @@
 <?php
 
     function main_page() {
-        require('../App/View/frontend/main_page.php');
+        require('../App/View/frontend/homepage.php');
     }
 
     function signup_page() {
