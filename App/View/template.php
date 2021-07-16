@@ -55,8 +55,8 @@
                 echo '<br>Vous êtes connecté en tant que <span style="color: black">' . ucfirst($_SESSION['username']) . '</span>';
                 echo '<br><a href="index.php?action=logout" id="logout_link">Logout</a>';
             } else {
-                echo '<a class="login_link" href="index.php?action=login">Login</a>';
-                echo '<a class="login_link" href="index.php?action=login">Register</a>';
+                echo '<a class="login_link" href="index.php?action=user-login">Login</a>';
+                echo '<a class="login_link" href="index.php?action=user-register">Register</a>';
             }
             ?>
             </div>

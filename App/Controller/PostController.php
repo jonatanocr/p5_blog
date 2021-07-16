@@ -12,7 +12,7 @@ class PostController
 
     public function index() {
         $posts = $this->manager->fetch_all($this->db);
-        require(ROOT . '/App/View/frontend/blog.php');
+        require(ROOT . '/App/View/frontend/blog/index.php');
     }
 
     public function display($id) {
@@ -25,6 +25,6 @@ class PostController
             $comment_author = $user_manager->fetch_one($this->db, $comment->getFkUserCreate());
             $comment->setUserCreate($comment_author);
         }
-        require(ROOT.'/App/View/frontend/post.php');
+        require(ROOT . '/App/View/frontend/blog/post.php');
     }
 }

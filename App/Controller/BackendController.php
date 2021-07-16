@@ -3,7 +3,7 @@ require('../App/Model/UserManager.php');
 require('../App/Entity/User.php');
 
 class BackendController {
-
+// todo delete this page
     public function submitSignup($username, $password, $password2, $email) {
         if ($password === $password2) {
             $hashed_psw = password_hash($password, PASSWORD_DEFAULT);

@@ -13,11 +13,18 @@ body {
 }
 
 .nav-link {
-    color: #999;
+    color: #999 !important;
+}
+
+.nav-link:hover, #register_page_link:hover {
+    color: dodgerblue !important;
 }
 
 .login_link {
     margin-left: 2em;
+}
+
+.login_link, #register_page_link {
     text-decoration: none;
     color: #999;
 }
@@ -111,6 +118,7 @@ h1, h3, .comments_separator {
 
 .comments_div {
     margin-top: 4em;
+    padding-bottom: 3em;
 }
 
 .comments_line {
@@ -120,4 +128,72 @@ h1, h3, .comments_separator {
 
 .comment_infos, .comments_symbol {
     color: #999;
+}
+
+/* user administration */
+.register_form {
+    width: 20em;
+    margin: auto;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.form-control:focus {
+    border: 1px solid dodgerblue;
+    box-shadow: none;
+}
+
+.register_form_btn {
+    margin: auto;
+    background-color: transparent;
+    border: 1px solid #999;
+    border-radius: 0;
+    color: #999;
+}
+
+.register_form_btn:hover {
+    background-color: dodgerblue;
+    color: #ffff;
+    border: none;
+}
+
+.register_form_btn:focus, .register_form_btn:active {
+    box-shadow: none !important;
+}
+
+.register_form_btn:active {
+    position: relative;
+    top: 2px;
+}
+
+.register_form_validation_div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.register_form_validation_sub_div {
+    vertical-align: center;
+}
+
+.cancel_link {
+    text-decoration: none;
+    color: #a80707;
+}
+
+.cancel_link:hover {
+    text-decoration: underline #a80707;
+    color: #a80707;
+}
+
+.cancel_link:active {
+    position: relative;
+    top: 2px;
+}
+
+#register_page_link_p {
+    text-align: center;
+    margin-top: 4em;
 }

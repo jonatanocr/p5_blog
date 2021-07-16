@@ -8,7 +8,6 @@ ob_start();
     <p class="post_line_content mt-4"><?php echo $post->getContent(); ?></p>
 </div>
 <div class="container comments_div">
-
     <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
 
     <?php foreach ($comments as $comment) {
@@ -18,5 +17,5 @@ ob_start();
 </div>
 <?php
 $page_body = ob_get_clean();
-require('template.php');
+require(ROOT . '/App/View/template.php');
 ?>

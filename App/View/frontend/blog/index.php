@@ -10,4 +10,4 @@ foreach ($posts as $post) {
 }
 
 $page_body = ob_get_clean();
-require('template.php');
+require(ROOT . '/App/View/template.php');

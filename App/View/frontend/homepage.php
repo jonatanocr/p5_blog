@@ -27,5 +27,5 @@ if (isset($_GET['add']) && $_GET['add'] == 1) {
 
 <?php
 $page_body = ob_get_clean();
-require('template.php');
+require(ROOT . '/App/View/template.php');
 ?>

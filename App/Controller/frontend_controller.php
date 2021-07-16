@@ -1,16 +1,6 @@
 <?php
+// todo delete this page
 
-    function main_page() {
-        require('../App/View/frontend/homepage.php');
-    }
-
-    function signup_page() {
-        require('../App/View/frontend/signup.php');
-    }
-
-    function login_page() {
-        require('../App/View/frontend/login.php');
-    }
 
     function settings_page() {
         require('../App/View/frontend/settings.php');

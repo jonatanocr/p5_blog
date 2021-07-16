@@ -9,31 +9,38 @@ if (isset($_GET['wrong_credential']) && $_GET['wrong_credential'] == 1) {?>
             <?php
         }
         ?>
-        <form action="index.php" method="post">
+        <form class="register_form mt-5" action="index.php" method="post">
             <input name="action" type="hidden" value="submit_login">
             <div class="form-group">
 
-                <label for="username_input">Nom d'utilisateur</label>
+                <label for="username_input">Username</label>
                 <input type="text" class="form-control" id="username_input" name="username_input"
                     <?php if (isset($_COOKIE["username"])) {
                     echo 'value="' . $_COOKIE["username"] . '"';
                     } ?>
                 >
             </div>
-            <div class="form-group">
-                <label for="password_input">Votre mot de passe</label>
+            <div class="form-group mt-2">
+                <label for="password_input">Password</label>
                 <input type="password" class="form-control" id="password_input" name="password_input">
             </div>
-            <div class="form-check">
+            <div class="form-check mt-2">
                 <input type="checkbox" class="form-check-input" id="remember_me_input" name="remember_me_input" value="1">
+                <!-- todo remember me feature -->
                 <label class="form-check-label" for="remember_me_input">Remember me</label>
             </div>
-            <button type="submit" class="btn btn-primary">Valider</button>
+            <div class="register_form_validation_div mt-4">
+                <div class="register_form_validation_sub_div">
+                    <button type="submit" class="register_form_btn btn btn-primary">Submit</button>
+                </div>
+                <div class="register_form_validation_sub_div">
+                    <a class="cancel_link" href="index.php">Cancel</a>
+                </div>
+            </div>
         </form>
-        <a href="index.php">Annuler</a>
-        <p>Pas encore de compte ? <a href="index.php?action=signup">Créer un compte</a></p>
+        <p id="register_page_link_p"><a id="register_page_link" href="index.php?action=user-register">Register</a> if you don't have an account yet.</p>
 <?php
 $page_body = ob_get_clean();
-require('template.php');
+require(ROOT . '/App/View/template.php');
 ?>
 
