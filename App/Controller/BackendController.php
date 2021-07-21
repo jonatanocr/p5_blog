@@ -22,11 +22,6 @@ class BackendController {
 
     }
 
-    public function logout() {
-        session_destroy();
-        header('Location: index.php');
-    }
-
     public function delete_account($id) {
         delete_user($id);
         session_destroy();
