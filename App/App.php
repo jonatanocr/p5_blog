@@ -12,11 +12,9 @@ class App
     public function __construct($action) {
         $this->action = $action;
         $this->db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
-
     }
 
     public function run() {
-        session_start();
         if ($this->action === 'homepage') {
             require(ROOT.'/App/View/frontend/homepage.php');
         } else {

@@ -16,13 +16,13 @@ class PostController
     }
 
     public function display($id) {
-        $post = $this->manager->fetch_one($this->db, $id);
-        $user_manager = new Model\UserManager();
-        $post_author = $user_manager->fetch_one($this->db, $post->getFkUserCreate());
+        $post = $this->manager->fetch($this->db, $id);
+        $user_manager = new Model\UserManager($this->db);
+        $post_author = $user_manager->fetch($post->getFkUserCreate());
         $comment_manager = new Model\CommentManager();
         $comments = $comment_manager->fetch_all_from_post($this->db, $id);
         foreach ($comments as $comment) {
-            $comment_author = $user_manager->fetch_one($this->db, $comment->getFkUserCreate());
+            $comment_author = $user_manager->fetch($comment->getFkUserCreate());
             $comment->setUserCreate($comment_author);
         }
         require(ROOT . '/App/View/frontend/blog/post.php');

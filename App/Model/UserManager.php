@@ -2,30 +2,35 @@
 
 namespace App\Model;
 
+use App\Entity\User;
+
 class UserManager {
 
-    public function create_user($user) {
-        try {
-            $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
-        $check_if_exist_query = 'SELECT id FROM users where (username=:username || email=:email)';
-        $verify = $db->prepare($check_if_exist_query);
-        $verify->bindParam(':username',$user->getUsername(),PDO::PARAM_STR);
-        $verify->bindParam(':email',$user->getEmail(),PDO::PARAM_STR);
-        $verify->execute();
-        $results = $verify->fetchAll(PDO::FETCH_OBJ);
+    protected $db;
 
+    public function __construct($db) {
+            $this->db = $db;
+    }
+
+    public function create(User $user) {
+        $username = $user->getUsername();
+        $email = $user->getEmail();
+        $password = $user->getPassword();
+        $check_if_exist_query = 'SELECT id FROM users where (username=:username OR email=:email);';
+        $verify = $this->db->prepare($check_if_exist_query);
+        $verify->bindParam(':username', $username);
+        $verify->bindParam(':email', $email);
+        $verify->execute();
+        $results = $verify->fetchAll(\PDO::FETCH_OBJ);
         if ($verify->rowCount() == 0) {
-            $insert_query = 'INSERT INTO users (username, password, email)';
-            $insert_query.= ' VALUES (:username, :password, :email);';
-            $prepared_query = $db->prepare( $insert_query );
-            $prepared_query->bindParam( 'username', $user->getUsername());
-            $prepared_query->bindParam( 'password', $user->getPassword());
-            $prepared_query->bindParam( 'email', $user->getEmail());
+            $insert_query = 'INSERT INTO users (username, password, email, user_verified)';
+            $insert_query.= ' VALUES (:username, :password, :email, 0);';
+            $prepared_query = $this->db->prepare($insert_query);
+            $prepared_query->bindParam( 'username', $username);
+            $prepared_query->bindParam( 'password', $password);
+            $prepared_query->bindParam( 'email', $email);
             $prepared_query->execute();
-            $last_insert = $db->lastInsertId();
+            $last_insert = $this->db->lastInsertId();
             if ($last_insert) {
                 return 1;
             } else {
@@ -36,9 +41,21 @@ class UserManager {
         }
     }
 
-    public function fetch_one($db, $id) {
-        $sql = 'SELECT id, username, password, email, user_verified FROM users WHERE id = ' . $id;
-        $query = $db->prepare($sql);
+    public function fetch(User $user) {
+        $id = $user->getId();
+        $username = $user->getUsername();
+        $sql = 'SELECT id, username, password, email, user_verified FROM users WHERE (';
+        $sql.= $id>0?' id = :id':' ';
+        $sql.= ($id>0 && !empty($username))?' OR':'';
+        $sql.= !empty($username)?' username = :username':'';
+        $sql.= ');';
+        $query = $this->db->prepare($sql);
+        if ($id > 0) {
+            $query->bindParam(':id', $id);
+        }
+        if ($username) {
+            $query->bindParam(':username', $username);
+        }
         $query->execute();
         $result = $query->fetchObject('App\Entity\User');
         if ($result) {

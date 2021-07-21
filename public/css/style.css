@@ -62,6 +62,13 @@ footer {
     color: dodgerblue;
 }
 
+.alert {
+    width: 24em;
+    text-align: center;
+    margin: auto;
+    margin-top: 1em;
+}
+
 /* homepage */
 #homepage_picture {
     max-height: 300px;

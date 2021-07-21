@@ -1,7 +1,7 @@
 <?php
 $page_title = 'Create new account';
 ob_start();
-
+// todo gerer les errors differement et remove this
 if (isset($_GET['pswnomatch']) && $_GET['pswnomatch'] == 1) {?>
     <div class="alert alert-danger" role="alert">
         Les mots de passe ne sont pas identique!
@@ -14,7 +14,7 @@ if (isset($_GET['pswnomatch']) && $_GET['pswnomatch'] == 1) {?>
     <?php
 } ?>
 
-<form class="register_form mt-5" action="index.php" method="post">
+<form class="register_form mt-5" action="index.php?action=user-confirm_register" method="post">
     <input name="action" type="hidden" value="submitSignup">
     <div class="form-group">
         <label for="username_input">Username</label>

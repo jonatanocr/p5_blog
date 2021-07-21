@@ -9,8 +9,7 @@ if (isset($_GET['wrong_credential']) && $_GET['wrong_credential'] == 1) {?>
             <?php
         }
         ?>
-        <form class="register_form mt-5" action="index.php" method="post">
-            <input name="action" type="hidden" value="submit_login">
+        <form class="register_form mt-5" action="index.php?action=user-confirm_login" method="post">
             <div class="form-group">
 
                 <label for="username_input">Username</label>

@@ -42,7 +42,20 @@
             </div>
         </nav>
         <div class="container">
-            <?php   echo $page_body;
+            <?php
+            if (!empty($_SESSION['success_msg'])) {
+                echo '<div class="alert alert-success" role="alert">' . $_SESSION['success_msg'] . '</div>';
+                unset($_SESSION['success_msg']);
+            }
+            if (!empty($_SESSION['warning_msg'])) {
+                echo '<div class="alert alert-warning" role="alert">' . $_SESSION['warning_msg'] . '</div>';
+                unset($_SESSION['warning_msg']);
+            }
+            if (!empty($_SESSION['error_msg'])) {
+                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error_msg'] . '</div>';
+                unset($_SESSION['error_msg']);
+            }
+            echo $page_body;
             ?>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Model;
 
 class CommentManager
 {
+    // todo degager le $db des param et use construct
     public function fetch_all_from_post($db, $post) {
         $sql = 'SELECT id, DATE_FORMAT(created_date, "%d.%m.%Y-%H:%i:%s") createdDate, fk_user_create fkUserCreate, content';
         $sql.= ' FROM comments WHERE verified = 1 AND fk_post = ' . $post . ' ORDER BY created_date DESC';

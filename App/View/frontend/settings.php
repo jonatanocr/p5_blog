@@ -1,18 +1,7 @@
 <?php
 $page_title = 'Settings';
 ob_start();
-
-if (isset($_GET['pswnomatch']) && $_GET['pswnomatch'] == 1) {?>
-    <div class="alert alert-danger" role="alert">
-        Les mots de passe ne sont pas identique!
-    </div>
-    <?php
-} elseif (isset($_GET['accountexist']) && $_GET['accountexist'] == 1) {?>
-    <div class="alert alert-danger" role="alert">
-        Un compte existe déjà avec ces identifiants!
-    </div>
-    <?php
-} ?>
+?>
 
 <form action="index.php" method="post">
     <input name="action" type="hidden" value="submitSettings">

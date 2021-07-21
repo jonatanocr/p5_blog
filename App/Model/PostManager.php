@@ -17,7 +17,7 @@ class PostManager
         }
     }
 
-    public function fetch_one($db, $id) {
+    public function fetch($db, $id) {
         $sql = 'SELECT id, DATE_FORMAT(post_updated_date, "%d.%m.%Y") updatedDate, fk_user_create fkUserCreate, title, header, content FROM posts WHERE id = ' . $id;
         $query = $db->prepare($sql);
         $query->execute();
