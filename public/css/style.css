@@ -81,8 +81,8 @@ footer {
 }
 
 .blog_line_title, .blog_line_description {
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .blog_line_title {
@@ -104,7 +104,26 @@ footer {
     color: dodgerblue;
 }
 
-/* blog list display post */
+.post_link_a {
+    text-decoration: none;
+    font-size: 1.8em;
+}
+
+.post_link_a:hover {
+    color: dimgrey;
+}
+
+.post_link_edit {
+    color: black;
+    margin-left: 0.5em;
+}
+
+.post_link_delete {
+    color: red;
+    margin-left: 0.5em;
+}
+
+/* blog display one post */
 h1 {
     font-size: 2em;
 }

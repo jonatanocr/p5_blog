@@ -9,6 +9,7 @@ class UserController
 {
     public function __construct($db) {
         $this->db = $db;
+        // todo mettre manager direct dans le constructor comme pour les posts
     }
 
     public function register() {
@@ -57,17 +58,21 @@ class UserController
                 session_start();
                 $_SESSION['id'] = $fetch_user->getId();
                 $_SESSION['username'] = $fetch_user->getUsername();
+                $_SESSION['user_verified'] = $fetch_user->getUserVerified();
+                $_SESSION['user_type'] = $fetch_user->getUserType();
                 $remember_me = 0;
                 if ($remember_me == 1) {
                     // todo upgrade remember me logic and security
                     setcookie('username', $result['username'], time() + 365 * 24 * 3600, null, null, false, true);
                     setcookie('password', $result['password'], time() + 365 * 24 * 3600, null, null, false, true);
                 }
+                // todo utiliser plutot les fonctions que les header ???
                 header('Location: index.php');
             } else {
                 header('Location: index.php');
             }
         } else {
+            // todo error use session general error msg
             header('Location: index.php?action=login&wrg_cred=1');
         }
     }

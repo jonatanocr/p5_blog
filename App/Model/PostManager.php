@@ -10,11 +10,8 @@ class PostManager
         $query = $db->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Post');
-        if ($result) {
-            return $result;
-        } else {
-            return -1;
-        }
+        return $result;
+
     }
 
     public function fetch($db, $id) {
@@ -24,6 +21,17 @@ class PostManager
         $result = $query->fetchObject('App\Entity\Post');
         if ($result) {
             return $result;
+        } else {
+            return -1;
+        }
+    }
+
+    public function delete($db, $id) {
+        $sql = 'DELETE FROM posts WHERE id = ' . $id;
+        $query = $db->prepare($sql);
+        $result = $query->execute();
+        if ($result) {
+            return 1;
         } else {
             return -1;
         }

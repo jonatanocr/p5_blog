@@ -4,10 +4,11 @@ CREATE TABLE IF NOT EXISTS  `users`
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    user_verified INT(1) NOT NULL DEFAULT 0
+    user_verified INT(1) NOT NULL DEFAULT 0,
+    user_type VARCHAR(20) NOT NULL DEFAULT 'visitor'
 );
 /*todo
-  fk_user mettre fk link
+  fk_user mettre foreign key pareil dans les autres tables
   */
 CREATE TABLE IF NOT EXISTS  `posts`
 (

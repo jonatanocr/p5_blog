@@ -30,6 +30,11 @@ class User
     protected $user_verified;
 
     /**
+     * @var string
+     */
+    protected $user_type;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -107,5 +112,21 @@ class User
     public function setUserVerified(int $user_verified): void
     {
         $this->user_verified = $user_verified;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserType(): string
+    {
+        return $this->user_type;
+    }
+
+    /**
+     * @param string $user_type
+     */
+    public function setUserType(string $user_type): void
+    {
+        $this->user_type = $user_type;
     }
 }

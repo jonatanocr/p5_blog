@@ -65,7 +65,7 @@
             © 2021 Copyright: Jonatan Buzek
             <?php
             if (isset($_SESSION['username'])) {
-                echo '<br>Vous êtes connecté en tant que <span style="color: black">' . ucfirst($_SESSION['username']) . '</span>';
+                echo '<br>You\'re logged in as <span style="color: black">' . ucfirst($_SESSION['username']) . '</span>';
                 echo '<br><a href="index.php?action=user-logout" id="logout_link">Logout</a>';
             } else {
                 echo '<a class="login_link" href="index.php?action=user-login">Login</a>';

@@ -44,7 +44,7 @@ class UserManager {
     public function fetch(User $user) {
         $id = $user->getId();
         $username = $user->getUsername();
-        $sql = 'SELECT id, username, password, email, user_verified FROM users WHERE (';
+        $sql = 'SELECT id, username, password, email, user_verified, user_type FROM users WHERE (';
         $sql.= $id>0?' id = :id':' ';
         $sql.= ($id>0 && !empty($username))?' OR':'';
         $sql.= !empty($username)?' username = :username':'';
