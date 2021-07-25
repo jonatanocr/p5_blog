@@ -1,6 +1,13 @@
 <?php
 $page_title = '';
 ob_start();
+?>
+<div class="container mt-4">
+    <p class="blog_line_add">
+        <a href="index.php?action=post-create" id="create_link">Write a post</a>
+    </p>
+</div>
+<?php
 if (isset($posts)) {
     foreach ($posts as $post) {
         echo '<div class="container mt-4 blog_post_div">';

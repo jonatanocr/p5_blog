@@ -1,10 +1,14 @@
 <?php
 ob_start();
 ?>
-<form action="index.php?action=post-confirm_edit-<?php echo $post_data['post']->getId(); ?>" method="post">
+<form action="index.php?action=post-confirm_create" method="post">
     <div class="container">
         <p class="post_line_header mt-4 mb-4">
-            <input class="post_input" type="text" id="post_input_title" name="title_input" value="<?php echo $post_data['post']->getTitle(); ?>" required="required">
+            <input class="post_input" type="text" id="post_input_title" name="title_input" placeholder="Title" required="required"
+                <?php if (isset($_SESSION['form']['title'])) {
+                    echo ' value="' . $_SESSION['form']['title'] . '"';
+                } ?>
+            >
         </p>
     </div>
     <div class="container">
@@ -12,7 +16,7 @@ ob_start();
             <select class="form-select" name="author_input" id="" required="required">
                 <?php
                 foreach ($authors as $id => $username) {
-                    if ($id == $post_data['post']->getFkAuthor()) {
+                    if ($id == $_SESSION['id']) {
                         echo '<option value="' . $id . '" selected="selected">' . $username . '</option>';
                     } else {
                         echo '<option value="' . $id . '">' . $username . '</option>';
@@ -22,11 +26,16 @@ ob_start();
             </select>
         </p>
         <p class="post_line_header mt-4">
-            <input class="post_input" type="text" id="post_input_header" name="header_input" value="<?php echo $post_data['post']->getHeader(); ?>" required="required">
+            <input class="post_input" type="text" id="post_input_header" name="header_input" placeholder="Header" required="required"
+                <?php if (isset($_SESSION['form']['header'])) {
+                    echo ' value="' . $_SESSION['form']['header'] . '"';
+                } ?>
+            >
         </p>
         <p class="post_line_content mt-4">
-            <textarea class="post_input" name="content_input"
-                      rows="20" required="required"><?php echo $post_data['post']->getContent(); ?></textarea>
+            <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required"><?php if (isset($_SESSION['form']['content'])) {
+                    echo $_SESSION['form']['content'];
+                } ?></textarea>
         </p>
         <div class="form_submit_div mt-4" id="post_form_submit_div">
             <div class="form_submit_sub_div">
@@ -38,13 +47,6 @@ ob_start();
         </div>
     </div>
 </form>
-<div class="container comments_div">
-    <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
-        <?php foreach ($post_data['comments'] as $comment) {
-        echo '<p class="comments_line"><span class="comment_infos">[' . $comment->getCreatedDate() . '] ' . $comment->UserCreate->getUsername() . ':</span> ' . $comment->getContent() . '</p>';
-        }
-        ?>
-</div>
 
 <?php
 $page_body = ob_get_clean();

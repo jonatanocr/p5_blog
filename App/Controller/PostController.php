@@ -15,6 +15,38 @@ class PostController
         $this->db = $db;
     }
 
+    public function create() {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            $user_manager = new Model\UserManager($this->db);
+            $authors = $user_manager->author_list();
+            require(ROOT . '/App/View/frontend/blog/create.php');
+        } else {
+            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+        }
+    }
+
+    public function confirm_create() {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            if (empty($_POST['title_input']) || empty($_POST['header_input']) || empty($_POST['content_input']) || empty($_POST['author_input'])) {
+                $this->redirect('post-create', 'error', 'All fields must be filled');
+            } else {
+                $post = new Post();
+                $post->setTitle($_POST['title_input']);
+                $post->setHeader($_POST['header_input']);
+                $post->setContent($_POST['content_input']);
+                $post->setFkAuthor($_POST['author_input']);
+                $result = $this->manager->create($post);
+                if ($result === 1) {
+                    $this->redirect('post-index', 'success', 'Post created');
+                } else {
+                    $this->redirect('post-create', 'error', 'Fail to create post');
+                }
+            }
+        } else {
+            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+        }
+    }
+
     public function index() {
         $posts = $this->manager->fetch_all();
         require(ROOT . '/App/View/frontend/blog/index.php');
@@ -105,6 +137,15 @@ class PostController
         }
         if (!empty($msg_type) AND !empty($msg)) {
             $_SESSION[$msg_type . '_msg'] = $msg;
+            if (!empty($_POST['title_input'])) {
+                $_SESSION['form']['title'] = $_POST['title_input'];
+            }
+            if (!empty($_POST["header_input"])) {
+                $_SESSION['form']['header'] = $_POST["header_input"];
+            }
+            if (!empty($_POST["content_input"])) {
+                $_SESSION['form']['content'] = $_POST["content_input"];
+            }
         }
         header($url);
         die();

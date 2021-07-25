@@ -28,20 +28,19 @@ class UserManager {
     }
 
     public function create(User $user) {
-        $insert_query = 'INSERT INTO users (username, password, email, user_verified)';
-        $insert_query.= ' VALUES (:username, :password, :email, 0);';
-        $prepared_query = $this->db->prepare($insert_query);
-        $prepared_query->bindValue( 'username', $user->getUsername());
-        $prepared_query->bindValue( 'password', $user->getPassword());
-        $prepared_query->bindValue( 'email', $user->getEmail());
-        $prepared_query->execute();
+        $sql = 'INSERT INTO users (username, password, email, user_verified)';
+        $sql.= ' VALUES (:username, :password, :email, 0);';
+        $query = $this->db->prepare($sql);
+        $query->bindValue( 'username', $user->getUsername());
+        $query->bindValue( 'password', $user->getPassword());
+        $query->bindValue( 'email', $user->getEmail());
+        $query->execute();
         $last_insert = $this->db->lastInsertId();
         if ($last_insert) {
             return 1;
         } else {
             return -1;
         }
-
     }
 
     public function fetch(User $user) {

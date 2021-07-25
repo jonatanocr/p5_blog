@@ -13,6 +13,23 @@ class PostManager
         $this->db = $db;
     }
 
+    public function create(Post $post) {
+        $sql = 'INSERT INTO posts (created_date, updated_date, fk_author, title, header, content)';
+        $sql.= ' VALUES (NOW(), NOW(), :fk_author, :title, :header, :content);';
+        $query = $this->db->prepare($sql);
+        $query->bindValue( 'fk_author', $post->getFkAuthor(), \PDO::PARAM_INT);
+        $query->bindValue( 'title', $post->getTitle());
+        $query->bindValue( 'header', $post->getHeader());
+        $query->bindValue( 'content', $post->getContent());
+        $query->execute();
+        $last_insert = $this->db->lastInsertId();
+        if ($last_insert) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
     public function fetch_all() {
         $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header FROM posts';
         $query = $this->db->prepare($sql);
