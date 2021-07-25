@@ -20,7 +20,7 @@
                 <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
                     <span id="navbar_span"></span>
                     <ul class="navbar-nav w-100 justify-content-end">
-                        <li class="nav-item active" id="navitem_home">
+                        <li class="nav-item" id="navitem_home">
                             <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
@@ -34,7 +34,7 @@
                         </li>
                         <?php if (isset($_SESSION['username'])) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?action=settings">Settings</a>
+                                <a class="nav-link" href="index.php?action=user-edit">Settings</a>
                             </li>
                         <?php } ?>
                     </ul>
@@ -59,9 +59,9 @@
             ?>
         </div>
     </div>
-    <footer class="text-center text-lg-start bg-light text-muted">
-        <div class="text-center" id="footer_bloc" style="background-color: rgba(0, 0, 0, 0.05);">
-            <div>
+    <footer class="text-center text-lg-start">
+        <div class="text-center" id="footer_bloc">
+            <div id="footer_txt">
             © 2021 Copyright: Jonatan Buzek
             <?php
             if (isset($_SESSION['username'])) {
@@ -71,11 +71,26 @@
                 echo '<a class="login_link" href="index.php?action=user-login">Login</a>';
                 echo '<a class="login_link" href="index.php?action=user-register">Register</a>';
             }
+            unset($_SESSION['form']);
             ?>
             </div>
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script>
+        function alertMsg(id, object) {
+            var msg;
+            if (object === 'post') {
+                msg = 'this post'
+            } else if (object === 'user') {
+                msg = 'your account'
+            }
+            if (confirm("Are you sure you want to delete " + msg + '?')) {
+                var link = 'index.php?action=' + object + '-delete-';
+                window.location.href = link + id;
+            }
+        }
+    </script>
 </body>
 </html>
 

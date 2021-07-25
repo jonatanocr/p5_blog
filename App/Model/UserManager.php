@@ -12,51 +12,45 @@ class UserManager {
             $this->db = $db;
     }
 
-    public function create(User $user) {
-        $username = $user->getUsername();
-        $email = $user->getEmail();
-        $password = $user->getPassword();
-        $check_if_exist_query = 'SELECT id FROM users where (username=:username OR email=:email);';
-        $verify = $this->db->prepare($check_if_exist_query);
-        $verify->bindParam(':username', $username);
-        $verify->bindParam(':email', $email);
-        $verify->execute();
-        $results = $verify->fetchAll(\PDO::FETCH_OBJ);
-        if ($verify->rowCount() == 0) {
-            $insert_query = 'INSERT INTO users (username, password, email, user_verified)';
-            $insert_query.= ' VALUES (:username, :password, :email, 0);';
-            $prepared_query = $this->db->prepare($insert_query);
-            $prepared_query->bindParam( 'username', $username);
-            $prepared_query->bindParam( 'password', $password);
-            $prepared_query->bindParam( 'email', $email);
-            $prepared_query->execute();
-            $last_insert = $this->db->lastInsertId();
-            if ($last_insert) {
-                return 1;
-            } else {
-                return -1;
-            }
+    public function check_user_exists(User $user) {
+        $sql = 'SELECT COUNT(id) count FROM users WHERE id = :id OR username = :username OR email = :email;';
+        $query = $this->db->prepare($sql);
+        $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
+        $query->bindValue('username', $user->getUsername());
+        $query->bindValue('email', $user->getEmail());
+        $query->execute();
+        $result = $query->fetch();
+        if ($result) {
+            return $result['count'];
         } else {
-            return 0;
+            return -1;
         }
     }
 
+    public function create(User $user) {
+        $insert_query = 'INSERT INTO users (username, password, email, user_verified)';
+        $insert_query.= ' VALUES (:username, :password, :email, 0);';
+        $prepared_query = $this->db->prepare($insert_query);
+        $prepared_query->bindValue( 'username', $user->getUsername());
+        $prepared_query->bindValue( 'password', $user->getPassword());
+        $prepared_query->bindValue( 'email', $user->getEmail());
+        $prepared_query->execute();
+        $last_insert = $this->db->lastInsertId();
+        if ($last_insert) {
+            return 1;
+        } else {
+            return -1;
+        }
+
+    }
+
     public function fetch(User $user) {
-        $id = $user->getId();
-        $username = $user->getUsername();
-        $sql = 'SELECT id, username, password, email, user_verified, user_type FROM users WHERE (';
-        $sql.= $id>0?' id = :id':' ';
-        $sql.= ($id>0 && !empty($username))?' OR':'';
-        $sql.= !empty($username)?' username = :username':'';
-        $sql.= ');';
+        $sql = 'SELECT id, username, password, email, user_verified, user_type FROM users WHERE id = :id OR username = :username';
         $query = $this->db->prepare($sql);
-        if ($id > 0) {
-            $query->bindParam(':id', $id);
-        }
-        if ($username) {
-            $query->bindParam(':username', $username);
-        }
+        $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
+        $query->bindValue(':username', $user->getUsername());
         $query->execute();
+        //todo stop use fetchObject and use hydrate function
         $result = $query->fetchObject('App\Entity\User');
         if ($result) {
             return $result;
@@ -65,37 +59,50 @@ class UserManager {
         }
     }
 
-    public function updateUser($settings) {
-        try {
-            $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-            $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+    public function update(User $user, $update_password = 0) {
+        $sql = 'UPDATE users SET';
+        $sql.= ' username = :username,';
+        if ($update_password === 1) {
+            $sql.= ' password = :password,';
         }
-        $update_query = 'UPDATE users SET';
-        $update_query.= ' username = :username,';
-        $update_query.= ' password = :password,';
-        $update_query.= ' email = :email';
-        $update_query.= ' WHERE id = :id';
-        $query = $db->prepare($update_query);
-        $query->bindParam( 'username', $settings['username'],PDO::PARAM_STR);
-        $query->bindParam( 'password', $settings['hashed_psw'],PDO::PARAM_STR);
-        $query->bindParam( 'email', $settings['email'],PDO::PARAM_STR);
-        $query->bindParam( 'id', $settings['id'] );
-        $query->execute();
-        return 1;
+        $sql.= ' email = :email';
+        $sql.= ' WHERE id = :id';
+        $query = $this->db->prepare($sql);
+        $query->bindValue( 'username', $user->getUsername());
+        if ($update_password === 1) {
+            $query->bindValue( 'password', $user->getPassword());
+        }
+        $query->bindValue( 'email', $user->getEmail());
+        $query->bindValue( 'id', $user->getId(), \PDO::PARAM_INT);
+        $update = $query->execute();
+        if ($update) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
-    public function delete_user($id) {
-        try {
-            $db = new PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '');
-            //$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
+    public function delete($id) {
+        //todo delete user comm/posts
         $delete_query = 'DELETE FROM users WHERE id = ' . $id;
-        $query = $db->prepare($delete_query);
+        $query = $this->db->prepare($delete_query);
+        $result = $query->execute();
+        if ($result) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    public function author_list() {
+        $sql = 'SELECT id, username FROM users WHERE user_type = "admin" ORDER BY username';
+        $query = $this->db->prepare($sql);
         $query->execute();
-        return 1;
+        $authors_list = $query->fetchAll();
+        $authors = array();
+        foreach ($authors_list as $author) {
+            $authors[$author['id']] = $author['username'];
+        }
+        return $authors;
     }
 }

@@ -12,12 +12,12 @@ body {
     margin-bottom: 4em;
 }
 
-.nav-link {
-    color: #999 !important;
+.nav-link, .login_link, #register_page_link {
+    color: #6d6d6d !important;
 }
 
-.nav-link:hover, #register_page_link:hover {
-    color: dodgerblue !important;
+.nav-link:hover, .login_link:hover, #register_page_link:hover {
+    color: #999 !important;
 }
 
 .login_link {
@@ -26,15 +26,17 @@ body {
 
 .login_link, #register_page_link {
     text-decoration: none;
-    color: #999;
 }
 
-.login_link:hover {
-    color: dodgerblue;
-}
-
-#logout_link {
+#logout_link, #delete_user_link, .cancel_link {
     color: #a80707;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#logout_link:hover, #delete_user_link:hover, .cancel_link:hover {
+    font-weight: normal;
+    color: #bf0808;
 }
 
 #navbar_container {
@@ -43,8 +45,7 @@ body {
 
 footer {
     position: fixed;
-    height: 4em;
-    background-color: red !important;
+    height: 5em;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -56,6 +57,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .blog_post_title:hover {
@@ -156,22 +158,49 @@ h1, h3, .comments_separator {
     color: #999;
 }
 
+/* blog edit one post */
+.post_input {
+    width:100%;
+}
+
+#post_input_title {
+    text-align: center;
+    font-size: 2em;
+}
+
+#post_input_header {
+    color: #999;
+}
+
+#post_form_submit_div {
+    margin: auto;
+    max-width: 200px;
+}
+
 /* user administration */
 .register_form {
     width: 20em;
     margin: auto;
 }
 
-.form-control {
+.form-control, .form-select {
     border-radius: 0;
 }
 
-.form-control:focus {
-    border: 1px solid dodgerblue;
+.form-control, textarea, .post_input, .form-select {
+    border: 1px solid #999 !important;
+}
+
+.form-control:focus, textarea:focus, .post_input:focus, .form-select:focus {
+    border: 1px solid dodgerblue !important;
     box-shadow: none;
 }
 
-.register_form_btn {
+.form-select:focus {
+    box-shadow: none;
+}
+
+.submit_form_btn {
     margin: auto;
     background-color: transparent;
     border: 1px solid #999;
@@ -179,39 +208,29 @@ h1, h3, .comments_separator {
     color: #999;
 }
 
-.register_form_btn:hover {
-    background-color: dodgerblue;
+.submit_form_btn:hover {
+    background-color: #afc8ef;
     color: #ffff;
-    border: none;
+    border: 1px solid transparent;
 }
 
-.register_form_btn:focus, .register_form_btn:active {
+.submit_form_btn:focus, .submit_form_btn:active {
     box-shadow: none !important;
 }
 
-.register_form_btn:active {
+.submit_form_btn:active {
     position: relative;
     top: 2px;
 }
 
-.register_form_validation_div {
+.form_submit_div {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.register_form_validation_sub_div {
+.form_submit_sub_div {
     vertical-align: center;
-}
-
-.cancel_link {
-    text-decoration: none;
-    color: #a80707;
-}
-
-.cancel_link:hover {
-    text-decoration: underline #a80707;
-    color: #a80707;
 }
 
 .cancel_link:active {

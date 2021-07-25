@@ -18,12 +18,12 @@ class Comment
     /**
      * @var int
      */
-    protected $fkUserCreate;
+    protected $fkAuthor;
 
     /**
      * @var object
      */
-    protected $userCreate;
+    protected $author;
 
     /**
      * @var int
@@ -70,26 +70,26 @@ class Comment
     /**
      * @return int
      */
-    public function getFkUserCreate(): int
+    public function getFkAuthor(): int
     {
-        return $this->fkUserCreate;
+        return $this->fkAuthor;
     }
 
     /**
      * @param int
      */
-    public function setFkUserCreate(int $fkUserCreate)
+    public function setFkAuthor(int $fkAuthor)
     {
-        $this->fkUserCreate = $fkUserCreate;
+        $this->fkAuthor = $fkAuthor;
     }
 
     /**
      * @param int
      */
-    public function setUserCreate(object $userCreate)
+    public function setAuthor(object $author)
     {
-        if ($userCreate instanceof User) {
-            $this->UserCreate = $userCreate;
+        if ($author instanceof User) {
+            $this->author = $author;
         }
     }
 

@@ -23,12 +23,7 @@ class Post
     /**
      * @var int
      */
-    protected $fkUserCreate;
-
-    /**
-     * @var int
-     */
-    protected $fkUserUpdate;
+    protected $fkAuthor;
 
     /**
      * @var string
@@ -96,33 +91,17 @@ class Post
     /**
      * @return int
      */
-    public function getFkUserCreate(): int
+    public function getFkAuthor()
     {
-        return $this->fkUserCreate;
+        return $this->fkAuthor;
     }
 
     /**
-     * @param int $fkUserCreate
+     * @param int $fkAuthor
      */
-    public function setFkUserCreate(int $fkUserCreate): void
+    public function setFkAuthor(int $fkAuthor)
     {
-        $this->fkUserCreate = $fkUserCreate;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFkUserUpdate(): int
-    {
-        return $this->fkUserUpdate;
-    }
-
-    /**
-     * @param int $fkUserUpdate
-     */
-    public function setFkUserUpdate(int $fkUserUpdate): void
-    {
-        $this->fkUserUpdate = $fkUserUpdate;
+        $this->fkAuthor = $fkAuthor;
     }
 
     /**

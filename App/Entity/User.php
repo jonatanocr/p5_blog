@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Entity;
-
+// todo pour toutes les classes revoir getters and setters verifications
 class User
 {
     /**
      * @var int
      */
-    protected $id = 0;
+    protected $id;
 
     /**
      * @var string
@@ -28,7 +28,7 @@ class User
      * @var int
      */
     protected $user_verified;
-
+    // todo rename keep verified and type without user_
     /**
      * @var string
      */
@@ -37,7 +37,7 @@ class User
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -45,15 +45,17 @@ class User
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId($id)
     {
-        $this->id = $id;
+        if ((int) $id and $id > 0) {
+            $this->id = $id;
+        }
     }
 
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -61,7 +63,7 @@ class User
     /**
      * @param string $username
      */
-    public function setUsername(string $username): void
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
@@ -69,7 +71,7 @@ class User
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -77,7 +79,7 @@ class User
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }
@@ -85,7 +87,7 @@ class User
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -93,7 +95,7 @@ class User
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
@@ -101,7 +103,7 @@ class User
     /**
      * @return int
      */
-    public function getUserVerified(): int
+    public function getUserVerified()
     {
         return $this->user_verified;
     }
@@ -109,7 +111,7 @@ class User
     /**
      * @param int $user_verified
      */
-    public function setUserVerified(int $user_verified): void
+    public function setUserVerified(int $user_verified)
     {
         $this->user_verified = $user_verified;
     }
@@ -117,7 +119,7 @@ class User
     /**
      * @return string
      */
-    public function getUserType(): string
+    public function getUserType()
     {
         return $this->user_type;
     }
@@ -125,7 +127,7 @@ class User
     /**
      * @param string $user_type
      */
-    public function setUserType(string $user_type): void
+    public function setUserType(string $user_type)
     {
         $this->user_type = $user_type;
     }

@@ -14,3 +14,15 @@ if (isset($_GET['action'])) {
 
 $app = new \App\App($action);
 $app->run();
+
+/* todo
+- footer pas fix
+- comment rename fkAuthor
+- fermer pdo/query a la fin a chaque fois
+- in constructor add id param and if exist direct load object
+- stop pdo fetchObject usage -> hydrate function
+- restrict admin pages and user edit
+- respondive design
+- delete user -> delete also comm and post
+- enlever le user verified -> comment sont validés donc pas besoin
+ */

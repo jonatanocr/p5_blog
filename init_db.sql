@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS  `posts`
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     created_date DATETIME NOT NULL,
     updated_date DATETIME,
-    fk_user_create INT NOT NULL,
-    fk_user_update INT,
+    fk_author INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     header TEXT NOT NULL,
     content TEXT NOT NULL
@@ -26,7 +25,7 @@ CREATE TABLE IF NOT EXISTS  `comments`
 (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     created_date DATETIME NOT NULL,
-    fk_user_create INT NOT NULL,
+    fk_author INT NOT NULL,
     fk_post INT NOT NULL,
     verified TINYINT NOT NULL DEFAULT 0,
     content TEXT NOT NULL
