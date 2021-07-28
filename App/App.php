@@ -25,7 +25,6 @@ class App
             $controllerName = 'App\Controller\\'.ucfirst($this->action[0]).'Controller';
             $controllerAction = $this->action[1];
             $controller = new $controllerName($this->db);
-            //$id = !empty($_GET['id'])?$_GET['id']:null;
             $id = !empty($this->action[2])?$this->action[2]:null;
             $controller->$controllerAction($id);
         }

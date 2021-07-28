@@ -84,6 +84,8 @@
                 msg = 'this post'
             } else if (object === 'user') {
                 msg = 'your account'
+            } else if (object === 'comment') {
+                msg = 'this comment'
             }
             if (confirm("Are you sure you want to delete " + msg + '?')) {
                 var link = 'index.php?action=' + object + '-delete-';

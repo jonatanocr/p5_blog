@@ -41,7 +41,15 @@ ob_start();
 <div class="container comments_div">
     <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
         <?php foreach ($post_data['comments'] as $comment) {
-        echo '<p class="comments_line"><span class="comment_infos">[' . $comment->getCreatedDate() . '] ' . $comment->UserCreate->getUsername() . ':</span> ' . $comment->getContent() . '</p>';
+            echo '<p class="comments_line">';
+            if ($comment->getVerified() === 1) {
+                echo '<a href="index.php?action=comment-invalidate-' . $comment->getId() . '" class="post_link_a post_link_edit">&#9745;</a>';
+            } else {
+                echo '<a href="index.php?action=comment-validate-' . $comment->getId() . '" class="post_link_a post_link_edit">&#9744;</a>';
+            }
+            echo '<a href="#" onclick="alertMsg('.$comment->getId().', \'comment\')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>';
+            echo '<span class="comment_infos">[' . $comment->getCreatedDate() . '] ' . $comment->getAuthor()->getUsername() . ':</span> ' . $comment->getContent();
+            echo '</p>';
         }
         ?>
 </div>

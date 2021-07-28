@@ -28,6 +28,11 @@ class Comment
     /**
      * @var int
      */
+    protected $fkPost;
+
+    /**
+     * @var int
+     */
     protected $verified;
 
     /**
@@ -84,13 +89,39 @@ class Comment
     }
 
     /**
-     * @param int
+     * @param object
+     */
+    public function getAuthor()
+    {
+
+        return $this->author;
+
+    }
+
+    /**
+     * @param object
      */
     public function setAuthor(object $author)
     {
         if ($author instanceof User) {
             $this->author = $author;
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getFkPost(): int
+    {
+        return $this->fkPost;
+    }
+
+    /**
+     * @param int $fkPost
+     */
+    public function setFkPost(int $fkPost)
+    {
+        $this->fkPost = $fkPost;
     }
 
     /**

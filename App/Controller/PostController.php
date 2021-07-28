@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Model as Model;
@@ -125,6 +126,28 @@ class PostController
         } else {
             $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
             $this->index();
+        }
+    }
+
+    //todo move this function in comment controller
+    public function add_comment($id) {
+        if (!isset($_SESSION['id']) || $_SESSION['id'] < 1) {
+            $this->redirect('post-display-'.$id, 'error', 'You must be logged in to post a comment');
+        }
+        if (!empty($_POST['content_input'])) {
+            $comment = new Comment();
+            $comment->setFkAuthor($_SESSION['id']);
+            $comment->setFkPost($id);
+            $comment->setContent($_POST['content_input']);
+            $comment_manager = new Model\CommentManager($this->db);
+            $create = $comment_manager->create($comment);
+            if ($create === 1) {
+                $this->redirect('post-display-'.$id, 'success', 'Comment added<br>Waiting for Approval');
+            } else {
+                $this->redirect('post-display-'.$id, 'error', 'An error has<br>occurred please try again');
+            }
+        } else {
+            $this->redirect('post-display-'.$id, 'error', 'Comment field is empty');
         }
     }
 

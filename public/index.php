@@ -25,4 +25,5 @@ $app->run();
 - respondive design
 - delete user -> delete also comm and post
 - enlever le user verified -> comment sont validés donc pas besoin
+- dashboard page for admin (user and comment waiting for validation)
  */
