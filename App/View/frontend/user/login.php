@@ -35,4 +35,3 @@ ob_start();
 $page_body = ob_get_clean();
 require(ROOT . '/App/View/template.php');
 ?>
-

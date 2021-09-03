@@ -11,14 +11,14 @@ class App
 
     public function __construct($action) {
         $this->action = $action;
-        $this->db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+        $this->db = new \PDO('mysql:host=localhost;dbname=blog_jonatan;charset=utf8', 'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
     }
 
     public function run() {
         if ($this->action === 'homepage') {
             require(ROOT.'/App/View/frontend/homepage.php');
         } else {
-            require ROOT.'/core/Autoloader.php';
+            require ROOT . '/Core/Autoloader.php';
             $autoloader = new Autoloader();
             $autoloader->register();
 

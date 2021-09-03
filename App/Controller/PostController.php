@@ -5,8 +5,9 @@ use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Model as Model;
+use Core\Controller\Controller;
 
-class PostController
+class PostController extends Controller
 {
     protected $db;
     protected $manager;
@@ -135,43 +136,23 @@ class PostController
             $this->redirect('post-display-'.$id, 'error', 'You must be logged in to post a comment');
         }
         if (!empty($_POST['content_input'])) {
+            $verified = $_SESSION['user_type']=='admin'?1:0;
             $comment = new Comment();
             $comment->setFkAuthor($_SESSION['id']);
             $comment->setFkPost($id);
             $comment->setContent($_POST['content_input']);
+            $comment->setVerified($verified);
             $comment_manager = new Model\CommentManager($this->db);
             $create = $comment_manager->create($comment);
             if ($create === 1) {
-                $this->redirect('post-display-'.$id, 'success', 'Comment added<br>Waiting for Approval');
+                $msg = $verified==1?'Comment added':'Comment added<br>Waiting for Approval';
+                $this->redirect('post-display-'.$id, 'success', $msg);
             } else {
                 $this->redirect('post-display-'.$id, 'error', 'An error has<br>occurred please try again');
             }
         } else {
             $this->redirect('post-display-'.$id, 'error', 'Comment field is empty');
         }
-    }
-
-    // todo mettre cette fonction dans une classe mere
-    public function redirect($action = '', $msg_type = '', $msg = '') {
-        if (empty($action)) {
-            $url = 'Location: index.php';
-        } else {
-            $url = 'Location: index.php?action=' . $action;
-        }
-        if (!empty($msg_type) AND !empty($msg)) {
-            $_SESSION[$msg_type . '_msg'] = $msg;
-            if (!empty($_POST['title_input'])) {
-                $_SESSION['form']['title'] = $_POST['title_input'];
-            }
-            if (!empty($_POST["header_input"])) {
-                $_SESSION['form']['header'] = $_POST["header_input"];
-            }
-            if (!empty($_POST["content_input"])) {
-                $_SESSION['form']['content'] = $_POST["content_input"];
-            }
-        }
-        header($url);
-        die();
     }
 
 }

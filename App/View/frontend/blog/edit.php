@@ -10,15 +10,13 @@ ob_start();
     <div class="container">
         <p class="post_line_header">
             <select class="form-select" name="author_input" id="" required="required">
-                <?php
-                foreach ($authors as $id => $username) {
-                    if ($id == $post_data['post']->getFkAuthor()) {
-                        echo '<option value="' . $id . '" selected="selected">' . $username . '</option>';
-                    } else {
-                        echo '<option value="' . $id . '">' . $username . '</option>';
-                    }
-                }
-                ?>
+                <?php foreach ($authors as $id => $username) {
+                    if ($id == $post_data['post']->getFkAuthor()) { ?>
+                        <option value="<?php echo $id ?>" selected="selected"><?php echo $username ?></option>
+                    <?php } else { ?>
+                        <option value="<?php echo $id ?>"><?php echo $username ?></option>
+                    <?php }
+                    } ?>
             </select>
         </p>
         <p class="post_line_header mt-4">
@@ -40,18 +38,14 @@ ob_start();
 </form>
 <div class="container comments_div">
     <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
-        <?php foreach ($post_data['comments'] as $comment) {
-            echo '<p class="comments_line">';
-            if ($comment->getVerified() === 1) {
-                echo '<a href="index.php?action=comment-invalidate-' . $comment->getId() . '" class="post_link_a post_link_edit">&#9745;</a>';
-            } else {
-                echo '<a href="index.php?action=comment-validate-' . $comment->getId() . '" class="post_link_a post_link_edit">&#9744;</a>';
-            }
-            echo '<a href="#" onclick="alertMsg('.$comment->getId().', \'comment\')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>';
-            echo '<span class="comment_infos">[' . $comment->getCreatedDate() . '] ' . $comment->getAuthor()->getUsername() . ':</span> ' . $comment->getContent();
-            echo '</p>';
-        }
-        ?>
+        <?php foreach ($post_data['comments'] as $comment) { ?>
+            <p class="comments_line">
+                <a href="index.php?action=comment-<?php echo ($comment->getVerified() === 1?'invalidate':'validate') . '-' . $comment->getId() ?>" class="post_link_a post_link_edit">&#9745;</a>
+                <a href="#" onclick="alertMsg(<?php echo $comment->getId() ?>, \'comment\')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>';
+                <span class="comment_infos"><?php echo '[' . $comment->getCreatedDate() . ']' . $comment->getAuthor()->getUsername() ?>:</span>
+                <?php $comment->getContent(); ?>
+            </p>
+    <?php } ?>
 </div>
 
 <?php

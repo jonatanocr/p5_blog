@@ -13,10 +13,11 @@ class CommentManager
     }
 
     public function create(Comment $comment) {
-        $sql = 'INSERT INTO comments (created_date, fk_author, fk_post, content) VALUES (NOW(), :fk_author, :fk_post, :content)';
+        $sql = 'INSERT INTO comments (created_date, fk_author, fk_post, verified, content) VALUES (NOW(), :fk_author, :fk_post, :verified, :content)';
         $query = $this->db->prepare($sql);
         $query->bindValue('fk_author', $comment->getFkAuthor(), \PDO::PARAM_INT);
         $query->bindValue('fk_post', $comment->getFkPost(), \PDO::PARAM_INT);
+        $query->bindValue('verified', $comment->getVerified(), \PDO::PARAM_INT);
         $query->bindValue('content', $comment->getContent());
         $create = $query->execute();
         // todo mettre meme logique partout
@@ -28,7 +29,7 @@ class CommentManager
 
     public function fetch_all_from_post($post) {
         $sql = 'SELECT id, DATE_FORMAT(created_date, "%d.%m.%Y-%H:%i:%s") createdDate, fk_author fkAuthor, verified, content';
-        $sql.= ' FROM comments WHERE fk_post = :post ORDER BY created_date DESC';
+        $sql.= ' FROM comments WHERE fk_post = :post ORDER BY created_date';
         $query = $this->db->prepare($sql);
         $query->bindValue('post', $post, \PDO::PARAM_INT);
         $query->execute();

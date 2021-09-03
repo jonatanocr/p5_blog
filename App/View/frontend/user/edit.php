@@ -15,11 +15,11 @@ ob_start();
     </div>
     <div class="form-group mt-2">
         <label for="password_input">Password</label>
-        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8">
+        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8" onfocusout="passwords_match_check();">
     </div>
     <div class="form-group mt-2">
         <label for="password2_input">Repeat password</label>
-        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8">
+        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8" onfocusout="passwords_match_check();">
     </div>
     <div class="form-group mt-2">
         <label for="email_input">Email</label>
@@ -31,13 +31,16 @@ ob_start();
     </div>
     <div class="form_submit_div mt-4">
         <div class="form_submit_sub_div">
-            <button type="submit" class="submit_form_btn btn btn-primary">Submit</button>
+            <button type="submit" class="submit_form_btn btn btn-primary" id="btn_submit">Submit</button>
         </div>
         <div class="form_submit_sub_div">
             <a class="cancel_link" href="index.php">Cancel</a>
         </div>
     </div>
 </form>
+<div class="alert alert-danger" role="alert" id="alert_password" style="display: none;">
+    Password did not match <br> (˘︹˘)
+</div>
 <div class="container mt-5 mb-5 text-center">
     <a href="#" id="delete_user_link" onclick="alertMsg(<?php echo isset($_SESSION['id'])?$_SESSION['id']:''; ?>, 'user')">Delete my account</a>
 </div>

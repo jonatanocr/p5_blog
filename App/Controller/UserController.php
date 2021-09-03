@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Model\UserManager;
+use Core\Controller\Controller;
 
-class UserController
+class UserController extends Controller
 {
     protected $db;
     protected $manager;
@@ -69,7 +70,6 @@ class UserController
                     session_start();
                     $_SESSION['id'] = $user->getId();
                     $_SESSION['username'] = $user->getUsername();
-                    $_SESSION['user_verified'] = $user->getUserVerified();
                     $_SESSION['user_type'] = $user->getUserType();
                     $_SESSION['email'] = $user->getEmail();
                     $remember_me = 0;
@@ -155,26 +155,6 @@ class UserController
         } else {
             $this->redirect('user-edit', 'error', 'An error has occured');
         }
-    }
-
-    // todo mettre cette fonction dans une classe mere
-    public function redirect($action = '', $msg_type = '', $msg = '') {
-        if (empty($action)) {
-            $url = 'Location: index.php';
-        } else {
-            $url = 'Location: index.php?action=' . $action;
-        }
-        if (!empty($msg_type) AND !empty($msg)) {
-            $_SESSION[$msg_type . '_msg'] = $msg;
-            if (!empty($_POST['username_input'])) {
-                $_SESSION['form']['username'] = $_POST['username_input'];
-            }
-            if (!empty($_POST["email_input"])) {
-                $_SESSION['form']['email'] = $_POST["email_input"];
-            }
-        }
-        header($url);
-        die();
     }
 
 }

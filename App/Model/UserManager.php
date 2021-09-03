@@ -28,7 +28,7 @@ class UserManager {
     }
 
     public function create(User $user) {
-        $sql = 'INSERT INTO users (username, password, email, user_verified) VALUES (:username, :password, :email, 0);';
+        $sql = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
         $query = $this->db->prepare($sql);
         $query->bindValue( 'username', $user->getUsername());
         $query->bindValue( 'password', $user->getPassword());
@@ -42,7 +42,7 @@ class UserManager {
     }
 
     public function fetch(User $user) {
-        $sql = 'SELECT id, username, password, email, user_verified, user_type FROM users WHERE id = :id OR username = :username';
+        $sql = 'SELECT id, username, password, email, user_type FROM users WHERE id = :id OR username = :username';
         $query = $this->db->prepare($sql);
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $query->bindValue(':username', $user->getUsername());

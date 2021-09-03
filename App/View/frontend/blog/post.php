@@ -9,13 +9,13 @@ ob_start();
 </div>
 <div class="container comments_div">
     <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
-
     <?php foreach ($post_data['comments'] as $comment) {
-        if ($comment->getVerified() === 1) {
-            echo '<p class="comments_line"><span class="comment_infos">[' . $comment->getCreatedDate() . '] ' . $comment->getAuthor()->getUsername() . ':</span> ' . $comment->getContent() . '</p>';
-        }
-    }
-    ?>
+        if ($comment->getVerified() === 1) { ?>
+            <p class="comments_line"><span class="comment_infos">
+            <?php echo '[' . $comment->getCreatedDate() . '] ' . $comment->getAuthor()->getUsername() . ':</span> ' . $comment->getContent(); ?>
+            </p>
+        <?php }
+    } ?>
 
     <form action="index.php?action=post-add_comment-<?php echo $post_data['post']->getId(); ?>" method="post">
         <div class="container">
@@ -25,12 +25,11 @@ ob_start();
             <div class="form_submit_div mt-4" id="post_form_submit_div">
                 <div class="form_submit_sub_div">
                     <?php
-                    if (isset($_SESSION['id'])) {
-                        echo '<button type="submit" class="submit_form_btn btn btn-primary">Submit</button>';
-                    } else {
-                        echo '<button type="submit" class="submit_form_btn btn btn-primary" disabled>Submit</button>';
-                    }
-                    ?>
+                    if (isset($_SESSION['id'])) { ?>
+                        <button type="submit" class="submit_form_btn btn btn-primary">Submit</button>
+                    <?php } else { ?>
+                        <button type="submit" class="submit_form_btn btn btn-primary" disabled>Submit</button>
+                    <?php } ?>
                 </div>
             </div>
         </div>

@@ -16,11 +16,11 @@ ob_start();
             <select class="form-select" name="author_input" id="" required="required">
                 <?php
                 foreach ($authors as $id => $username) {
-                    if ($id == $_SESSION['id']) {
-                        echo '<option value="' . $id . '" selected="selected">' . $username . '</option>';
-                    } else {
-                        echo '<option value="' . $id . '">' . $username . '</option>';
-                    }
+                    if ($id == $_SESSION['id']) { ?>
+                        <option value="<?php echo $id ?>" selected="selected"><?php echo $username ?></option>
+                    <?php } else { ?>
+                        <option value="<?php echo $id ?>"><?php echo $username ?></option>
+                    <?php }
                 }
                 ?>
             </select>
@@ -33,9 +33,11 @@ ob_start();
             >
         </p>
         <p class="post_line_content mt-4">
-            <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required"><?php if (isset($_SESSION['form']['content'])) {
+            <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required">
+                <?php if (isset($_SESSION['form']['content'])) {
                     echo $_SESSION['form']['content'];
-                } ?></textarea>
+                } ?>
+            </textarea>
         </p>
         <div class="form_submit_div mt-4" id="post_form_submit_div">
             <div class="form_submit_sub_div">
@@ -52,3 +54,4 @@ ob_start();
 $page_body = ob_get_clean();
 require(ROOT . '/App/View/template.php');
 ?>
+

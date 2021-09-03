@@ -24,10 +24,6 @@ class User
      */
     protected $email;
 
-    /**
-     * @var int
-     */
-    protected $user_verified;
     // todo rename keep verified and type without user_
     /**
      * @var string

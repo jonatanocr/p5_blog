@@ -5,8 +5,9 @@ namespace App\Controller;
 
 use App\App;
 use App\Model\CommentManager;
+use Core\Controller\Controller;
 
-class CommentController
+class CommentController extends Controller
 {
 
     protected $db;
@@ -69,20 +70,6 @@ class CommentController
         } else {
             $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
         }
-    }
-
-    // todo mettre cette fonction dans une classe mere
-    public function redirect($action = '', $msg_type = '', $msg = '') {
-        if (empty($action)) {
-            $url = 'Location: index.php';
-        } else {
-            $url = 'Location: index.php?action=' . $action;
-        }
-        if (!empty($msg_type) AND !empty($msg)) {
-            $_SESSION[$msg_type . '_msg'] = $msg;
-        }
-        header($url);
-        die();
     }
 
 }

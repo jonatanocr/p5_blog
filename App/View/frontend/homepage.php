@@ -1,14 +1,11 @@
 <?php
 $page_title = '';
 ob_start();
-if (isset($_GET['add']) && $_GET['add'] == 1) {
-?>
+if (isset($_GET['add']) && $_GET['add'] == 1) { ?>
     <div class="alert alert-success" role="alert">
         Votre compte a bien été créé
     </div>
-<?php
-}
-?>
+<?php } ?>
 <div class="row mt-5 mb-5">
     <div class="col" style="text-align: center">
         <img src="media/me_sh_small.png" id="homepage_picture">
