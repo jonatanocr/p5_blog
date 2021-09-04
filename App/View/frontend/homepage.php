@@ -1,7 +1,9 @@
 <?php
 $page_title = '';
 ob_start();
-if (isset($_GET['add']) && $_GET['add'] == 1) { ?>
+if (isset($_GET['add']) && $_GET['add'] == 1) {
+    // todo message alert avec session comme ailleurs
+    ?>
     <div class="alert alert-success" role="alert">
         Votre compte a bien été créé
     </div>

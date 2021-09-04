@@ -7,7 +7,7 @@ ob_start();
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" required="required"
             <?php if (isset($_COOKIE["username"])) {
-            echo ' value="' . $_COOKIE["username"] . '"';
+            echo ' value="' . htmlspecialchars($_COOKIE["username"]) . '"';
             } ?>
         >
     </div>

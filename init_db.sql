@@ -19,7 +19,10 @@ CREATE TABLE IF NOT EXISTS  `posts`
     fk_author INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     header TEXT NOT NULL,
-    content TEXT NOT NULL
+    content TEXT NOT NULL,
+    FOREIGN KEY(fk_author)
+    REFERENCES users(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS  `comments`
@@ -29,5 +32,11 @@ CREATE TABLE IF NOT EXISTS  `comments`
     fk_author INT NOT NULL,
     fk_post INT NOT NULL,
     verified TINYINT NOT NULL DEFAULT 0,
-    content TEXT NOT NULL
+    content TEXT NOT NULL,
+    FOREIGN KEY(fk_author)
+    REFERENCES users(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY(fk_post)
+    REFERENCES posts(id)
+    ON DELETE CASCADE
 );

@@ -44,19 +44,19 @@
         <div class="container">
             <?php if (!empty($_SESSION['success_msg'])) {?>
                 <div class="alert alert-success" role="alert">
-                    <?php echo $_SESSION['success_msg'] ?>
+                    <?php echo $_SESSION['success_msg']; ?>
                 </div>
                 <?php unset($_SESSION['success_msg']);
             }
             if (!empty($_SESSION['warning_msg'])) {?>
                 <div class="alert alert-warning" role="alert">
-                    <?php echo $_SESSION['warning_msg'] ?>
+                    <?php echo $_SESSION['warning_msg']; ?>
                 </div>
                 <?php unset($_SESSION['warning_msg']);
             }
             if (!empty($_SESSION['error_msg'])) { ?>
                 <div class="alert alert-danger" role="alert">
-                    <?php echo $_SESSION['error_msg'] ?>
+                    <?php echo $_SESSION['error_msg']; ?>
                 </div>
                 <?php unset($_SESSION['error_msg']);
             }
@@ -70,7 +70,7 @@
             © 2021 Copyright: Jonatan Buzek
             <?php if (isset($_SESSION['username'])) { ?>
                 <br>You're logged in as <span style="color: black">
-                    <?php echo ucfirst($_SESSION['username']) ?>
+                    <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?>
                 </span>
                 <br><a href="index.php?action=user-logout" id="logout_link">Logout</a>
 

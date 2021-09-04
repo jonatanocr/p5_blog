@@ -12,7 +12,7 @@ ob_start();
     <?php foreach ($post_data['comments'] as $comment) {
         if ($comment->getVerified() === 1) { ?>
             <p class="comments_line"><span class="comment_infos">
-            <?php echo '[' . $comment->getCreatedDate() . '] ' . $comment->getAuthor()->getUsername() . ':</span> ' . $comment->getContent(); ?>
+            <?php echo '[' . $comment->getCreatedDate() . '] ' . htmlspecialchars($comment->getAuthor()->getUsername()) . ':</span> ' . htmlspecialchars($comment->getContent()); ?>
             </p>
         <?php }
     } ?>
