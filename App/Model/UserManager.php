@@ -20,6 +20,7 @@ class UserManager {
         $query->bindValue('email', $user->getEmail());
         $query->execute();
         $result = $query->fetch();
+        $query->closeCursor();
         if ($result) {
             return $result['count'];
         } else {
@@ -35,6 +36,7 @@ class UserManager {
         $query->bindValue( 'email', $user->getEmail());
         $query->execute();
         $last_insert = $this->db->lastInsertId();
+        $query->closeCursor();
         if ($last_insert) {
             return 1;
         }
@@ -49,6 +51,7 @@ class UserManager {
         $query->execute();
         //todo stop use fetchObject and use hydrate function
         $result = $query->fetchObject('App\Entity\User');
+        $query->closeCursor();
         if ($result) {
             return $result;
         } else {
@@ -72,6 +75,7 @@ class UserManager {
         $query->bindValue( 'email', $user->getEmail());
         $query->bindValue( 'id', $user->getId(), \PDO::PARAM_INT);
         $update = $query->execute();
+        $query->closeCursor();
         if ($update) {
             return 1;
         } else {
@@ -84,6 +88,7 @@ class UserManager {
         $delete_query = 'DELETE FROM users WHERE id = ' . $id;
         $query = $this->db->prepare($delete_query);
         $result = $query->execute();
+        $query->closeCursor();
         if ($result) {
             return 1;
         } else {
@@ -96,6 +101,7 @@ class UserManager {
         $query = $this->db->prepare($sql);
         $query->execute();
         $authors_list = $query->fetchAll();
+        $query->closeCursor();
         $authors = array();
         foreach ($authors_list as $author) {
             $authors[$author['id']] = $author['username'];

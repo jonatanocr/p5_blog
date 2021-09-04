@@ -20,6 +20,7 @@ class CommentManager
         $query->bindValue('verified', $comment->getVerified(), \PDO::PARAM_INT);
         $query->bindValue('content', $comment->getContent());
         $create = $query->execute();
+        $query->closeCursor();
         // todo mettre meme logique partout
         if ($create) {
             return 1;
@@ -35,6 +36,7 @@ class CommentManager
         $query->execute();
         // todo stop use fetch class
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Comment');
+        $query->closeCursor();
         return $result;
     }
 
@@ -45,12 +47,14 @@ class CommentManager
         $query->bindValue(':id', $id, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch();
+        $query->closeCursor();
         if ($result) {
             $sql = 'UPDATE comments SET verified = :verified WHERE id = :id';
             $query = $this->db->prepare($sql);
             $query->bindValue('verified', $verified, \PDO::PARAM_INT);
             $query->bindValue('id', $id, \PDO::PARAM_INT);
             $update = $query->execute();
+            $query->closeCursor();
             if ($update) {
                 return $result['fk_post'].'-'.'1';
             } else {
@@ -67,11 +71,13 @@ class CommentManager
         $query->bindValue(':id', $id, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch();
+        $query->closeCursor();
         if ($result) {
             $sql = 'DELETE FROM comments WHERE id = :id';
             $query = $this->db->prepare($sql);
             $query->bindValue('id', $id, \PDO::PARAM_INT);
             $result_delete = $query->execute();
+            $query->closeCursor();
             if ($result_delete) {
                 return $result['fk_post'].'-'.'1';
             } else {

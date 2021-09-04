@@ -23,6 +23,7 @@ class PostManager
         $query->bindValue( 'content', $post->getContent());
         $query->execute();
         $last_insert = $this->db->lastInsertId();
+        $query->closeCursor();
         if ($last_insert) {
             return 1;
         } else {
@@ -36,6 +37,7 @@ class PostManager
         $query->execute();
         // todo use hydrate function
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Post');
+        $query->closeCursor();
         return $result;
     }
 
@@ -45,6 +47,7 @@ class PostManager
         $query->bindValue('id', $id, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchObject('App\Entity\Post');
+        $query->closeCursor();
         if ($result) {
             return $result;
         } else {
@@ -66,7 +69,9 @@ class PostManager
         $query->bindValue('header', $post->getHeader());
         $query->bindValue('content', $post->getContent());
         $query->bindValue('id', $post->getId(), \PDO::PARAM_INT);
-        if ($query->execute()) {
+        $result = $query->execute();
+        $query->closeCursor();
+        if ($result) {
             return 1;
         } else {
             return -1;
@@ -78,6 +83,7 @@ class PostManager
         $query = $this->db->prepare($sql);
         $query->bindValue('id', $id, \PDO::PARAM_INT);
         $result = $query->execute();
+        $query->closeCursor();
         if ($result) {
             return 1;
         } else {
