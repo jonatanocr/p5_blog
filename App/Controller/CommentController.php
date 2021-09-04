@@ -19,56 +19,69 @@ class CommentController extends Controller
     }
 
     public function delete($id) {
-        if ((int)$id > 0) {
-            $delete = $this->manager->delete($id);
-            if ($delete === -1) {
-                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-            } else {
-                $result = explode('-', $delete);
-                if ($result[1] == 1) {
-                    $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully deleted');
-                } else {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            if ((int)$id > 0) {
+                $delete = $this->manager->delete($id);
+                if ($delete === -1) {
                     $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                } else {
+                    $result = explode('-', $delete);
+                    if ($result[1] == 1) {
+                        $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully deleted');
+                    } else {
+                        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                    }
                 }
+            } else {
+                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
             }
         } else {
-            $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+            $this->forbidden();
         }
     }
 
+    // todo merge validate and invalidate function
     public function validate($id) {
-        if ((int)$id > 0) {
-            $validate = $this->manager->validate(1, $id);
-            if ($validate === -1) {
-                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-            } else {
-                $result = explode('-', $validate);
-                if ($result[1] == 1) {
-                    $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully validated');
-                } else {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            if ((int)$id > 0) {
+                $validate = $this->manager->validate(1, $id);
+                if ($validate === -1) {
                     $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                } else {
+                    $result = explode('-', $validate);
+                    if ($result[1] == 1) {
+                        $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully validated');
+                    } else {
+                        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                    }
                 }
+            } else {
+                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
             }
         } else {
-            $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+            $this->forbidden();
         }
     }
 
     public function invalidate($id) {
-        if ((int)$id > 0) {
-            $validate = $this->manager->validate(0, $id);
-            if ($validate === -1) {
-                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-            } else {
-                $result = explode('-', $validate);
-                if ($result[1] == 1) {
-                    $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully invalidated');
-                } else {
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            if ((int)$id > 0) {
+                $validate = $this->manager->validate(0, $id);
+                if ($validate === -1) {
                     $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                } else {
+                    $result = explode('-', $validate);
+                    if ($result[1] == 1) {
+                        $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully invalidated');
+                    } else {
+                        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+                    }
                 }
+            } else {
+                $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
             }
         } else {
-            $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
+            $this->forbidden();
         }
     }
 

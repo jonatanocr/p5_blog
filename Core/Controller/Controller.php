@@ -33,4 +33,10 @@ class Controller
         die();
     }
 
+    protected function forbidden(){
+        $url = 'Location: index.php';
+        header($url);
+        die();
+    }
+
 }

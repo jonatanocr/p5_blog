@@ -42,7 +42,7 @@ ob_start();
     Password did not match <br> (˘︹˘)
 </div>
 <div class="container mt-5 mb-5 text-center">
-    <a href="#" id="delete_user_link" onclick="alertMsg(<?php echo isset($_SESSION['id'])?$_SESSION['id']:''; ?>, 'user')">Delete my account</a>
+    <a href="#" id="delete_user_link" onclick="alertMsg(<?php echo isset($_SESSION['id'])?$_SESSION['id']:''; //todo remove $_SESSION from view ?>, 'user')">Delete my account</a>
 </div>
 
 <?php

@@ -41,9 +41,9 @@ ob_start();
         <?php foreach ($post_data['comments'] as $comment) { ?>
             <p class="comments_line">
                 <a href="index.php?action=comment-<?php echo ($comment->getVerified() === 1?'invalidate':'validate') . '-' . $comment->getId() ?>" class="post_link_a post_link_edit">&#9745;</a>
-                <a href="#" onclick="alertMsg(<?php echo $comment->getId() ?>, \'comment\')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>';
+                <a href="#" onclick="alertMsg(<?php echo $comment->getId() ?>, 'comment')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>
                 <span class="comment_infos"><?php echo '[' . $comment->getCreatedDate() . ']' . $comment->getAuthor()->getUsername() ?>:</span>
-                <?php $comment->getContent(); ?>
+                <?php echo $comment->getContent(); ?>
             </p>
     <?php } ?>
 </div>

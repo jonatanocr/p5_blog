@@ -23,7 +23,7 @@ class PostController extends Controller
             $authors = $user_manager->author_list();
             require(ROOT . '/App/View/frontend/blog/create.php');
         } else {
-            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+            $this->forbidden();
         }
     }
 
@@ -45,7 +45,7 @@ class PostController extends Controller
                 }
             }
         } else {
-            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+            $this->forbidden();
         }
     }
 
@@ -78,14 +78,13 @@ class PostController extends Controller
     }
 
     public function edit($id) {
-        //todo mettre verification/access dans router ?
         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
             $post_data = $this->get_post_data($id);
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
             require(ROOT . '/App/View/frontend/blog/edit.php');
         } else {
-            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+            $this->forbidden();
         }
     }
 
@@ -110,30 +109,34 @@ class PostController extends Controller
                 }
             }
         } else {
-            $this->redirect('', 'warning', 'You don\'t have right to access this page');
+            $this->forbidden();
         }
     }
 
     public function delete($id) {
-        if ((int)$id > 0) {
-            $delete = $this->manager->delete($id);
-            if ($delete === 1) {
-                $_SESSION['success_msg'] = 'Post successfully deleted';
-                $this->index();
+        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+            if ((int)$id > 0) {
+                $delete = $this->manager->delete($id);
+                if ($delete === 1) {
+                    $_SESSION['success_msg'] = 'Post successfully deleted';
+                    $this->index();
+                } else {
+                    $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
+                    $this->index();
+                }
             } else {
                 $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
                 $this->index();
             }
         } else {
-            $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
-            $this->index();
+            $this->forbidden();
         }
     }
 
     //todo move this function in comment controller
     public function add_comment($id) {
-        if (!isset($_SESSION['id']) || $_SESSION['id'] < 1) {
-            $this->redirect('post-display-'.$id, 'error', 'You must be logged in to post a comment');
+        if (!isset($_SESSION['id'])) {
+            $this->forbidden();
         }
         if (!empty($_POST['content_input'])) {
             $verified = $_SESSION['user_type']=='admin'?1:0;

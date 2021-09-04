@@ -1,6 +1,8 @@
 <?php
 $page_title = '';
 ob_start();
+
+if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
 ?>
 <div class="container mt-4">
     <p class="blog_line_add">
@@ -8,6 +10,7 @@ ob_start();
     </p>
 </div>
 <?php
+}
 if (isset($posts)) {
     foreach ($posts as $post) { ?>
         <div class="container mt-4 blog_post_div">

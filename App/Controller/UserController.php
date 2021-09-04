@@ -92,11 +92,16 @@ class UserController extends Controller
     }
 
     public function edit() {
-        // todo verif si user connected pour laisser access
+        if (!isset($_SESSION['id'])) {
+            $this->forbidden();
+        }
         require(ROOT . '/App/View/frontend/user/edit.php');
     }
 
     public function confirm_edit() {
+        if (!isset($_SESSION['id'])) {
+            $this->forbidden();
+        }
         if (empty($_POST["username_input"]) OR empty($_POST["email_input"])) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');
         } else {
@@ -145,15 +150,15 @@ class UserController extends Controller
     }
 
     public function delete($id) {
-        if ($_SESSION['id'] === $id) {
+        if (!isset($_SESSION['id']) || $_SESSION['id'] !== $id) {
+            $this->forbidden();
+        } else {
             $delete = $this->manager->delete($id);
             if ($delete === 1) {
                 $this->logout();
             } else {
                 $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
             }
-        } else {
-            $this->redirect('user-edit', 'error', 'An error has occured');
         }
     }
 
