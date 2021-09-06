@@ -30,7 +30,7 @@
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">CV</a>
+                            <a target="_blank" rel="noopener noreferrer" class="nav-link" href="media/CV_Jonatan_Buzek.pdf">Resume</a>
                         </li>
                         <?php if (isset($_SESSION['username'])) { ?>
                             <li class="nav-item">

@@ -8,9 +8,7 @@ CREATE TABLE IF NOT EXISTS  `users`
     email VARCHAR(255) NOT NULL,
     user_type VARCHAR(20) NOT NULL DEFAULT 'visitor'
 );
-/*todo
-  fk_user mettre foreign key pareil dans les autres tables
-  */
+
 CREATE TABLE IF NOT EXISTS  `posts`
 (
     id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
