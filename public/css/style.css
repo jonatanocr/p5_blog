@@ -21,7 +21,7 @@ body {
 }
 
 .login_link {
-    margin-left: 2em;
+    /*margin-left: 2em;*/
 }
 
 .login_link, #register_page_link {
@@ -45,7 +45,7 @@ body {
 
 footer {
     position: fixed;
-    height: 5em;
+    height: 7em;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -53,11 +53,22 @@ footer {
 }
 
 #footer_bloc {
+    padding: 1em 0 1em 0;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: #e7eff9;
+    background-image: linear-gradient(315deg, #e7eff9 0%, #cfd6e6 74%);
+}
+
+#social_links_bloc {
+    display: flex;
+}
+
+.icon_img {
+    margin: 0.5em 0.5em 0.5em 0.5em !important;
 }
 
 .blog_post_title:hover {

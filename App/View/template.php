@@ -66,15 +66,33 @@
     </div>
     <footer class="text-center text-lg-start">
         <div class="text-center" id="footer_bloc">
+            <div id="social_links_bloc">
+                <div class="icon_img">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jonatanbuzek/" title="linkedin">
+                        <img src="media/icon/in.png">
+                    </a>
+                </div>
+                <div class="icon_img">
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/jonatanocr" title="gitHub">
+                        <img src="media/icon/GitHub-Mark-32px.png">
+                    </a>
+                </div>
+                <div class="icon_img">
+                    <a target="_blank" rel="noopener noreferrer" href="mailto:buzek.jonatan@gmail.com" title="buzek.jonatan@gmail.com">
+                        <img src="media/icon/email.png">
+                    </a>
+                </div>
+            </div>
             <div id="footer_txt">
             © 2021 Copyright: Jonatan Buzek
             <?php if (isset($_SESSION['username'])) { ?>
                 <br>You're logged in as <span style="color: black">
                     <?php echo htmlspecialchars(ucfirst($_SESSION['username'])); ?>
                 </span>
-                <br><a href="index.php?action=user-logout" id="logout_link">Logout</a>
+                <a href="index.php?action=user-logout" id="logout_link"> · Logout</a>
 
             <?php } else { ?>
+                    <br>
                 <a class="login_link" href="index.php?action=user-login">Login</a>
                 <a class="login_link" href="index.php?action=user-register">Register</a>
             <?php }

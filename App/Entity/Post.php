@@ -151,11 +151,6 @@ class Post
     {
         $this->content = $content;
     }
-    // todo remove this
-    public function index()
-    {
-        var_dump('index ok');
-    }
 
     /**
      * @return int

@@ -40,7 +40,9 @@ ob_start();
     <h3 class="mt-3 mb-3">&#10098;Comments&#10099;</h3>
         <?php foreach ($post_data['comments'] as $comment) { ?>
             <p class="comments_line">
-                <a href="index.php?action=comment-<?php echo ($comment->getVerified() === 1?'invalidate':'validate') . '-' . $comment->getId(); ?>" class="post_link_a post_link_edit">&#9745;</a>
+                <a href="index.php?action=comment-<?php echo ($comment->getVerified() === 1?'invalidate':'validate') . '-' . $comment->getId(); ?>" class="post_link_a post_link_edit">
+                    <?php echo ($comment->getVerified() === 1?'&#9745;':'&#9744;') ?>
+                </a>
                 <a href="#" onclick="alertMsg(<?php echo $comment->getId(); ?>, 'comment')" class="post_link_a post_link_delete" style="margin-right: 0.5em;">&#10007;</a>
                 <span class="comment_infos"><?php echo '[' . $comment->getCreatedDate() . ']' . htmlspecialchars($comment->getAuthor()->getUsername()); ?>:</span>
                 <?php echo htmlspecialchars($comment->getContent()); ?>
