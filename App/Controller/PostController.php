@@ -50,6 +50,8 @@ class PostController extends Controller
     }
 
     public function index() {
+        $test = mail('buzek.jonatan@gmail.com', 'matafaka', 'matafaka is back in the town');
+        var_dump($test);
         $posts = $this->manager->fetch_all();
         require(ROOT . '/App/View/frontend/blog/index.php');
     }

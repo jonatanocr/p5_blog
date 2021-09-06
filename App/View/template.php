@@ -27,7 +27,7 @@
                             <a class="nav-link" href="index.php?action=post-index">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
                             <a target="_blank" rel="noopener noreferrer" class="nav-link" href="media/CV_Jonatan_Buzek.pdf">Resume</a>
