@@ -21,7 +21,7 @@ class PostController extends Controller
         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
-            require(ROOT . '/App/View/frontend/blog/create.php');
+            require(ROOT . '/App/View/blog/create.php');
         } else {
             $this->forbidden();
         }
@@ -50,10 +50,8 @@ class PostController extends Controller
     }
 
     public function index() {
-        $test = mail('buzek.jonatan@gmail.com', 'matafaka', 'matafaka is back in the town');
-        var_dump($test);
         $posts = $this->manager->fetch_all();
-        require(ROOT . '/App/View/frontend/blog/index.php');
+        require(ROOT . '/App/View/blog/index.php');
     }
 
     private function get_post_data($id) {
@@ -76,7 +74,7 @@ class PostController extends Controller
 
     public function display($id) {
         $post_data = $this->get_post_data($id);
-        require(ROOT . '/App/View/frontend/blog/post.php');
+        require(ROOT . '/App/View/blog/post.php');
     }
 
     public function edit($id) {
@@ -84,7 +82,7 @@ class PostController extends Controller
             $post_data = $this->get_post_data($id);
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
-            require(ROOT . '/App/View/frontend/blog/edit.php');
+            require(ROOT . '/App/View/blog/edit.php');
         } else {
             $this->forbidden();
         }

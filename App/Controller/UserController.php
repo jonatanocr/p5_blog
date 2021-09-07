@@ -17,7 +17,7 @@ class UserController extends Controller
     }
 
     public function register() {
-        require(ROOT . '/App/View/frontend/user/register.php');
+        require(ROOT . '/App/View/user/register.php');
     }
 
     public function confirm_register() {
@@ -52,7 +52,7 @@ class UserController extends Controller
     }
 
     public function login() {
-        require(ROOT . '/App/View/frontend/user/login.php');
+        require(ROOT . '/App/View/user/login.php');
     }
 
     public function confirm_login() {
@@ -95,7 +95,7 @@ class UserController extends Controller
         if (!isset($_SESSION['id'])) {
             $this->forbidden();
         }
-        require(ROOT . '/App/View/frontend/user/edit.php');
+        require(ROOT . '/App/View/user/edit.php');
     }
 
     public function confirm_edit() {

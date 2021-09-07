@@ -16,7 +16,7 @@ class App
 
     public function run() {
         if ($this->action === 'homepage') {
-            require(ROOT.'/App/View/frontend/homepage.php');
+            require(ROOT . '/App/View/homepage.php');
         } else {
             require ROOT . '/Core/Autoloader.php';
             $autoloader = new Autoloader();

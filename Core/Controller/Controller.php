@@ -28,6 +28,12 @@ class Controller
             if (!empty($_POST["content_input"])) {
                 $_SESSION['form']['content'] = $_POST["content_input"];
             }
+            if (!empty($_POST["name_input"])) {
+                $_SESSION['form']['name'] = $_POST["name_input"];
+            }
+            if (!empty($_POST["message_input"])) {
+                $_SESSION['form']['message'] = $_POST["message_input"];
+            }
         }
         header($url);
         die();
