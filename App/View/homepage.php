@@ -8,9 +8,9 @@ if (isset($_GET['add']) && $_GET['add'] == 1) {
         Votre compte a bien été créé
     </div>
 <?php } ?>
-<div class="row mt-5 mb-5">
+<div class="row mt-5 mb-5" id="bloc_homepage">
     <div class="col" style="text-align: center">
-        <img src="media/me_sh_small.png" id="homepage_picture">
+        <img src="media/me_sh_s.png" id="homepage_picture">
     </div>
     <div class="col">
         <p>Hi, I’m Jonatan, a web developer.</p>

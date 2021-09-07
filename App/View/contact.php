@@ -37,6 +37,24 @@ ob_start();
     </div>
 </form>
 
+<div class="container mt-4" id="contact_social_links_bloc">
+        <div class="icon_img">
+            <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jonatanbuzek/" title="linkedin">
+                <img src="media/icon/in.png">
+            </a>
+        </div>
+        <div class="icon_img">
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/jonatanocr" title="gitHub">
+                <img src="media/icon/GitHub-Mark-32px.png">
+            </a>
+        </div>
+        <div class="icon_img">
+            <a target="_blank" rel="noopener noreferrer" href="mailto:buzek.jonatan@gmail.com" title="buzek.jonatan@gmail.com">
+                <img src="media/icon/email.png">
+            </a>
+        </div>
+</div>
+
 <?php
 $page_body = ob_get_clean();
 require(ROOT . '/App/View/template.php');

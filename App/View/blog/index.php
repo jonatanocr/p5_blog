@@ -13,9 +13,8 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
 }
 if (isset($posts)) {
     foreach ($posts as $post) { ?>
-        <div class="container mt-4 blog_post_div">
+        <div class="row mt-4 blog_post_div">
             <p class="blog_line_title">
-                <?php echo '[' . $post->getUpdatedDate() . ']'; ?>
                 <a class="blog_post_title" href="index.php?action=post-display-<?php echo $post->getId() . '">' . $post->getTitle(); ?></a>
             <?php
                 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') { ?>
@@ -23,7 +22,7 @@ if (isset($posts)) {
                 <a href="#" onclick="alertMsg(<?php echo $post->getId(); ?>, 'post')" class="post_link_a post_link_delete">&#10007;</a></span>
                 <?php } ?>
             </p>
-            <p class="blog_line_description"><?php echo $post->getReadingTime() . 'min · ' . $post->getHeader(); ?></p>
+            <p class="blog_line_description"><?php echo $post->getUpdatedDate() . ' · ' . $post->getReadingTime() . 'min <span class="small_screen_hide">· </span><span class="small_screen_show"><br></span>' . $post->getHeader(); ?></p>
         </div>
     <?php }
 }

@@ -67,6 +67,10 @@ footer {
     display: flex;
 }
 
+#contact_social_links_bloc {
+    display: none;
+}
+
 .icon_img {
     margin: 0.5em 0.5em 0.5em 0.5em !important;
 }
@@ -118,7 +122,6 @@ footer {
 }
 
 .blog_post_title {
-    margin-left: 1em;
     font-size: 1.4em;
     text-decoration: none;
     color: black;
@@ -263,4 +266,8 @@ h1, h3, .comments_separator {
 #register_page_link_p {
     text-align: center;
     margin-top: 4em;
+}
+
+.small_screen_show {
+    display: none;
 }

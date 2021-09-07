@@ -32,7 +32,7 @@ class PostManager
     }
 
     public function fetch_all() {
-        $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header FROM posts';
+        $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header, content FROM posts';
         $query = $this->db->prepare($sql);
         $query->execute();
         // todo use hydrate function
