@@ -8,7 +8,7 @@ ob_start();
         <label for="name_input">Your name</label>
         <input type="text" class="form-control" id="name_input" name="name_input" size="10" required="required"
             <?php if (isset($_SESSION['form']['name'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['form']['name']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['form']['name']) . '"');
             } ?>
         >
     </div>
@@ -16,7 +16,7 @@ ob_start();
         <label for="email_input">Your Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
             <?php if (isset($_SESSION['form']['email'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['form']['email']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['form']['email']) . '"');
             } ?>
         >
     </div>
@@ -24,7 +24,7 @@ ob_start();
         <label for="message_input">Your message</label>
         <textarea name="message_input" class="form-control" id="message_input" rows="3" required="required"
             ><?php if (isset($_SESSION['form']['message'])) {
-                echo htmlspecialchars($_SESSION['form']['message']);
+                print_r(htmlspecialchars($_SESSION['form']['message']));
             }?></textarea>
     </div>
     <div class="form_submit_div mt-4">

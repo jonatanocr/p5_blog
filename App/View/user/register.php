@@ -8,23 +8,23 @@ ob_start();
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
             <?php if (isset($_SESSION['form']['username'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['form']['username']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['form']['username']) . '"');
             } ?>
         >
     </div>
     <div class="form-group mt-2">
         <label for="password_input">Password</label>
-        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8" required="required" onfocusout="passwords_match_check();">
+        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8" required="required" onfocusout="passwordsMatchCheck();">
     </div>
     <div class="form-group mt-2">
         <label for="password2_input">Repeat password</label>
-        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8" required="required" onfocusout="passwords_match_check();">
+        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8" required="required" onfocusout="passwordsMatchCheck();">
     </div>
     <div class="form-group mt-2">
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
             <?php if (isset($_SESSION['form']['email'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['form']['email']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['form']['email']) . '"');
             } ?>
         >
     </div>

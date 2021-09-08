@@ -9,23 +9,23 @@ ob_start();
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
             <?php if (isset($_SESSION['username'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['username']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['username']) . '"');
             } ?>
         >
     </div>
     <div class="form-group mt-2">
         <label for="password_input">Password</label>
-        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8" onfocusout="passwords_match_check();">
+        <input type="password" class="form-control" id="password_input" name="password_input" minlength="8" onfocusout="passwordsMatchCheck();">
     </div>
     <div class="form-group mt-2">
         <label for="password2_input">Repeat password</label>
-        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8" onfocusout="passwords_match_check();">
+        <input type="password" class="form-control" id="password2_input" name="password2_input" minlength="8" onfocusout="passwordsMatchCheck();">
     </div>
     <div class="form-group mt-2">
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
             <?php if (isset($_SESSION['email'])) {
-                echo ' value="' . htmlspecialchars($_SESSION['email']) . '"';
+                print_r(' value="' . htmlspecialchars($_SESSION['email']) . '"');
             } ?>
         >
     </div>
@@ -42,7 +42,7 @@ ob_start();
     Password did not match <br> (˘︹˘)
 </div>
 <div class="container mt-5 mb-5 text-center">
-    <a href="#" id="delete_user_link" onclick="alertMsg(<?php echo isset($_SESSION['id'])?$_SESSION['id']:''; //todo remove $_SESSION from view ?>, 'user')">Delete my account</a>
+    <a href="#" id="delete_user_link" onclick="alertMsg(<?php print_r(isset($_SESSION['id'])?$_SESSION['id']:''); //todo remove $_SESSION from view ?>, 'user')">Delete my account</a>
 </div>
 
 <?php

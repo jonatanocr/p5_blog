@@ -6,7 +6,7 @@ ob_start();
         <p class="post_line_header mt-4 mb-4">
             <input class="post_input" type="text" id="post_input_title" name="title_input" placeholder="Title" required="required"
                 <?php if (isset($_SESSION['form']['title'])) {
-                    echo ' value="' . $_SESSION['form']['title'] . '"';
+                    print_r(' value="' . $_SESSION['form']['title'] . '"');
                 } ?>
             >
         </p>
@@ -17,9 +17,9 @@ ob_start();
                 <?php
                 foreach ($authors as $id => $username) {
                     if ($id == $_SESSION['id']) { ?>
-                        <option value="<?php echo $id; ?>" selected="selected"><?php echo $username; ?></option>
+                        <option value="<?php print_r($id); ?>" selected="selected"><?php print_r($username); ?></option>
                     <?php } else { ?>
-                        <option value="<?php echo $id; ?>"><?php echo $username; ?></option>
+                        <option value="<?php print_r($id); ?>"><?php print_r($username); ?></option>
                     <?php }
                 }
                 ?>
@@ -28,14 +28,14 @@ ob_start();
         <p class="post_line_header mt-4">
             <input class="post_input" type="text" id="post_input_header" name="header_input" placeholder="Header" required="required"
                 <?php if (isset($_SESSION['form']['header'])) {
-                    echo ' value="' . $_SESSION['form']['header'] . '"';
+                    print_r(' value="' . $_SESSION['form']['header'] . '"');
                 } ?>
             >
         </p>
         <p class="post_line_content mt-4">
             <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required">
                 <?php if (isset($_SESSION['form']['content'])) {
-                    echo $_SESSION['form']['content'];
+                    print_r($_SESSION['form']['content']);
                 } ?>
             </textarea>
         </p>
