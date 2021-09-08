@@ -35,7 +35,6 @@ class PostManager
         $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header, content FROM posts';
         $query = $this->db->prepare($sql);
         $query->execute();
-        // todo use hydrate function
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Post');
         $query->closeCursor();
         return $result;

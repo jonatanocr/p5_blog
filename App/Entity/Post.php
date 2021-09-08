@@ -9,7 +9,6 @@ class Post
      */
     protected $id;
 
-    // todo change type for date https://www.php.net/manual/en/language.types.declarations.php
     /**
      * @var string
      */
@@ -158,8 +157,7 @@ class Post
     public function getReadingTime(): int
     {
         //Average reading speed for an adult is 200words/min
-        $readingTime = str_word_count($this->content)>200?(str_word_count($this->content)/200):1;
-        return $readingTime;
+        return str_word_count($this->content)>200?(str_word_count($this->content)/200):1;
     }
 
 }

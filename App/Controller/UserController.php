@@ -68,13 +68,14 @@ class UserController extends Controller
                 $user = $this->manager->fetch($user);
                 if (password_verify($_POST['password_input'], $user->getPassword())) {
                     session_start();
+                    session_regenerate_id();
+                    //todo revoir la logic au niveau de la securite
                     $_SESSION['id'] = $user->getId();
                     $_SESSION['username'] = $user->getUsername();
                     $_SESSION['user_type'] = $user->getUserType();
                     $_SESSION['email'] = $user->getEmail();
                     $remember_me = 0;
                     if ($remember_me == 1) {
-                        // todo upgrade remember me logic and security
                         setcookie('username', $result['username'], time() + 365 * 24 * 3600, null, null, false, true);
                         setcookie('password', $result['password'], time() + 365 * 24 * 3600, null, null, false, true);
                     }

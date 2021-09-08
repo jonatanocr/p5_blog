@@ -9,7 +9,6 @@ class Comment
      */
     protected $id;
 
-    // todo change type for date https://www.php.net/manual/en/language.types.declarations.php
     /**
      * @var string
      */

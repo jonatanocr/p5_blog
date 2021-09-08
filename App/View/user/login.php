@@ -17,7 +17,6 @@ ob_start();
     </div>
     <div class="form-check mt-2">
         <input type="checkbox" class="form-check-input" id="remember_me_input" name="remember_me_input" value="1">
-        <!-- todo remember me feature -->
         <label class="form-check-label" for="remember_me_input">Remember me</label>
     </div>
     <div class="form_submit_div mt-4">

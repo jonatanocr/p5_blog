@@ -49,7 +49,6 @@ class UserManager {
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $query->bindValue(':username', $user->getUsername());
         $query->execute();
-        //todo stop use fetchObject and use hydrate function
         $result = $query->fetchObject('App\Entity\User');
         $query->closeCursor();
         if ($result) {
@@ -84,7 +83,6 @@ class UserManager {
     }
 
     public function delete($id) {
-        //todo delete user comm/posts
         $delete_query = 'DELETE FROM users WHERE id = ' . $id;
         $query = $this->db->prepare($delete_query);
         $result = $query->execute();

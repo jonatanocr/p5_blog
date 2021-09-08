@@ -1,13 +1,7 @@
 <?php
 $page_title = '';
 ob_start();
-if (isset($_GET['add']) && $_GET['add'] == 1) {
-    // todo message alert avec session comme ailleurs
-    ?>
-    <div class="alert alert-success" role="alert">
-        Votre compte a bien été créé
-    </div>
-<?php } ?>
+?>
 <div class="row mt-5 mb-5" id="bloc_homepage">
     <div class="col" style="text-align: center">
         <img src="media/me_sh_s.png" id="homepage_picture">

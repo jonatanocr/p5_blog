@@ -21,7 +21,6 @@ class CommentManager
         $query->bindValue('content', $comment->getContent());
         $create = $query->execute();
         $query->closeCursor();
-        // todo mettre meme logique partout
         if ($create) {
             return 1;
         }
@@ -34,20 +33,13 @@ class CommentManager
         $query = $this->db->prepare($sql);
         $query->bindValue('post', $post, \PDO::PARAM_INT);
         $query->execute();
-        // todo stop use fetch class
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Comment');
         $query->closeCursor();
         return $result;
     }
 
     public function validate($verified, $id) {
-        // todo mettre ca dans une function et use pour validate && delete
-        $sql = 'SELECT fk_post FROM comments WHERE id = :id;';
-        $query = $this->db->prepare($sql);
-        $query->bindValue(':id', $id, \PDO::PARAM_INT);
-        $query->execute();
-        $result = $query->fetch();
-        $query->closeCursor();
+        $result = $this->check_if_exists($id);
         if ($result) {
             $sql = 'UPDATE comments SET verified = :verified WHERE id = :id';
             $query = $this->db->prepare($sql);
@@ -66,12 +58,7 @@ class CommentManager
     }
 
     public function delete($id) {
-        $sql = 'SELECT fk_post FROM comments WHERE id = :id;';
-        $query = $this->db->prepare($sql);
-        $query->bindValue(':id', $id, \PDO::PARAM_INT);
-        $query->execute();
-        $result = $query->fetch();
-        $query->closeCursor();
+        $result = $this->check_if_exists($id);
         if ($result) {
             $sql = 'DELETE FROM comments WHERE id = :id';
             $query = $this->db->prepare($sql);
@@ -87,4 +74,15 @@ class CommentManager
             return -1;
         }
     }
+
+    private function check_if_exists($id) {
+        $sql = 'SELECT fk_post FROM comments WHERE id = :id;';
+        $query = $this->db->prepare($sql);
+        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetch();
+        $query->closeCursor();
+        return $result;
+    }
+
 }

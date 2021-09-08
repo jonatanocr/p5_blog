@@ -20,9 +20,7 @@ class ContactController extends Controller
         if (empty($_POST["name_input"]) OR empty($_POST["email_input"]) OR empty($_POST["message_input"])) {
             $this->redirect('contact-form', 'error', 'All fields must be filled');
         } else {
-            //todo mettre ca dans un fichier de config
-            define('GMailUSER', 'email@gmail.com'); // utilisateur Gmail
-            define('GMailPWD', 'password'); // Mot de passe Gmail
+            $configs = include(ROOT . '/Core/config/config.php');
             $mail = new PHPMailer();
             $mail->IsSMTP();
             $mail->Mailer = 'smtp';
@@ -30,8 +28,8 @@ class ContactController extends Controller
             $mail->SMTPSecure = 'ssl';
             $mail->Port       = 465;
             $mail->Host       = 'smtp.gmail.com';
-            $mail->Username   = GMailUSER;
-            $mail->Password   = GMailPWD;
+            $mail->Username   = $configs['email_username'];
+            $mail->Password   = $configs['email_password'];
             $mail->AddAddress('buzek.jonatan@gmail.com', 'jo');
             $mail->SetFrom('mailer.ocr@gmail.com', 'mailer.ocr');
             $mail->Subject = 'Contact from ' . $_POST["name_input"] . ' <' . $_POST["email_input"] . '>';

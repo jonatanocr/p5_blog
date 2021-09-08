@@ -133,29 +133,4 @@ class PostController extends Controller
         }
     }
 
-    //todo move this function in comment controller
-    public function add_comment($id) {
-        if (!isset($_SESSION['id'])) {
-            $this->forbidden();
-        }
-        if (!empty($_POST['content_input'])) {
-            $verified = $_SESSION['user_type']=='admin'?1:0;
-            $comment = new Comment();
-            $comment->setFkAuthor($_SESSION['id']);
-            $comment->setFkPost($id);
-            $comment->setContent($_POST['content_input']);
-            $comment->setVerified($verified);
-            $comment_manager = new Model\CommentManager($this->db);
-            $create = $comment_manager->create($comment);
-            if ($create === 1) {
-                $msg = $verified==1?'Comment added':'Comment added<br>Waiting for Approval';
-                $this->redirect('post-display-'.$id, 'success', $msg);
-            } else {
-                $this->redirect('post-display-'.$id, 'error', 'An error has<br>occurred please try again');
-            }
-        } else {
-            $this->redirect('post-display-'.$id, 'error', 'Comment field is empty');
-        }
-    }
-
 }
