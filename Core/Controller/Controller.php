@@ -13,26 +13,26 @@ class Controller
         }
         if (!empty($msg_type) AND !empty($msg)) {
             $_SESSION[$msg_type . '_msg'] = $msg;
-            if (!empty($_POST['username_input'])) {
-                $_SESSION['form']['username'] = $_POST['username_input'];
+            if (!empty(filter_input(INPUT_POST, 'username_input'))) {
+                $_SESSION['form']['username'] = filter_input(INPUT_POST, 'username_input');
             }
-            if (!empty($_POST["email_input"])) {
-                $_SESSION['form']['email'] = $_POST["email_input"];
+            if (!empty(filter_input(INPUT_POST, 'email_input'))) {
+                $_SESSION['form']['email'] = filter_input(INPUT_POST, 'email_input');
             }
-            if (!empty($_POST['title_input'])) {
-                $_SESSION['form']['title'] = $_POST['title_input'];
+            if (!empty(filter_input(INPUT_POST, 'title_input'))) {
+                $_SESSION['form']['title'] = filter_input(INPUT_POST, 'title_input');
             }
-            if (!empty($_POST["header_input"])) {
-                $_SESSION['form']['header'] = $_POST["header_input"];
+            if (!empty(filter_input(INPUT_POST, 'header_input'))) {
+                $_SESSION['form']['header'] = filter_input(INPUT_POST, 'header_input');
             }
-            if (!empty($_POST["content_input"])) {
-                $_SESSION['form']['content'] = $_POST["content_input"];
+            if (!empty(filter_input(INPUT_POST, 'content_input'))) {
+                $_SESSION['form']['content'] = filter_input(INPUT_POST, 'content_input');
             }
-            if (!empty($_POST["name_input"])) {
-                $_SESSION['form']['name'] = $_POST["name_input"];
+            if (!empty(filter_input(INPUT_POST, 'name_input'))) {
+                $_SESSION['form']['name'] = filter_input(INPUT_POST, 'name_input');
             }
-            if (!empty($_POST["message_input"])) {
-                $_SESSION['form']['message'] = $_POST["message_input"];
+            if (!empty(filter_input(INPUT_POST, 'message_input'))) {
+                $_SESSION['form']['message'] = filter_input(INPUT_POST, 'message_input');
             }
         }
         header($url);

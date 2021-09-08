@@ -19,7 +19,7 @@ class UserController extends Controller
     public function register() {
         require(ROOT . '/App/View/user/register.php');
     }
-//filter_input(INPUT_POST, '')
+
     public function confirm_register() {
         if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'password_input')) OR empty(filter_input(INPUT_POST, 'password2_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-register', 'error', 'All fields must be filled');

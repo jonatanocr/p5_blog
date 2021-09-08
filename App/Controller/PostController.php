@@ -29,14 +29,14 @@ class PostController extends Controller
 
     public function confirm_create() {
         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
-            if (empty($_POST['title_input']) || empty($_POST['header_input']) || empty($_POST['content_input']) || empty($_POST['author_input'])) {
+            if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-create', 'error', 'All fields must be filled');
             } else {
                 $post = new Post();
-                $post->setTitle($_POST['title_input']);
-                $post->setHeader($_POST['header_input']);
-                $post->setContent($_POST['content_input']);
-                $post->setFkAuthor($_POST['author_input']);
+                $post->setTitle(filter_input(INPUT_POST, 'title_input'));
+                $post->setHeader(filter_input(INPUT_POST, 'header_input'));
+                $post->setContent(filter_input(INPUT_POST, 'content_input'));
+                $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
                 $result = $this->manager->create($post);
                 if ($result === 1) {
                     $this->redirect('post-index', 'success', 'Post created');
@@ -90,15 +90,15 @@ class PostController extends Controller
 
     public function confirm_edit($id) {
         if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
-            if (empty($_POST['title_input']) || empty($_POST['header_input']) || empty($_POST['content_input']) || empty($_POST['author_input'])) {
+            if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-edit-'.$id, 'error', 'All fields must be filled');
             } else {
                 $post = new Post();
                 $post->setId($id);
-                $post->setTitle($_POST['title_input']);
-                $post->setHeader($_POST['header_input']);
-                $post->setContent($_POST['content_input']);
-                $post->setFkAuthor($_POST['author_input']);
+                $post->setTitle(filter_input(INPUT_POST, 'title_input'));
+                $post->setHeader(filter_input(INPUT_POST, 'header_input'));
+                $post->setContent(filter_input(INPUT_POST, 'content_input'));
+                $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
                 $result = $this->manager->update($post);
                 if ($result === 1) {
                     $_SESSION['success_msg'] = 'Post updated';

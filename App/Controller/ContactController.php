@@ -17,7 +17,7 @@ class ContactController extends Controller
     }
 
     public function process() {
-        if (empty($_POST["name_input"]) OR empty($_POST["email_input"]) OR empty($_POST["message_input"])) {
+        if (empty(filter_input(INPUT_POST, 'name_input')) OR empty(filter_input(INPUT_POST, 'email_input')) OR empty(filter_input(INPUT_POST, 'message_input'))) {
             $this->redirect('contact-form', 'error', 'All fields must be filled');
         } else {
             $configs = include(ROOT . '/Core/config/config.php');
@@ -32,8 +32,8 @@ class ContactController extends Controller
             $mail->Password   = $configs['email_password'];
             $mail->AddAddress('buzek.jonatan@gmail.com', 'jo');
             $mail->SetFrom('mailer.ocr@gmail.com', 'mailer.ocr');
-            $mail->Subject = 'Contact from ' . $_POST["name_input"] . ' <' . $_POST["email_input"] . '>';
-            $content = $_POST["message_input"];
+            $mail->Subject = 'Contact from ' . filter_input(INPUT_POST, 'name_input') . ' <' . filter_input(INPUT_POST, 'email_input') . '>';
+            $content = filter_input(INPUT_POST, 'message_input');
             $mail->MsgHTML($content);
             if(!$mail->Send()) {
                 $this->redirect('contact-form', 'error', 'An error has occured<br>Please try again');
