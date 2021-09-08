@@ -19,22 +19,22 @@ class UserController extends Controller
     public function register() {
         require(ROOT . '/App/View/user/register.php');
     }
-
+//filter_input(INPUT_POST, '')
     public function confirm_register() {
-        if (empty($_POST["username_input"]) OR empty($_POST["password_input"]) OR empty($_POST["password2_input"]) OR empty($_POST["email_input"])) {
+        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'password_input')) OR empty(filter_input(INPUT_POST, 'password2_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-register', 'error', 'All fields must be filled');
-        } elseif ($_POST["password_input"] !== $_POST["password2_input"]) {
+        } elseif (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
             $this->redirect('user-register', 'error', 'Passwords mismatch');
-        } elseif (strlen($_POST["password_input"]) < 8) {
+        } elseif (strlen(filter_input(INPUT_POST, 'password_input')) < 8) {
             $this->redirect('user-register', 'error', 'The password must have at least 8 characters');
-        } elseif (!filter_var($_POST['email_input'], FILTER_VALIDATE_EMAIL)) {
+        } elseif (!filter_var(filter_input(INPUT_POST, 'email_input'), FILTER_VALIDATE_EMAIL)) {
             $this->redirect('user-register', 'error', 'The email address is not valid');
         } else {
-            $hashed_password = password_hash($_POST["password_input"], PASSWORD_DEFAULT);
+            $hashed_password = password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT);
             $new_user = new User();
-            $new_user->setUsername($_POST["username_input"]);
+            $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
             $new_user->setPassword($hashed_password);
-            $new_user->setEmail($_POST["email_input"]);
+            $new_user->setEmail(filter_input(INPUT_POST, 'email_input'));
             $verify_exists = $this->manager->check_user_exists($new_user);
             if ($verify_exists == 0) {
                 $add_user = $this->manager->create($new_user);
@@ -56,17 +56,17 @@ class UserController extends Controller
     }
 
     public function confirm_login() {
-        if (empty($_POST['username_input']) OR empty($_POST['password_input'])) {
+        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'password_input'))) {
             $this->redirect('user-login', 'error', 'All fields must be filled');
         } else {
             $user = new User();
-            $user->setUsername($_POST['username_input']);
+            $user->setUsername(filter_input(INPUT_POST, 'username_input'));
             $verify_exists = $this->manager->check_user_exists($user);
             if ($verify_exists != 1) {
                 $this->redirect('user-login', 'warning', 'Username or password is incorrect');
             } else {
                 $user = $this->manager->fetch($user);
-                if (password_verify($_POST['password_input'], $user->getPassword())) {
+                if (password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
                     session_start();
                     session_regenerate_id();
                     //todo revoir la logic au niveau de la securite
@@ -103,17 +103,17 @@ class UserController extends Controller
         if (!isset($_SESSION['id'])) {
             $this->forbidden();
         }
-        if (empty($_POST["username_input"]) OR empty($_POST["email_input"])) {
+        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');
         } else {
             $verify_exists = 0;
-            if ($_POST['username_input'] != $_SESSION['username'] || $_POST['email_input'] != $_SESSION['email']) {
+            if (filter_input(INPUT_POST, 'username_input') != $_SESSION['username'] || filter_input(INPUT_POST, 'email_input') != $_SESSION['email']) {
                 $check_user = new User();
-                if ($_POST['username_input'] != $_SESSION['username']) {
-                    $check_user->setUsername($_POST['username_input']);
+                if (filter_input(INPUT_POST, 'username_input') != $_SESSION['username']) {
+                    $check_user->setUsername(filter_input(INPUT_POST, 'username_input'));
                 }
-                if ($_POST['email_input'] != $_SESSION['email']) {
-                    $check_user->setEmail($_POST['email_input']);
+                if (filter_input(INPUT_POST, 'email_input') != $_SESSION['email']) {
+                    $check_user->setEmail(filter_input(INPUT_POST, 'email_input'));
                 }
                 $verify_exists = $this->manager->check_user_exists($check_user);
             }
@@ -121,16 +121,16 @@ class UserController extends Controller
                 $user = new User();
                 $user->setId($_SESSION['id']);
                 $user = $this->manager->fetch($user);
-                $user->setUsername($_POST['username_input']);
-                $user->setEmail($_POST['email_input']);
+                $user->setUsername(filter_input(INPUT_POST, 'username_input'));
+                $user->setEmail(filter_input(INPUT_POST, 'email_input'));
                 $update_psw = 0;
-                if (!empty($_POST['password_input'])) {
-                    if ($_POST["password_input"] !== $_POST["password2_input"]) {
+                if (!empty(filter_input(INPUT_POST, 'password_input'))) {
+                    if (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
                         $this->redirect('user-edit', 'error', 'Passwords mismatch');
-                    } elseif (strlen($_POST["password_input"]) < 8) {
+                    } elseif (strlen(filter_input(INPUT_POST, 'password_input')) < 8) {
                         $this->redirect('user-edit', 'error', 'The password must have at least 8 characters');
                     } else {
-                        $user->setPassword(password_hash($_POST['password_input'], PASSWORD_DEFAULT));
+                        $user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
                         $update_psw = 1;
                     }
                 }

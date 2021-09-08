@@ -2,16 +2,20 @@
 
 namespace App;
 
+require ROOT . '/Core/Security/Session.php';
 use Autoloader;
+use Core\Security\Session;
 
 class App
 {
     protected $action;
     protected $db;
+    protected $session;
 
     public function __construct($action) {
         $this->action = $action;
         $this->db = new \PDO('mysql:host=localhost;dbname=blog_jonatan;charset=utf8', 'root', '', array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+        $this->session = new Session();
     }
 
     public function run() {
