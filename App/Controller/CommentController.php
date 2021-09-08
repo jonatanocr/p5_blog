@@ -23,12 +23,12 @@ class CommentController extends Controller
         if (!isset($_SESSION['id'])) {
             $this->forbidden();
         }
-        if (!empty($_POST['content_input'])) {
+        if (!empty(filter_input(INPUT_POST, 'content_input'))) {
             $verified = $_SESSION['user_type']=='admin'?1:0;
             $comment = new Comment();
             $comment->setFkAuthor($_SESSION['id']);
             $comment->setFkPost($id);
-            $comment->setContent($_POST['content_input']);
+            $comment->setContent(filter_input(INPUT_POST, 'content_input'));
             $comment->setVerified($verified);
             //$comment_manager = new Model\CommentManager($this->db);
             $create = $this->manager->create($comment);
