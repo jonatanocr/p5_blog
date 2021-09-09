@@ -48,7 +48,7 @@ class Post
     }
 
     /**
-     * @param int $id
+     * @param int $postId
      */
     public function setId(int $postId): void
     {

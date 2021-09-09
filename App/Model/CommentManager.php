@@ -38,13 +38,13 @@ class CommentManager
         return $result;
     }
 
-    public function validate($verified, $id) {
-        $result = $this->check_if_exists($id);
+    public function validate($verified, $commentId) {
+        $result = $this->check_if_exists($commentId);
         if ($result) {
             $sql = 'UPDATE comments SET verified = :verified WHERE id = :id';
             $query = $this->pdo->prepare($sql);
             $query->bindValue('verified', $verified, \PDO::PARAM_INT);
-            $query->bindValue('id', $id, \PDO::PARAM_INT);
+            $query->bindValue('id', $commentId, \PDO::PARAM_INT);
             $update = $query->execute();
             $query->closeCursor();
             if ($update) {
@@ -57,12 +57,12 @@ class CommentManager
         }
     }
 
-    public function delete($id) {
-        $result = $this->check_if_exists($id);
+    public function delete($commentId) {
+        $result = $this->check_if_exists($commentId);
         if ($result) {
             $sql = 'DELETE FROM comments WHERE id = :id';
             $query = $this->pdo->prepare($sql);
-            $query->bindValue('id', $id, \PDO::PARAM_INT);
+            $query->bindValue('id', $commentId, \PDO::PARAM_INT);
             $result_delete = $query->execute();
             $query->closeCursor();
             if ($result_delete) {
@@ -75,10 +75,10 @@ class CommentManager
         }
     }
 
-    private function check_if_exists($id) {
+    private function check_if_exists($commentId) {
         $sql = 'SELECT fk_post FROM comments WHERE id = :id;';
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(':id', $id, \PDO::PARAM_INT);
+        $query->bindValue(':id', $commentId, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch();
         $query->closeCursor();

@@ -7,7 +7,7 @@ class User
     /**
      * @var int
      */
-    protected $id;
+    protected $userId;
 
     /**
      * @var string
@@ -34,15 +34,15 @@ class User
      */
     public function getId()
     {
-        return $this->id;
+        return $this->userId;
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      */
-    public function setId(int $id)
+    public function setId(int $userId)
     {
-        $this->id = $id;
+        $this->userId = $userId;
     }
 
     /**

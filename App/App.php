@@ -30,8 +30,8 @@ class App
             $controllerName = 'App\Controller\\'.ucfirst($this->action[0]).'Controller';
             $controllerAction = $this->action[1];
             $controller = new $controllerName($this->pdo, $this->session);
-            $id = !empty($this->action[2])?$this->action[2]:null;
-            $controller->$controllerAction($id);
+            $entityId = !empty($this->action[2])?$this->action[2]:null;
+            $controller->$controllerAction($entityId);
         }
     }
 }

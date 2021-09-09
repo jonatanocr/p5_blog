@@ -16,11 +16,11 @@ ob_start();
         <p class="post_line_header">
             <select class="form-select" name="author_input" id="" required="required">
                 <?php
-                foreach ($authors as $id => $username) {
-                    if ($id == $session->getSession('id')) { ?>
-                        <option value="<?php print_r($id); ?>" selected="selected"><?php print_r($username); ?></option>
+                foreach ($authors as $authorId => $username) {
+                    if ($authorId == $session->getSession('id')) { ?>
+                        <option value="<?php print_r($authorId); ?>" selected="selected"><?php print_r($username); ?></option>
                     <?php } else { ?>
-                        <option value="<?php print_r($id); ?>"><?php print_r($username); ?></option>
+                        <option value="<?php print_r($authorId); ?>"><?php print_r($username); ?></option>
                     <?php }
                 }
                 ?>

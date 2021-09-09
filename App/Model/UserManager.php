@@ -82,8 +82,8 @@ class UserManager {
         }
     }
 
-    public function delete($id) {
-        $delete_query = 'DELETE FROM users WHERE id = ' . $id;
+    public function delete($userId) {
+        $delete_query = 'DELETE FROM users WHERE id = ' . $userId;
         $query = $this->pdo->prepare($delete_query);
         $result = $query->execute();
         $query->closeCursor();

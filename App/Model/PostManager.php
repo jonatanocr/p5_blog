@@ -40,10 +40,10 @@ class PostManager
         return $result;
     }
 
-    public function fetch($id) {
+    public function fetch($postId) {
         $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, fk_author fkAuthor, title, header, content FROM posts WHERE id = :id';
         $query = $this->pdo->prepare($sql);
-        $query->bindValue('id', $id, \PDO::PARAM_INT);
+        $query->bindValue('id', $postId, \PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchObject('App\Entity\Post');
         $query->closeCursor();
@@ -77,10 +77,10 @@ class PostManager
         }
     }
 
-    public function delete($id) {
+    public function delete($postId) {
         $sql = 'DELETE FROM posts WHERE id = :id';
         $query = $this->pdo->prepare($sql);
-        $query->bindValue('id', $id, \PDO::PARAM_INT);
+        $query->bindValue('id', $postId, \PDO::PARAM_INT);
         $result = $query->execute();
         $query->closeCursor();
         if ($result) {
