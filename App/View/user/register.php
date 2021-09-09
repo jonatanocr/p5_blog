@@ -8,7 +8,7 @@ ob_start();
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
             <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                print_r(' value="' . htmlspecialchars($session->getSession('form')['username']) . '"');
+                print ' value="' . htmlspecialchars($session->getSession('form')['username']) . '"';
             } ?>
         >
     </div>
@@ -24,7 +24,7 @@ ob_start();
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
             <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                print_r(' value="' . htmlspecialchars($session->getSession('form')['email']) . '"');
+                print ' value="' . htmlspecialchars($session->getSession('form')['email']) . '"';
             } ?>
         >
     </div>

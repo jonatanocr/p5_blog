@@ -32,7 +32,7 @@ class PostManager
     }
 
     public function fetch_all() {
-        $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header, content FROM posts';
+        $sql = 'SELECT id postId, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header, content FROM posts';
         $query = $this->pdo->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(\PDO::FETCH_CLASS, 'App\Entity\Post');
@@ -41,7 +41,7 @@ class PostManager
     }
 
     public function fetch($postId) {
-        $sql = 'SELECT id, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, fk_author fkAuthor, title, header, content FROM posts WHERE id = :id';
+        $sql = 'SELECT id postId, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, fk_author fkAuthor, title, header, content FROM posts WHERE id = :id';
         $query = $this->pdo->prepare($sql);
         $query->bindValue('id', $postId, \PDO::PARAM_INT);
         $query->execute();

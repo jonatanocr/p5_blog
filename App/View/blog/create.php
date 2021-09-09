@@ -7,7 +7,7 @@ ob_start();
             <input class="post_input" type="text" id="post_input_title" name="title_input" placeholder="Title" required="required"
                 <?php
                 if (isset($session) && $session->getSession('form') !== NULL) {
-                    print_r(' value="' . $session->getSession('form')["title"] . '"');
+                    print ' value="' . $session->getSession('form')["title"] . '"';
                 } ?>
             >
         </p>
@@ -18,9 +18,9 @@ ob_start();
                 <?php
                 foreach ($authors as $authorId => $username) {
                     if ($authorId == $session->getSession('id')) { ?>
-                        <option value="<?php print_r($authorId); ?>" selected="selected"><?php print_r($username); ?></option>
+                        <option value="<?php print $authorId; ?>" selected="selected"><?php print $username; ?></option>
                     <?php } else { ?>
-                        <option value="<?php print_r($authorId); ?>"><?php print_r($username); ?></option>
+                        <option value="<?php print $authorId; ?>"><?php print $username; ?></option>
                     <?php }
                 }
                 ?>
@@ -29,14 +29,14 @@ ob_start();
         <p class="post_line_header mt-4">
             <input class="post_input" type="text" id="post_input_header" name="header_input" placeholder="Header" required="required"
                 <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                    print_r(' value="' . $session->getSession('form')['header'] . '"');
+                    print ' value="' . $session->getSession('form')['header'] . '"';
                 } ?>
             >
         </p>
         <p class="post_line_content mt-4">
             <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required">
                 <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                    print_r($session->getSession('form')['content']);
+                    print $session->getSession('form')['content'];
                 } ?>
             </textarea>
         </p>

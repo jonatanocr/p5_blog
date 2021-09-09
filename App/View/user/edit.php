@@ -8,7 +8,7 @@ $page_title = 'Settings';
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
             <?php if (isset($session) && $session->getSession('username') !== NULL) {
-                print_r(' value="' . htmlspecialchars($session->getSession('username')) . '"');
+                print ' value="' . htmlspecialchars($session->getSession('username')) . '"';
             } ?>
         >
     </div>
@@ -24,7 +24,7 @@ $page_title = 'Settings';
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
             <?php if (isset($session) && $session->getSession('email') !== NULL) {
-                print_r(' value="' . htmlspecialchars($session->getSession('email')) . '"');
+                print ' value="' . htmlspecialchars($session->getSession('email')) . '"';
             } ?>
         >
     </div>
@@ -41,7 +41,7 @@ $page_title = 'Settings';
     Password did not match <br> (˘︹˘)
 </div>
 <div class="container mt-5 mb-5 text-center">
-    <a href="#" id="delete_user_link" onclick="alertMsg(<?php print_r((isset($session) && $session->getSession('id') !== NULL)?$session->getSession('id'):''); ?>, 'user')">Delete my account</a>
+    <a href="#" id="delete_user_link" onclick="alertMsg(<?php print (isset($session) && $session->getSession('id') !== NULL)?$session->getSession('id'):''; ?>, 'user')">Delete my account</a>
 </div>
 
 <?php

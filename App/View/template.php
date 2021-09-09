@@ -46,23 +46,23 @@
         <div class="container">
             <?php if (isset($session) && !empty($session->getSession('success_msg'))) {?>
                 <div class="alert alert-success" role="alert">
-                    <?php print_r($session->getSession('success_msg')); ?>
+                    <?php print $session->getSession('success_msg'); ?>
                 </div>
                 <?php $session->delete('success_msg');
             }
             if (isset($session) && !empty($session->getSession('warning_msg'))) {?>
                 <div class="alert alert-warning" role="alert">
-                    <?php print_r($session->getSession('warning_msg')); ?>
+                    <?php print $session->getSession('warning_msg'); ?>
                 </div>
                 <?php $session->delete('warning_msg');
             }
             if (isset($session) && !empty($session->getSession('error_msg'))) { ?>
                 <div class="alert alert-danger" role="alert">
-                    <?php print_r($session->getSession('error_msg')); ?>
+                    <?php print $session->getSession('error_msg'); ?>
                 </div>
                 <?php $session->delete('error_msg');
             }
-            print_r($page_body);
+            print $page_body;
             ?>
         </div>
         <div id="separator" style="font-size: 3em;">&nbsp;</div>
@@ -90,7 +90,7 @@
             © 2021 Copyright: Jonatan Buzek
             <?php if (isset($session) && $session->getSession('username') !== NULL) { ?>
                 <br>You're logged in as <span style="color: black">
-                    <?php print_r(htmlspecialchars(ucfirst($session->getSession('username')))); ?>
+                    <?php print htmlspecialchars(ucfirst($session->getSession('username'))); ?>
                 </span>
                 <a href="index.php?action=user-logout" id="logout_link"> · Logout</a>
 
