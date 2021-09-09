@@ -48,19 +48,19 @@
         <div class="container">
             <?php if (isset($session) && !empty($session->getSession('success_msg'))) {?>
                 <div class="alert alert-success" role="alert">
-                    <?= $session->getSession('success_msg'); ?>
+                    <?= htmlspecialchars($session->getSession('success_msg')); ?>
                 </div>
                 <?php $session->delete('success_msg');
             }
             if (isset($session) && !empty($session->getSession('warning_msg'))) {?>
                 <div class="alert alert-warning" role="alert">
-                    <?= $session->getSession('warning_msg'); ?>
+                    <?= htmlspecialchars($session->getSession('warning_msg')); ?>
                 </div>
                 <?php $session->delete('warning_msg');
             }
             if (isset($session) && !empty($session->getSession('error_msg'))) { ?>
                 <div class="alert alert-danger" role="alert">
-                    <?= $session->getSession('error_msg'); ?>
+                    <?= htmlspecialchars($session->getSession('error_msg')); ?>
                 </div>
                 <?php $session->delete('error_msg');
             }?>
