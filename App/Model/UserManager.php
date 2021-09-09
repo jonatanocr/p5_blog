@@ -44,7 +44,7 @@ class UserManager {
     }
 
     public function fetch(User $user) {
-        $sql = 'SELECT id, username, password, email, user_type FROM users WHERE id = :id OR username = :username';
+        $sql = 'SELECT id userId, username, password, email, user_type FROM users WHERE id = :id OR username = :username';
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $query->bindValue(':username', $user->getUsername());
@@ -83,8 +83,9 @@ class UserManager {
     }
 
     public function delete($userId) {
-        $delete_query = 'DELETE FROM users WHERE id = ' . $userId;
+        $delete_query = 'DELETE FROM users WHERE id = :id';
         $query = $this->pdo->prepare($delete_query);
+        $query->bindValue('id', $userId, \PDO::PARAM_INT);
         $result = $query->execute();
         $query->closeCursor();
         if ($result) {

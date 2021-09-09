@@ -20,7 +20,6 @@ class Controller
             $this->session->setSession($msg_type . '_msg', $msg);
             if (!empty(filter_input(INPUT_POST, 'username_input'))) {
                 $this->session->setSession('form',['username' => filter_input(INPUT_POST, 'username_input')]);
-                //$_SESSION['form']['username'] = filter_input(INPUT_POST, 'username_input');
             } else {
                 $this->session->setSession('form', ['username' => NULL]);
             }

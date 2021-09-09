@@ -74,7 +74,6 @@ class UserController extends Controller
                 if (password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
                     session_start();
                     session_regenerate_id();
-                    //todo revoir la logic au niveau de la securite
                     $this->session->setSession('id', $user->getId());
                     $this->session->setSession('username', $user->getUsername());
                     $this->session->setSession('user_type', $user->getUserType());
@@ -139,9 +138,7 @@ class UserController extends Controller
                 $update = $this->manager->update($user, $update_psw);
                 if ($update === 1) {
                     $this->session->setSession('username', $user->getUsername());
-                    //$_SESSION['username'] = $user->getUsername();
                     $this->session->setSession('email', $user->getEmail());
-                    //$_SESSION['email'] = $user->getEmail();
                     $this->redirect('', 'success', 'Account updated');
                 } else {
                     $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');

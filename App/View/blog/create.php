@@ -18,9 +18,9 @@ ob_start();
                 <?php
                 foreach ($authors as $authorId => $username) {
                     if ($authorId == $session->getSession('id')) { ?>
-                        <option value="<?php print $authorId; ?>" selected="selected"><?php print $username; ?></option>
+                        <option value="<?= $authorId; ?>" selected="selected"><?= $username; ?></option>
                     <?php } else { ?>
-                        <option value="<?php print $authorId; ?>"><?php print $username; ?></option>
+                        <option value="<?= $authorId; ?>"><?= $username; ?></option>
                     <?php }
                 }
                 ?>
