@@ -24,7 +24,8 @@ class PostController extends Controller
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
             $session = $this->session;
-            require(ROOT . '/App/View/blog/create.php');
+            $url = ROOT . '/App/View/blog/create.php';
+            require $url;
         } else {
             $this->forbidden();
         }
@@ -55,7 +56,8 @@ class PostController extends Controller
     public function index() {
         $session = $this->session;
         $posts = $this->manager->fetch_all();
-        require(ROOT . '/App/View/blog/index.php');
+        $url = ROOT . '/App/View/blog/index.php';
+        require $url;
     }
 
     private function get_post_data($id) {
@@ -78,7 +80,8 @@ class PostController extends Controller
 
     public function display($id) {
         $post_data = $this->get_post_data($id);
-        require(ROOT . '/App/View/blog/post.php');
+        $url = ROOT . '/App/View/blog/post.php';
+        require $url;
     }
 
     public function edit($id) {
@@ -86,7 +89,8 @@ class PostController extends Controller
             $post_data = $this->get_post_data($id);
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
-            require(ROOT . '/App/View/blog/edit.php');
+            $url = ROOT . '/App/View/blog/edit.php';
+            require $url;
         } else {
             $this->forbidden();
         }

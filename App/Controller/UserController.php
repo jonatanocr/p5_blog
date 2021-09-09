@@ -20,7 +20,8 @@ class UserController extends Controller
 
     public function register() {
         $session = $this->session;
-        require(ROOT . '/App/View/user/register.php');
+        $url = ROOT . '/App/View/user/register.php';
+        require $url;
     }
 
     public function confirm_register() {
@@ -55,7 +56,8 @@ class UserController extends Controller
     }
 
     public function login() {
-        require(ROOT . '/App/View/user/login.php');
+        $url = ROOT . '/App/View/user/login.php';
+        require $url;
     }
 
     public function confirm_login() {
@@ -95,7 +97,8 @@ class UserController extends Controller
             $this->forbidden();
         }
         $session = $this->session;
-        require(ROOT . '/App/View/user/edit.php');
+        $url = ROOT . '/App/View/user/edit.php';
+        require $url;
     }
 
     public function confirm_edit() {

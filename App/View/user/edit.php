@@ -46,5 +46,6 @@ $page_title = 'Settings';
 
 <?php
 $page_body = ob_get_clean();
-require(ROOT . '/App/View/template.php');
+$url = ROOT . '/App/View/template.php';
+require $url;
 ?>
