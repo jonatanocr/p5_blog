@@ -7,9 +7,7 @@ $page_title = 'Settings';
     <div class="form-group">
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
-            <?php if (isset($session) && $session->getSession('username') !== NULL) {
-                print ' value="' . htmlspecialchars($session->getSession('username')) . '"';
-            } ?>
+                <?= (isset($session) && $session->getSession('username') !== NULL)?' value="' . htmlspecialchars($session->getSession('username')) . '"':''; ?>
         >
     </div>
     <div class="form-group mt-2">
@@ -23,9 +21,7 @@ $page_title = 'Settings';
     <div class="form-group mt-2">
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
-            <?php if (isset($session) && $session->getSession('email') !== NULL) {
-                print ' value="' . htmlspecialchars($session->getSession('email')) . '"';
-            } ?>
+                <?= (isset($session) && $session->getSession('email') !== NULL)?' value="' . htmlspecialchars($session->getSession('email')) . '"':''; ?>
         >
     </div>
     <div class="form_submit_div mt-4">

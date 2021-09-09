@@ -7,9 +7,7 @@ ob_start();
     <div class="form-group">
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" size="10" required="required"
-            <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                print ' value="' . htmlspecialchars($session->getSession('form')['username']) . '"';
-            } ?>
+            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')['username']) . '"':''; ?>
         >
     </div>
     <div class="form-group mt-2">
@@ -23,9 +21,7 @@ ob_start();
     <div class="form-group mt-2">
         <label for="email_input">Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
-            <?php if (isset($session) && $session->getSession('form') !== NULL) {
-                print ' value="' . htmlspecialchars($session->getSession('form')['email']) . '"';
-            } ?>
+            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')['email']) . '"':''; ?>
         >
     </div>
     <div class="form_submit_div mt-4">

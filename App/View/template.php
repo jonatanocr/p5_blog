@@ -63,9 +63,8 @@
                     <?= $session->getSession('error_msg'); ?>
                 </div>
                 <?php $session->delete('error_msg');
-            }
-            print $page_body;
-            ?>
+            }?>
+            <?= $page_body; ?>
         </div>
         <div id="separator" style="font-size: 3em;">&nbsp;</div>
     </div>
