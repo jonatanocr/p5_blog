@@ -9,9 +9,8 @@ $session = new Session();
 
 require ROOT.'/App/App.php';
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-    $action = explode('-', $action);
+if (filter_input(INPUT_GET, 'action')) {
+    $action = explode('-', filter_input(INPUT_GET, 'action'));
 } else {
     $action = 'homepage';
 }

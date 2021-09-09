@@ -77,17 +77,6 @@ class UserController extends Controller
                     $this->session->setSession('username', $user->getUsername());
                     $this->session->setSession('user_type', $user->getUserType());
                     $this->session->setSession('email', $user->getEmail());
-                    /*
-                    $_SESSION['id'] = $user->getId();
-                    $_SESSION['username'] = $user->getUsername();
-                    $_SESSION['user_type'] = $user->getUserType();
-                    $_SESSION['email'] = $user->getEmail();
-*/
-                    $remember_me = 0;
-                    if ($remember_me == 1) {
-                        setcookie('username', $result['username'], time() + 365 * 24 * 3600, null, null, false, true);
-                        setcookie('password', $result['password'], time() + 365 * 24 * 3600, null, null, false, true);
-                    }
                     $this->redirect();
                 } else {
                     $this->redirect('user-login', 'warning', 'Username or password is incorrect');

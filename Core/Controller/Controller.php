@@ -56,13 +56,11 @@ class Controller
             }
         }
         header($url);
-        die();
     }
 
     protected function forbidden(){
         $url = 'Location: index.php';
         header($url);
-        die();
     }
 
 }

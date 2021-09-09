@@ -80,10 +80,6 @@ footer {
   margin: 0.5em 0.5em 0.5em 0.5em !important;
 }
 
-.blog_post_title:hover {
-  color: dodgerblue;
-}
-
 .alert {
   width: 24em;
   text-align: center;
@@ -196,7 +192,7 @@ h3,
 
 /* blog edit one post */
 .post_input {
-  width:100%;
+  width: 100%;
 }
 
 #post_input_title {

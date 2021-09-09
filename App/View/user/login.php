@@ -5,19 +5,11 @@ ob_start();
 <form class="register_form mt-5" action="index.php?action=user-confirm_login" method="post">
     <div class="form-group">
         <label for="username_input">Username</label>
-        <input type="text" class="form-control" id="username_input" name="username_input" required="required"
-            <?php if (isset($_COOKIE["username"])) {
-                print_r(' value="' . htmlspecialchars($_COOKIE["username"]) . '"');
-            } ?>
-        >
+        <input type="text" class="form-control" id="username_input" name="username_input" required="required">
     </div>
     <div class="form-group mt-2">
         <label for="password_input">Password</label>
         <input type="password" class="form-control" id="password_input" name="password_input" required="required">
-    </div>
-    <div class="form-check mt-2">
-        <input type="checkbox" class="form-check-input" id="remember_me_input" name="remember_me_input" value="1">
-        <label class="form-check-label" for="remember_me_input">Remember me</label>
     </div>
     <div class="form_submit_div mt-4">
         <div class="form_submit_sub_div">
