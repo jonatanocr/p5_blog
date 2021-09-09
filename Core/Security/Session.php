@@ -21,4 +21,8 @@ class Session
         $this->session[$key] = $value;
         $_SESSION[$key] = $this->session[$key];
     }
+
+    public function delete($key) {
+        unset($_SESSION[$key]);
+    }
 }

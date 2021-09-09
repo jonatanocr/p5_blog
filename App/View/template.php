@@ -34,7 +34,7 @@
                         <li class="nav-item">
                             <a target="_blank" rel="noopener noreferrer" class="nav-link" href="media/CV_Jonatan_Buzek.pdf">Resume</a>
                         </li>
-                        <?php if (isset($_SESSION['username'])) { ?>
+                        <?php if (isset($session) && $session->getSession('username') !== NULL) { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?action=user-edit">Settings</a>
                             </li>
@@ -44,23 +44,23 @@
             </div>
         </nav>
         <div class="container">
-            <?php if (!empty($_SESSION['success_msg'])) {?>
+            <?php if (isset($session) && !empty($session->getSession('success_msg'))) {?>
                 <div class="alert alert-success" role="alert">
-                    <?php print_r($_SESSION['success_msg']); ?>
+                    <?php print_r($session->getSession('success_msg')); ?>
                 </div>
-                <?php unset($_SESSION['success_msg']);
+                <?php $session->delete('success_msg');
             }
-            if (!empty($_SESSION['warning_msg'])) {?>
+            if (isset($session) && !empty($session->getSession('warning_msg'))) {?>
                 <div class="alert alert-warning" role="alert">
-                    <?php print_r($_SESSION['warning_msg']); ?>
+                    <?php print_r($session->getSession('warning_msg')); ?>
                 </div>
-                <?php unset($_SESSION['warning_msg']);
+                <?php $session->delete('warning_msg');
             }
-            if (!empty($_SESSION['error_msg'])) { ?>
+            if (isset($session) && !empty($session->getSession('error_msg'))) { ?>
                 <div class="alert alert-danger" role="alert">
-                    <?php print_r($_SESSION['error_msg']); ?>
+                    <?php print_r($session->getSession('error_msg')); ?>
                 </div>
-                <?php unset($_SESSION['error_msg']);
+                <?php $session->delete('error_msg');
             }
             print_r($page_body);
             ?>
@@ -88,7 +88,7 @@
             </div>
             <div id="footer_txt">
             © 2021 Copyright: Jonatan Buzek
-            <?php if (isset($_SESSION['username'])) { ?>
+            <?php if (isset($session) && $session->getSession('username') !== NULL) { ?>
                 <br>You're logged in as <span style="color: black">
                     <?php print_r(htmlspecialchars(ucfirst($session->getSession('username')))); ?>
                 </span>
@@ -99,7 +99,9 @@
                 <a class="login_link" href="index.php?action=user-login">Login</a>
                 <a class="login_link" href="index.php?action=user-register">Register</a>
             <?php }
-            unset($_SESSION['form']);
+            if (isset($session)) {
+                $session->delete('form');
+            }
             ?>
             </div>
         </div>

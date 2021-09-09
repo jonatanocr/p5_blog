@@ -1,8 +1,7 @@
 <?php
 $page_title = '';
 ob_start();
-
-if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+if (isset($session) && $session->getSession('user_type') && $session->getSession('user_type') === 'admin') {
 ?>
 <div class="container mt-4">
     <p class="blog_line_add">
@@ -17,7 +16,7 @@ if (isset($posts)) {
             <p class="blog_line_title">
                 <a class="blog_post_title" href="index.php?action=post-display-<?php print_r($post->getId() . '">' . $post->getTitle()); ?></a>
             <?php
-                if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') { ?>
+                if (isset($session) && $session->getSession('user_type') && $session->getSession('user_type') === 'admin') { ?>
                 <span class="post_link"><a href="index.php?action=post-edit-<?php print_r($post->getId()); ?>" class="post_link_a post_link_edit">&#9998;</a>
                 <a href="#" onclick="alertMsg(<?php print_r($post->getId()); ?>, 'post')" class="post_link_a post_link_delete">&#10007;</a></span>
                 <?php } ?>

@@ -20,9 +20,10 @@ class PostController extends Controller
     }
 
     public function create() {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
+            $session = $this->session;
             require(ROOT . '/App/View/blog/create.php');
         } else {
             $this->forbidden();
@@ -30,7 +31,7 @@ class PostController extends Controller
     }
 
     public function confirm_create() {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-create', 'error', 'All fields must be filled');
             } else {
@@ -52,6 +53,7 @@ class PostController extends Controller
     }
 
     public function index() {
+        $session = $this->session;
         $posts = $this->manager->fetch_all();
         require(ROOT . '/App/View/blog/index.php');
     }
@@ -80,7 +82,7 @@ class PostController extends Controller
     }
 
     public function edit($id) {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             $post_data = $this->get_post_data($id);
             $user_manager = new Model\UserManager($this->db);
             $authors = $user_manager->author_list();
@@ -91,7 +93,7 @@ class PostController extends Controller
     }
 
     public function confirm_edit($id) {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
             if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-edit-'.$id, 'error', 'All fields must be filled');
             } else {
@@ -103,10 +105,10 @@ class PostController extends Controller
                 $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
                 $result = $this->manager->update($post);
                 if ($result === 1) {
-                    $_SESSION['success_msg'] = 'Post updated';
+                    $this->session->setSession('success_msg', 'Post updated');
                     header('Location: index.php?action=post-display-' . $id);
                 } else {
-                    $_SESSION['error_msg'] = 'Fail to update post';
+                    $this->session->setSession('error_msg', 'Fail to update post');
                     $this->edit($id);
                 }
             }
@@ -116,18 +118,18 @@ class PostController extends Controller
     }
 
     public function delete($id) {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
             if ((int)$id > 0) {
                 $delete = $this->manager->delete($id);
                 if ($delete === 1) {
-                    $_SESSION['success_msg'] = 'Post successfully deleted';
+                    $this->session->setSession('success_msg', 'Post successfully deleted');
                     $this->index();
                 } else {
-                    $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
+                    $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
                     $this->index();
                 }
             } else {
-                $_SESSION['error_msg'] = 'An error has<br>occurred please try again';
+                $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
                 $this->index();
             }
         } else {

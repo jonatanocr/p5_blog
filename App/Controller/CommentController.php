@@ -22,13 +22,14 @@ class CommentController extends Controller
     }
 
     public function add_comment($id) {
-        if (!isset($_SESSION['id'])) {
+        $session = $this->session;
+        if ($this->session->getSession('id') === NULL) {
             $this->forbidden();
         }
         if (!empty(filter_input(INPUT_POST, 'content_input'))) {
-            $verified = $_SESSION['user_type']=='admin'?1:0;
+            $verified = $this->session->getSession('user_type') == 'admin' ? 1 : 0;
             $comment = new Comment();
-            $comment->setFkAuthor($_SESSION['id']);
+            $comment->setFkAuthor($this->session->getSession('id'));
             $comment->setFkPost($id);
             $comment->setContent(filter_input(INPUT_POST, 'content_input'));
             $comment->setVerified($verified);
@@ -46,7 +47,8 @@ class CommentController extends Controller
     }
 
     public function delete($id) {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        $session = $this->session;
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if ((int)$id > 0) {
                 $delete = $this->manager->delete($id);
                 if ($delete === -1) {
@@ -76,7 +78,8 @@ class CommentController extends Controller
     }
 
     private function change_status($status, $id) {
-        if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admin') {
+        $session = $this->session;
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if ((int)$id > 0) {
                 $validate = $this->manager->validate($status, $id);
                 if ($validate === -1) {

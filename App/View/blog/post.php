@@ -20,12 +20,12 @@ ob_start();
     <form action="index.php?action=comment-add_comment-<?php print_r($post_data['post']->getId()); ?>" method="post">
         <div class="container">
             <p class="post_line_content mt-4">
-            <textarea class="post_input" name="content_input" rows="3" placeholder="<?php print_r(isset($_SESSION['id'])?'Write a comment ..."':'Sign in to comment" disabled'); ?>></textarea>
+            <textarea class="post_input" name="content_input" rows="3" placeholder="<?php print_r((isset($session) && $session->getSession('id') !== NULL)?'Write a comment ..."':'Sign in to comment" disabled'); ?>></textarea>
             </p>
             <div class="form_submit_div mt-4" id="post_form_submit_div">
                 <div class="form_submit_sub_div">
                     <?php
-                    if (isset($_SESSION['id'])) { ?>
+                    if (isset($session) && $session->getSession('id') !== NULL) { ?>
                         <button type="submit" class="submit_form_btn btn btn-primary">Submit</button>
                     <?php } else { ?>
                         <button type="submit" class="submit_form_btn btn btn-primary" disabled>Submit</button>

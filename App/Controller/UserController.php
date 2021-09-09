@@ -19,6 +19,7 @@ class UserController extends Controller
     }
 
     public function register() {
+        $session = $this->session;
         require(ROOT . '/App/View/user/register.php');
     }
 
@@ -101,15 +102,15 @@ class UserController extends Controller
     }
 
     public function edit() {
-        //if (!isset($_SESSION['id'])) {
-        if ($this->session->getSession('id') === null) {
+        if ($this->session->getSession('id') === NULL) {
             $this->forbidden();
         }
+        $session = $this->session;
         require(ROOT . '/App/View/user/edit.php');
     }
 
     public function confirm_edit() {
-        if ($this->session->getSession('id') === null) {
+        if ($this->session->getSession('id') === NULL) {
             $this->forbidden();
         }
         if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {

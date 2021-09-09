@@ -12,7 +12,14 @@ require ROOT.'/vendor/phpmailer/phpmailer/src/SMTP.php';
 
 class ContactController extends Controller
 {
+    protected $session;
+
+    public function __construct($db, $session) {
+        $this->session = $session;
+    }
+
     public function form() {
+        $session = $this->session;
         require(ROOT . '/App/View/contact.php');
     }
 
