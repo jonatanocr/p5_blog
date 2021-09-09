@@ -11,10 +11,12 @@ class PostController extends Controller
 {
     protected $db;
     protected $manager;
+    protected $session;
 
-    public function __construct($db) {
-        $this->manager = new Model\PostManager($db);
+    public function __construct($db, $session) {
         $this->db = $db;
+        $this->session = $session;
+        $this->manager = new Model\PostManager($db);
     }
 
     public function create() {

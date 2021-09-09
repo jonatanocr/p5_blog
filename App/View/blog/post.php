@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-<h1 class="mt-4 mb-4"><?php print_r($post_data['post']->getTitle())); ?></h1>
+<h1 class="mt-4 mb-4"><?php print_r($post_data['post']->getTitle()); ?></h1>
 <div class="row">
     <p class="post_line_header"><?php print_r('[' . $post_data['post']->getUpdatedDate() . '] ' . $post_data['post_author']->getUsername()); ?></p>
     <p class="post_line_header"><?php print_r($post_data['post']->getReadingTime() . 'min · ' . $post_data['post']->getHeader()); ?></p>

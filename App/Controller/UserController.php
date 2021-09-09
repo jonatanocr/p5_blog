@@ -10,9 +10,11 @@ class UserController extends Controller
 {
     protected $db;
     protected $manager;
+    protected $session;
 
-    public function __construct($db) {
+    public function __construct($db, $session) {
         $this->db = $db;
+        $this->session = $session;
         $this->manager = new UserManager($this->db);
     }
 
@@ -70,10 +72,16 @@ class UserController extends Controller
                     session_start();
                     session_regenerate_id();
                     //todo revoir la logic au niveau de la securite
+                    $this->session->setSession('id', $user->getId());
+                    $this->session->setSession('username', $user->getUsername());
+                    $this->session->setSession('user_type', $user->getUserType());
+                    $this->session->setSession('email', $user->getEmail());
+                    /*
                     $_SESSION['id'] = $user->getId();
                     $_SESSION['username'] = $user->getUsername();
                     $_SESSION['user_type'] = $user->getUserType();
                     $_SESSION['email'] = $user->getEmail();
+*/
                     $remember_me = 0;
                     if ($remember_me == 1) {
                         setcookie('username', $result['username'], time() + 365 * 24 * 3600, null, null, false, true);
@@ -93,33 +101,34 @@ class UserController extends Controller
     }
 
     public function edit() {
-        if (!isset($_SESSION['id'])) {
+        //if (!isset($_SESSION['id'])) {
+        if ($this->session->getSession('id') === null) {
             $this->forbidden();
         }
         require(ROOT . '/App/View/user/edit.php');
     }
 
     public function confirm_edit() {
-        if (!isset($_SESSION['id'])) {
+        if ($this->session->getSession('id') === null) {
             $this->forbidden();
         }
         if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');
         } else {
             $verify_exists = 0;
-            if (filter_input(INPUT_POST, 'username_input') != $_SESSION['username'] || filter_input(INPUT_POST, 'email_input') != $_SESSION['email']) {
+            if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username') || filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
                 $check_user = new User();
-                if (filter_input(INPUT_POST, 'username_input') != $_SESSION['username']) {
+                if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username')) {
                     $check_user->setUsername(filter_input(INPUT_POST, 'username_input'));
                 }
-                if (filter_input(INPUT_POST, 'email_input') != $_SESSION['email']) {
+                if (filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
                     $check_user->setEmail(filter_input(INPUT_POST, 'email_input'));
                 }
                 $verify_exists = $this->manager->check_user_exists($check_user);
             }
             if ($verify_exists == 0) {
                 $user = new User();
-                $user->setId($_SESSION['id']);
+                $user->setId($this->session->getSession('id'));
                 $user = $this->manager->fetch($user);
                 $user->setUsername(filter_input(INPUT_POST, 'username_input'));
                 $user->setEmail(filter_input(INPUT_POST, 'email_input'));
@@ -136,8 +145,10 @@ class UserController extends Controller
                 }
                 $update = $this->manager->update($user, $update_psw);
                 if ($update === 1) {
-                    $_SESSION['username'] = $user->getUsername();
-                    $_SESSION['email'] = $user->getEmail();
+                    $this->session->setSession('username', $user->getUsername());
+                    //$_SESSION['username'] = $user->getUsername();
+                    $this->session->setSession('email', $user->getEmail());
+                    //$_SESSION['email'] = $user->getEmail();
                     $this->redirect('', 'success', 'Account updated');
                 } else {
                     $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
@@ -151,7 +162,7 @@ class UserController extends Controller
     }
 
     public function delete($id) {
-        if (!isset($_SESSION['id']) || $_SESSION['id'] !== $id) {
+        if ($this->session->getSession('id') === null || $this->session->getSession('id') !== $id) {
             $this->forbidden();
         } else {
             $delete = $this->manager->delete($id);

@@ -16,4 +16,9 @@ class Session
     public function getSession($key) {
         return (isset($this->session[$key])?$this->session[$key]:null);
     }
+
+    public function setSession($key, $value) {
+        $this->session[$key] = $value;
+        $_SESSION[$key] = $this->session[$key];
+    }
 }

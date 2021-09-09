@@ -13,9 +13,11 @@ class CommentController extends Controller
 
     protected $db;
     protected $manager;
+    protected $session;
 
-    public function __construct($db) {
+    public function __construct($db, $session) {
         $this->db = $db;
+        $this->session = $session;
         $this->manager = new CommentManager($this->db);
     }
 

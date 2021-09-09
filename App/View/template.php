@@ -90,7 +90,7 @@
             © 2021 Copyright: Jonatan Buzek
             <?php if (isset($_SESSION['username'])) { ?>
                 <br>You're logged in as <span style="color: black">
-                    <?php print_r(htmlspecialchars(ucfirst($_SESSION['username']))); ?>
+                    <?php print_r(htmlspecialchars(ucfirst($session->getSession('username')))); ?>
                 </span>
                 <a href="index.php?action=user-logout" id="logout_link"> · Logout</a>
 
