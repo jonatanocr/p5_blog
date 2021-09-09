@@ -6,7 +6,7 @@ class Controller
 {
     protected $session;
 
-    public function __construct($db, $session) {
+    public function __construct($pdo, $session) {
         $this->session = $session;
     }
 

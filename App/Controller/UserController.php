@@ -8,14 +8,14 @@ use Core\Controller\Controller;
 
 class UserController extends Controller
 {
-    protected $db;
+    protected $pdo;
     protected $manager;
     protected $session;
 
-    public function __construct($db, $session) {
-        $this->db = $db;
+    public function __construct($pdo, $session) {
+        $this->pdo = $pdo;
         $this->session = $session;
-        $this->manager = new UserManager($this->db);
+        $this->manager = new UserManager($this->pdo);
     }
 
     public function register() {
@@ -154,11 +154,11 @@ class UserController extends Controller
         }
     }
 
-    public function delete($id) {
-        if ($this->session->getSession('id') === null || $this->session->getSession('id') !== $id) {
+    public function delete($userId) {
+        if ($this->session->getSession('id') === null || $this->session->getSession('id') !== $userId) {
             $this->forbidden();
         } else {
-            $delete = $this->manager->delete($id);
+            $delete = $this->manager->delete($userId);
             if ($delete === 1) {
                 $this->logout();
             } else {

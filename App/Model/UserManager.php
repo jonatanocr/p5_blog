@@ -6,15 +6,15 @@ use App\Entity\User;
 
 class UserManager {
 
-    protected $db;
+    protected $pdo;
 
-    public function __construct($db) {
-            $this->db = $db;
+    public function __construct($pdo) {
+            $this->pdo = $pdo;
     }
 
     public function check_user_exists(User $user) {
         $sql = 'SELECT COUNT(id) count FROM users WHERE id = :id OR username = :username OR email = :email;';
-        $query = $this->db->prepare($sql);
+        $query = $this->pdo->prepare($sql);
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $query->bindValue('username', $user->getUsername());
         $query->bindValue('email', $user->getEmail());
@@ -30,12 +30,12 @@ class UserManager {
 
     public function create(User $user) {
         $sql = 'INSERT INTO users (username, password, email) VALUES (:username, :password, :email);';
-        $query = $this->db->prepare($sql);
+        $query = $this->pdo->prepare($sql);
         $query->bindValue( 'username', $user->getUsername());
         $query->bindValue( 'password', $user->getPassword());
         $query->bindValue( 'email', $user->getEmail());
         $query->execute();
-        $last_insert = $this->db->lastInsertId();
+        $last_insert = $this->pdo->lastInsertId();
         $query->closeCursor();
         if ($last_insert) {
             return 1;
@@ -45,7 +45,7 @@ class UserManager {
 
     public function fetch(User $user) {
         $sql = 'SELECT id, username, password, email, user_type FROM users WHERE id = :id OR username = :username';
-        $query = $this->db->prepare($sql);
+        $query = $this->pdo->prepare($sql);
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
         $query->bindValue(':username', $user->getUsername());
         $query->execute();
@@ -66,7 +66,7 @@ class UserManager {
         }
         $sql.= ' email = :email';
         $sql.= ' WHERE id = :id';
-        $query = $this->db->prepare($sql);
+        $query = $this->pdo->prepare($sql);
         $query->bindValue( 'username', $user->getUsername());
         if ($update_password === 1) {
             $query->bindValue( 'password', $user->getPassword());
@@ -84,7 +84,7 @@ class UserManager {
 
     public function delete($id) {
         $delete_query = 'DELETE FROM users WHERE id = ' . $id;
-        $query = $this->db->prepare($delete_query);
+        $query = $this->pdo->prepare($delete_query);
         $result = $query->execute();
         $query->closeCursor();
         if ($result) {
@@ -96,7 +96,7 @@ class UserManager {
 
     public function author_list() {
         $sql = 'SELECT id, username FROM users WHERE user_type = "admin" ORDER BY username';
-        $query = $this->db->prepare($sql);
+        $query = $this->pdo->prepare($sql);
         $query->execute();
         $authors_list = $query->fetchAll();
         $query->closeCursor();

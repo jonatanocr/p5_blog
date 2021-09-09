@@ -7,7 +7,7 @@ class Post
     /**
      * @var int
      */
-    protected $id;
+    protected $postId;
 
     /**
      * @var string
@@ -44,15 +44,15 @@ class Post
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->postId;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id): void
+    public function setId(int $postId): void
     {
-        $this->id = $id;
+        $this->postId = $postId;
     }
 
     /**
