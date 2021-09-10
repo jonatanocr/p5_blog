@@ -48,13 +48,11 @@ class CommentManager
             $update = $query->execute();
             $query->closeCursor();
             if ($update) {
-                return $result['fk_post'].'-'.'1';
-            } else {
-                return $result['fk_post'].'-'.'0';
+                return $result['fk_post'];
             }
-        } else {
             return -1;
         }
+        return -1;
     }
 
     public function delete($commentId) {
@@ -66,10 +64,9 @@ class CommentManager
             $result_delete = $query->execute();
             $query->closeCursor();
             if ($result_delete) {
-                return $result['fk_post'].'-'.'1';
-            } else {
-                return $result['fk_post'].'-'.'0';
+                return $result['fk_post'];
             }
+            return -1;
         } else {
             return -1;
         }

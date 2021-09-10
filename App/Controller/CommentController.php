@@ -45,25 +45,14 @@ class CommentController extends Controller
 
     public function delete($commentId) {
         $session = $this->session;
-        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
-            if ((int)$commentId > 0) {
-                $delete = $this->manager->delete($commentId);
-                if ($delete === -1) {
-                    $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-                } else {
-                    $result = explode('-', $delete);
-                    if ($result[1] == 1) {
-                        $this->redirect('post-edit-'.$result[0], 'success', 'Comment successfully deleted');
-                    } else {
-                        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-                    }
-                }
-            } else {
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin' && (int)$commentId > 0) {
+            $delete = $this->manager->delete($commentId);
+            if ($delete === -1) {
                 $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
             }
-        } else {
-            $this->forbidden();
+            $this->redirect('post-edit-'.$delete, 'success', 'Comment successfully deleted');
         }
+        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
     }
 
     public function validate($commentId) {
@@ -75,31 +64,15 @@ class CommentController extends Controller
     }
 
     private function changeStatus($status, $commentId) {
-        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
-            if ((int)$commentId > 0) {
-                $validate = $this->manager->validate($status, $commentId);
-                if ($validate === -1) {
-                    $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-                } else {
-                    $result = explode('-', $validate);
-                    if ($result[1] == 1) {
-                        $msg = '';
-                        if ($status == 0) {
-                            $msg = 'Comment successfully invalidated';
-                        } elseif ($status == 1) {
-                            $msg = 'Comment successfully validated';
-                        }
-                        $this->redirect('post-edit-'.$result[0], 'success', $msg);
-                    } else {
-                        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
-                    }
-                }
-            } else {
+        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin' && (int)$commentId > 0) {
+            $validate = $this->manager->validate($status, $commentId);
+            if ($validate === -1) {
                 $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
             }
-        } else {
-            $this->forbidden();
+            $msg = $status == 0?'Comment successfully invalidated':'Comment successfully validated';
+            $this->redirect('post-edit-'.$validate, 'success', $msg);
         }
+        $this->redirect('post-index', 'error', 'An error has<br>occurred please try again');
     }
 
 }
