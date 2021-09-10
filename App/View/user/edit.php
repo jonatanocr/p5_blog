@@ -37,11 +37,10 @@ $page_title = 'Settings';
     Password did not match <br> (˘︹˘)
 </div>
 <div class="container mt-5 mb-5 text-center">
-    <a href="#" id="delete_user_link" onclick="alertMsg(<?= (isset($session) && $session->getSession('id') !== NULL)?htmlspecialchars($session->getSession('id')):''; ?>, 'user')">Delete my account</a>
+    <a href="#" id="delete_user_link" onclick="alertMsg(<?= (isset($session) && $session->getSession('id') !== NULL)?$session->getSession('id'):''; ?>, 'user')">Delete my account</a>
 </div>
 
 <?php
 $page_body = ob_get_clean();
-$url = ROOT . '/App/View/template.php';
-require $url;
+require ROOT . '/App/View/template.php';
 ?>

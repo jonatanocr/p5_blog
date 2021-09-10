@@ -28,7 +28,7 @@ class CommentManager
     }
 
     public function fetchAllFromPost($post) {
-        $sql = 'SELECT id, DATE_FORMAT(created_date, "%d.%m.%Y-%H:%i:%s") createdDate, fk_author fkAuthor, verified, content';
+        $sql = 'SELECT id commentId, DATE_FORMAT(created_date, "%d.%m.%Y-%H:%i:%s") createdDate, fk_author fkAuthor, verified, content';
         $sql.= ' FROM comments WHERE fk_post = :post ORDER BY created_date';
         $query = $this->pdo->prepare($sql);
         $query->bindValue('post', $post, \PDO::PARAM_INT);

@@ -15,9 +15,9 @@ ob_start();
                 <?php
                 foreach ($authors as $authorId => $username) {
                     if ($authorId == $session->getSession('id')) { ?>
-                        <option value="<?= htmlspecialchars($authorId); ?>" selected="selected"><?= htmlspecialchars($username); ?></option>
+                        <option value="<?= $authorId; ?>" selected="selected"><?= htmlspecialchars($username); ?></option>
                     <?php } else { ?>
-                        <option value="<?= htmlspecialchars($authorId); ?>"><?= htmlspecialchars($username); ?></option>
+                        <option value="<?= $authorId; ?>"><?= htmlspecialchars($username); ?></option>
                     <?php }
                 }
                 ?>
@@ -30,7 +30,7 @@ ob_start();
         </p>
         <p class="post_line_content mt-4">
             <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required">
-                <?= (isset($session) && $session->getSession('form') !== NULL)?htmlspecialchars($session->getSession('form')['content']):''; ?>
+                <?= (isset($session) && $session->getSession('form') !== NULL)?$session->getSession('form')['content']:''; ?>
             </textarea>
         </p>
         <div class="form_submit_div mt-4" id="post_form_submit_div">
@@ -46,7 +46,6 @@ ob_start();
 
 <?php
 $page_body = ob_get_clean();
-$url =  ROOT . '/App/View/template.php';
-require $url;
+require ROOT . '/App/View/template.php';
 ?>
 

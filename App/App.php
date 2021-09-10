@@ -19,11 +19,9 @@ class App
     public function run() {
         if ($this->action === 'homepage') {
             $session = $this->session;
-            $url = ROOT . '/App/View/homepage.php';
-            require $url;
+            require ROOT . '/App/View/homepage.php';
         } else {
-            $url =  ROOT . '/Core/Autoloader.php';
-            require $url;
+            require ROOT . '/Core/Autoloader.php';
             $autoloader = new Autoloader();
             $autoloader->register();
 

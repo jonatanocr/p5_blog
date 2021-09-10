@@ -24,8 +24,7 @@ class PostController extends Controller
             $user_manager = new Model\UserManager($this->pdo);
             $authors = $user_manager->authorList();
             $session = $this->session;
-            $url = ROOT . '/App/View/blog/create.php';
-            require $url;
+            require ROOT . '/App/View/blog/create.php';
         } else {
             $this->forbidden();
         }
@@ -56,8 +55,7 @@ class PostController extends Controller
     public function index() {
         $session = $this->session;
         $posts = $this->manager->fetchAll();
-        $url = ROOT . '/App/View/blog/index.php';
-        require $url;
+        require ROOT . '/App/View/blog/index.php';
     }
 
     private function getPostData($postId) {
@@ -79,9 +77,9 @@ class PostController extends Controller
     }
 
     public function display($postId) {
+        $session = $this->session;
         $post_data = $this->getPostData($postId);
-        $url = ROOT . '/App/View/blog/post.php';
-        require $url;
+        require ROOT . '/App/View/blog/post.php';
     }
 
     public function edit($postId) {
@@ -89,8 +87,8 @@ class PostController extends Controller
             $post_data = $this->getPostData($postId);
             $user_manager = new Model\UserManager($this->pdo);
             $authors = $user_manager->authorList();
-            $url = ROOT . '/App/View/blog/edit.php';
-            require $url;
+            $session = $this->session;
+            require ROOT . '/App/View/blog/edit.php';
         } else {
             $this->forbidden();
         }
@@ -109,8 +107,8 @@ class PostController extends Controller
                 $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
                 $result = $this->manager->update($post);
                 if ($result === 1) {
-                    $this->session->setSession('success_msg', 'Post updated');
-                    header('Location: index.php?action=post-display-' . $postId);
+                    $session = $this->session;
+                    $this->redirect('post-display-'.$postId, 'success', 'Post updated');
                 } else {
                     $this->session->setSession('error_msg', 'Fail to update post');
                     $this->edit($postId);

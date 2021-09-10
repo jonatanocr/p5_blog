@@ -77,7 +77,6 @@ class CommentController extends Controller
     }
 
     private function changeStatus($status, $commentId) {
-        $session = $this->session;
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if ((int)$commentId > 0) {
                 $validate = $this->manager->validate($status, $commentId);

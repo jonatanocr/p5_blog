@@ -58,8 +58,7 @@ class Controller
     }
 
     protected function forbidden(){
-        $url = 'Location: index.php';
-        header($url);
+        header('Location: index.php');
     }
 
 }

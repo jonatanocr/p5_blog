@@ -20,8 +20,7 @@ class ContactController extends Controller
 
     public function form() {
         $session = $this->session;
-        $url =  ROOT . '/App/View/contact.php';
-        require $url;
+        require ROOT . '/App/View/contact.php';
     }
 
     public function process() {

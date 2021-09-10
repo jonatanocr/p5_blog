@@ -38,6 +38,5 @@ ob_start();
 </div>
 <?php
 $page_body = ob_get_clean();
-$url = ROOT . '/App/View/template.php';
-require $url;
+require ROOT . '/App/View/template.php';
 ?>
