@@ -24,30 +24,37 @@ class UserController extends Controller
     }
 
     public function confirmRegister() {
-        if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'password_input')) || empty(filter_input(INPUT_POST, 'password2_input')) || empty(filter_input(INPUT_POST, 'email_input'))) {
-            $this->redirect('user-register', 'error', 'All fields must be filled');
-        } elseif (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
+        $this->checkEmptyFields(['username_input', 'password_input', 'password2_input', 'email_input'], 'user-register');
+        $this->registrationCheckInputs();
+        $new_user = new User();
+        $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
+        $new_user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
+        $new_user->setEmail(filter_input(INPUT_POST, 'email_input'));
+        $verify_exists = $this->manager->checkUserExists($new_user);
+        if ($verify_exists == 0) {
+            if ($this->manager->create($new_user) === 1) {
+                $this->redirect(null, 'success', 'Your account is created');
+            }
+            $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
+        }
+        $this->errorUserVerification($verify_exists);
+    }
+
+    private function registrationCheckInputs() {
+        if (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
             $this->redirect('user-register', 'error', 'Passwords mismatch');
         } elseif (strlen(filter_input(INPUT_POST, 'password_input')) < 8) {
             $this->redirect('user-register', 'error', 'The password must have at least 8 characters');
         } elseif (!filter_var(filter_input(INPUT_POST, 'email_input'), FILTER_VALIDATE_EMAIL)) {
             $this->redirect('user-register', 'error', 'The email address is not valid');
-        } else {
-            $new_user = new User();
-            $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
-            $new_user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
-            $new_user->setEmail(filter_input(INPUT_POST, 'email_input'));
-            $verify_exists = $this->manager->checkUserExists($new_user);
-            if ($verify_exists == 0) {
-                if ($this->manager->create($new_user) === 1) {
-                    $this->redirect(null, 'success', 'Your account is created');
-                }
-                $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
-            } elseif ($verify_exists > 0) {
-                $this->redirect('user-register', 'warning', 'An account already exists with this email or this username address');
-            } else {
-                $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
-            }
+        }
+    }
+
+    private function errorUserVerification($verify_exists) {
+        if ($verify_exists > 0) {
+            $this->redirect('user-register', 'warning', 'An account already exists with this email or this username address');
+        } elseif ($verify_exists < 0) {
+            $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
         }
     }
 
@@ -57,9 +64,7 @@ class UserController extends Controller
     }
 
     public function confirmLogin() {
-        if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'password_input'))) {
-            $this->redirect('user-login', 'error', 'All fields must be filled');
-        }
+        $this->checkEmptyFields(['username_input', 'password_input'], 'user-login');
         $user = new User();
         $user->setUsername(filter_input(INPUT_POST, 'username_input'));
         $user = $this->manager->fetch($user);
