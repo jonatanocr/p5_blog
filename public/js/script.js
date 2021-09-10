@@ -12,12 +12,14 @@ function alertMsg(id, object) {
 }
 
 function passwordsMatchCheck() {
+    var btn = document.getElementById("btn_submit");
+    var alert = document.getElementById("alert_password");
     if (document.getElementById("password_input").value !==
         document.getElementById("password2_input").value) {
-        document.getElementById("btn_submit").disabled = true;
-        document.getElementById("alert_password").style.display = "block";
+        btn.disabled = true;
+        alert.style.display = "block";
     } else {
-        document.getElementById("btn_submit").disabled = false;
-        document.getElementById("alert_password").style.display = "none";
+        btn.disabled = false;
+        alert.style.display = "none";
     }
 }

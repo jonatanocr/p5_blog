@@ -37,12 +37,10 @@ class CommentController extends Controller
             if ($create === 1) {
                 $msg = $verified==1?'Comment added':'Comment added<br>Waiting for Approval';
                 $this->redirect('post-display-'.$postId, 'success', $msg);
-            } else {
-                $this->redirect('post-display-'.$postId, 'error', 'An error has<br>occurred please try again');
             }
-        } else {
-            $this->redirect('post-display-'.$postId, 'error', 'Comment field is empty');
+            $this->redirect('post-display-'.$postId, 'error', 'An error has<br>occurred please try again');
         }
+        $this->redirect('post-display-'.$postId, 'error', 'Comment field is empty');
     }
 
     public function delete($commentId) {

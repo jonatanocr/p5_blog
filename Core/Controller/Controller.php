@@ -55,10 +55,12 @@ class Controller
             }
         }
         header($url);
+        exit();
     }
 
     protected function forbidden(){
         header('Location: index.php');
+        exit();
     }
 
 }
