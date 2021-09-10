@@ -23,14 +23,18 @@ class Session
     }
 
     public function delete($var_name) {
-        if ($var_name == 'form_input') {
-            foreach ($_SESSION as $key => $value) {
-                if (strpos($key, 'input') !== false) {
-                    unset($_SESSION[$key]);
-                }
-            }
+        if ($var_name === 'form_input') {
+            $this->deleteFormInput();
         } else {
             unset($_SESSION[$var_name]);
+        }
+    }
+
+    private function deleteFormInput() {
+        foreach ($_SESSION as $key => $value) {
+            if (strpos($key, 'input') !== false) {
+                unset($_SESSION[$key]);
+            }
         }
     }
 }

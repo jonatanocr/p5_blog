@@ -26,12 +26,8 @@ class Controller
     private function saveFormInput() {
         foreach ($_POST as $key => $value) {
             if (strpos($key, 'input') !== false) {
-                $input_name = explode('_', $key)[0];
-                if (!empty(filter_input(INPUT_POST, $key))) {
-                    $this->session->setSession($key, filter_input(INPUT_POST, $key));
-                } else {//var_dump($input_name);var_dump($key);var_dump($value);var_dump('<br>');
-                    $this->session->setSession($key, NULL);
-                }
+                $form_value = (!empty(filter_input(INPUT_POST, $key)))?filter_input(INPUT_POST, $key):NULL;
+                $this->session->setSession($key, $form_value);
             }
         }
     }
