@@ -22,7 +22,15 @@ class Session
         $_SESSION[$key] = $this->session[$key];
     }
 
-    public function delete($key) {
-        unset($_SESSION[$key]);
+    public function delete($var_name) {
+        if ($var_name == 'form_input') {
+            foreach ($_SESSION as $key => $value) {
+                if (strpos($key, 'input') !== false) {
+                    unset($_SESSION[$key]);
+                }
+            }
+        } else {
+            unset($_SESSION[$var_name]);
+        }
     }
 }

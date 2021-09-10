@@ -101,7 +101,7 @@
                 <a class="login_link" href="index.php?action=user-register">Register</a>
             <?php }
             if (isset($session)) {
-                $session->delete('form');
+                $session->delete('form_input');
             }
             ?>
             </div>
