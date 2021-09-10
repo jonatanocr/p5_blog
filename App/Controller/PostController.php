@@ -56,6 +56,7 @@ class PostController extends Controller
         $session = $this->session;
         $posts = $this->manager->fetchAll();
         require ROOT . '/App/View/blog/index.php';
+        exit();
     }
 
     private function getPostData($postId) {
@@ -120,23 +121,15 @@ class PostController extends Controller
     }
 
     public function delete($postId) {
-        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
-            if ((int)$postId > 0) {
-                $delete = $this->manager->delete($postId);
-                if ($delete === 1) {
-                    $this->session->setSession('success_msg', 'Post successfully deleted');
-                    $this->index();
-                } else {
-                    $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
-                    $this->index();
-                }
-            } else {
-                $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
-                $this->index();
-            }
-        } else {
+        if (!$this->session->getSession('user_type') && $this->session->getSession('user_type') !== 'admin') {
             $this->forbidden();
         }
+        if ((int)$postId > 0 && $this->manager->delete($postId) === 1) {
+            $this->session->setSession('success_msg', 'Post successfully deleted');
+            $this->index();
+        }
+        $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
+        $this->index();
     }
 
 }

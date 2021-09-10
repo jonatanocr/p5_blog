@@ -59,27 +59,20 @@ class UserController extends Controller
     public function confirmLogin() {
         if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'password_input'))) {
             $this->redirect('user-login', 'error', 'All fields must be filled');
-        } else {
-            $user = new User();
-            $user->setUsername(filter_input(INPUT_POST, 'username_input'));
-            $verify_exists = $this->manager->checkUserExists($user);
-            if ($verify_exists != 1) {
-                $this->redirect('user-login', 'warning', 'Username or password is incorrect');
-            } else {
-                $user = $this->manager->fetch($user);
-                if (password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
-                    session_start();
-                    session_regenerate_id();
-                    $this->session->setSession('id', $user->getId());
-                    $this->session->setSession('username', $user->getUsername());
-                    $this->session->setSession('user_type', $user->getUserType());
-                    $this->session->setSession('email', $user->getEmail());
-                    $this->redirect();
-                } else {
-                    $this->redirect('user-login', 'warning', 'Username or password is incorrect');
-                }
-            }
         }
+        $user = new User();
+        $user->setUsername(filter_input(INPUT_POST, 'username_input'));
+        $user = $this->manager->fetch($user);
+        if ($this->manager->checkUserExists($user) == 1 && password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
+            session_start();
+            session_regenerate_id();
+            $this->session->setSession('id', $user->getId());
+            $this->session->setSession('username', $user->getUsername());
+            $this->session->setSession('user_type', $user->getUserType());
+            $this->session->setSession('email', $user->getEmail());
+            $this->redirect();
+        }
+        $this->redirect('user-login', 'warning', 'Username or password is incorrect');
     }
 
     public function logout() {
