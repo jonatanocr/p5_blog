@@ -33,19 +33,16 @@ class UserController extends Controller
         } elseif (!filter_var(filter_input(INPUT_POST, 'email_input'), FILTER_VALIDATE_EMAIL)) {
             $this->redirect('user-register', 'error', 'The email address is not valid');
         } else {
-            $hashed_password = password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT);
             $new_user = new User();
             $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
-            $new_user->setPassword($hashed_password);
+            $new_user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
             $new_user->setEmail(filter_input(INPUT_POST, 'email_input'));
             $verify_exists = $this->manager->checkUserExists($new_user);
             if ($verify_exists == 0) {
-                $add_user = $this->manager->create($new_user);
-                if ($add_user === 1) {
+                if ($this->manager->create($new_user) === 1) {
                     $this->redirect(null, 'success', 'Your account is created');
-                } else {
-                    $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
                 }
+                $this->redirect('user-register', 'error', 'An error has occured<br>Please try again');
             } elseif ($verify_exists > 0) {
                 $this->redirect('user-register', 'warning', 'An account already exists with this email or this username address');
             } else {
@@ -152,14 +149,12 @@ class UserController extends Controller
     public function delete($userId) {
         if ($this->session->getSession('id') === NULL || $this->session->getSession('id') !== $userId) {
             $this->forbidden();
-        } else {
-            $delete = $this->manager->delete($userId);
-            if ($delete === 1) {
-                $this->logout();
-            } else {
-                $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
-            }
         }
+        $delete = $this->manager->delete($userId);
+        if ($delete === 1) {
+            $this->logout();
+        }
+        $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
     }
 
 }
