@@ -25,7 +25,7 @@ class ContactController extends Controller
     }
 
     public function process() {
-        if (empty(filter_input(INPUT_POST, 'name_input')) OR empty(filter_input(INPUT_POST, 'email_input')) OR empty(filter_input(INPUT_POST, 'message_input'))) {
+        if (empty(filter_input(INPUT_POST, 'name_input')) || empty(filter_input(INPUT_POST, 'email_input')) || empty(filter_input(INPUT_POST, 'message_input'))) {
             $this->redirect('contact-form', 'error', 'All fields must be filled');
         } else {
             $configs = include(ROOT . '/Core/config/config.php');

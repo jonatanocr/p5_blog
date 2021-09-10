@@ -12,7 +12,7 @@ class UserManager {
             $this->pdo = $pdo;
     }
 
-    public function check_user_exists(User $user) {
+    public function checkUserExists(User $user) {
         $sql = 'SELECT COUNT(id) count FROM users WHERE id = :id OR username = :username OR email = :email;';
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_INT);
@@ -95,7 +95,7 @@ class UserManager {
         }
     }
 
-    public function author_list() {
+    public function authorList() {
         $sql = 'SELECT id, username FROM users WHERE user_type = "admin" ORDER BY username';
         $query = $this->pdo->prepare($sql);
         $query->execute();

@@ -27,7 +27,7 @@ class CommentManager
         return -1;
     }
 
-    public function fetch_all_from_post($post) {
+    public function fetchAllFromPost($post) {
         $sql = 'SELECT id, DATE_FORMAT(created_date, "%d.%m.%Y-%H:%i:%s") createdDate, fk_author fkAuthor, verified, content';
         $sql.= ' FROM comments WHERE fk_post = :post ORDER BY created_date';
         $query = $this->pdo->prepare($sql);
@@ -39,7 +39,7 @@ class CommentManager
     }
 
     public function validate($verified, $commentId) {
-        $result = $this->check_if_exists($commentId);
+        $result = $this->checkIfExists($commentId);
         if ($result) {
             $sql = 'UPDATE comments SET verified = :verified WHERE id = :id';
             $query = $this->pdo->prepare($sql);
@@ -58,7 +58,7 @@ class CommentManager
     }
 
     public function delete($commentId) {
-        $result = $this->check_if_exists($commentId);
+        $result = $this->checkIfExists($commentId);
         if ($result) {
             $sql = 'DELETE FROM comments WHERE id = :id';
             $query = $this->pdo->prepare($sql);
@@ -75,7 +75,7 @@ class CommentManager
         }
     }
 
-    private function check_if_exists($commentId) {
+    private function checkIfExists($commentId) {
         $sql = 'SELECT fk_post FROM comments WHERE id = :id;';
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':id', $commentId, \PDO::PARAM_INT);

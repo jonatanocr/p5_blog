@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" />
     <link rel="stylesheet" media="screen and (max-width: 768px)" href="css/style_768px.css" />
-    <link rel="icon" type="image/png" href="media/icon/favicon.ico"/>
+    <link rel="icon" type="image/png" href="favicon.ico"/>
 
 </head>
 <body>

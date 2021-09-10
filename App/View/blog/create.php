@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-<form action="index.php?action=post-confirm_create" method="post">
+<form action="index.php?action=post-confirmCreate" method="post">
     <div class="container">
         <p class="post_line_header mt-4 mb-4">
             <input class="post_input" type="text" id="post_input_title" name="title_input" placeholder="Title" required="required"

@@ -22,7 +22,7 @@ class PostController extends Controller
     public function create() {
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             $user_manager = new Model\UserManager($this->pdo);
-            $authors = $user_manager->author_list();
+            $authors = $user_manager->authorList();
             $session = $this->session;
             $url = ROOT . '/App/View/blog/create.php';
             require $url;
@@ -31,7 +31,7 @@ class PostController extends Controller
         }
     }
 
-    public function confirm_create() {
+    public function confirmCreate() {
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-create', 'error', 'All fields must be filled');
@@ -55,12 +55,12 @@ class PostController extends Controller
 
     public function index() {
         $session = $this->session;
-        $posts = $this->manager->fetch_all();
+        $posts = $this->manager->fetchAll();
         $url = ROOT . '/App/View/blog/index.php';
         require $url;
     }
 
-    private function get_post_data($postId) {
+    private function getPostData($postId) {
         $post_data = array();
         $post_data['post'] = $this->manager->fetch($postId);
         $user_manager = new Model\UserManager($this->pdo);
@@ -68,7 +68,7 @@ class PostController extends Controller
         $author->setId($post_data['post']->getFkAuthor());
         $post_data['post_author'] = $user_manager->fetch($author);
         $comment_manager = new Model\CommentManager($this->pdo);
-        $post_data['comments'] = $comment_manager->fetch_all_from_post($postId);
+        $post_data['comments'] = $comment_manager->fetchAllFromPost($postId);
         foreach ($post_data['comments'] as $comment) {
             $comment_author = new User();
             $comment_author->setId($comment->getFkAuthor());
@@ -79,16 +79,16 @@ class PostController extends Controller
     }
 
     public function display($postId) {
-        $post_data = $this->get_post_data($postId);
+        $post_data = $this->getPostData($postId);
         $url = ROOT . '/App/View/blog/post.php';
         require $url;
     }
 
     public function edit($postId) {
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
-            $post_data = $this->get_post_data($postId);
+            $post_data = $this->getPostData($postId);
             $user_manager = new Model\UserManager($this->pdo);
-            $authors = $user_manager->author_list();
+            $authors = $user_manager->authorList();
             $url = ROOT . '/App/View/blog/edit.php';
             require $url;
         } else {
@@ -96,7 +96,7 @@ class PostController extends Controller
         }
     }
 
-    public function confirm_edit($postId) {
+    public function confirmEdit($postId) {
         if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
             if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
                 $this->redirect('post-edit-'.$postId, 'error', 'All fields must be filled');

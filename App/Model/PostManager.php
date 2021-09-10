@@ -31,7 +31,7 @@ class PostManager
         }
     }
 
-    public function fetch_all() {
+    public function fetchAll() {
         $sql = 'SELECT id postId, DATE_FORMAT(updated_date, "%d.%m.%Y") updatedDate, title, header, content FROM posts';
         $query = $this->pdo->prepare($sql);
         $query->execute();

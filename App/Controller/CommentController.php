@@ -21,7 +21,7 @@ class CommentController extends Controller
         $this->manager = new CommentManager($this->pdo);
     }
 
-    public function add_comment($postId) {
+    public function addComment($postId) {
         $session = $this->session;
         if ($this->session->getSession('id') === NULL) {
             $this->forbidden();
@@ -69,14 +69,14 @@ class CommentController extends Controller
     }
 
     public function validate($commentId) {
-        $this->change_status(1, $commentId);
+        $this->changeStatus(1, $commentId);
     }
 
     public function invalidate($commentId) {
-        $this->change_status(0, $commentId);
+        $this->changeStatus(0, $commentId);
     }
 
-    private function change_status($status, $commentId) {
+    private function changeStatus($status, $commentId) {
         $session = $this->session;
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
             if ((int)$commentId > 0) {

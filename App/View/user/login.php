@@ -2,7 +2,7 @@
 ob_start();
 ?>
 
-<form class="register_form mt-5" action="index.php?action=user-confirm_login" method="post">
+<form class="register_form mt-5" action="index.php?action=user-confirmLogin" method="post">
     <div class="form-group">
         <label for="username_input">Username</label>
         <input type="text" class="form-control" id="username_input" name="username_input" required="required">

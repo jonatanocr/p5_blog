@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-<form action="index.php?action=post-confirm_edit-<?= htmlspecialchars($post_data['post']->getId()); ?>" method="post">
+<form action="index.php?action=post-confirmEdit-<?= htmlspecialchars($post_data['post']->getId()); ?>" method="post">
     <div class="container">
         <p class="post_line_header mt-4 mb-4">
             <input class="post_input" type="text" id="post_input_title" name="title_input" value="<?= htmlspecialchars($post_data['post']->getTitle()); ?>" required="required">

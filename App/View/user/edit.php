@@ -2,7 +2,7 @@
 $page_title = 'Settings';
 ?>
 
-<form class="register_form mt-5" action="index.php?action=user-confirm_edit" method="post">
+<form class="register_form mt-5" action="index.php?action=user-confirmEdit" method="post">
     <input name="action" type="hidden" value="submitSignup">
     <div class="form-group">
         <label for="username_input">Username</label>

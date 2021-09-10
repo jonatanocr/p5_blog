@@ -17,7 +17,7 @@ ob_start();
         <?php }
     } ?>
 
-    <form action="index.php?action=comment-add_comment-<?= htmlspecialchars($post_data['post']->getId()); ?>" method="post">
+    <form action="index.php?action=comment-addComment-<?= htmlspecialchars($post_data['post']->getId()); ?>" method="post">
         <div class="container">
             <p class="post_line_content mt-4">
             <textarea class="post_input" name="content_input" rows="3" placeholder="<?= (isset($session) && $session->getSession('id') !== NULL)?'Write a comment ..."':'Sign in to comment" disabled'; ?>></textarea>

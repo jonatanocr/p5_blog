@@ -24,8 +24,8 @@ class UserController extends Controller
         require $url;
     }
 
-    public function confirm_register() {
-        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'password_input')) OR empty(filter_input(INPUT_POST, 'password2_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
+    public function confirmRegister() {
+        if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'password_input')) || empty(filter_input(INPUT_POST, 'password2_input')) || empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-register', 'error', 'All fields must be filled');
         } elseif (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
             $this->redirect('user-register', 'error', 'Passwords mismatch');
@@ -39,7 +39,7 @@ class UserController extends Controller
             $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
             $new_user->setPassword($hashed_password);
             $new_user->setEmail(filter_input(INPUT_POST, 'email_input'));
-            $verify_exists = $this->manager->check_user_exists($new_user);
+            $verify_exists = $this->manager->checkUserExists($new_user);
             if ($verify_exists == 0) {
                 $add_user = $this->manager->create($new_user);
                 if ($add_user === 1) {
@@ -60,13 +60,13 @@ class UserController extends Controller
         require $url;
     }
 
-    public function confirm_login() {
-        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'password_input'))) {
+    public function confirmLogin() {
+        if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'password_input'))) {
             $this->redirect('user-login', 'error', 'All fields must be filled');
         } else {
             $user = new User();
             $user->setUsername(filter_input(INPUT_POST, 'username_input'));
-            $verify_exists = $this->manager->check_user_exists($user);
+            $verify_exists = $this->manager->checkUserExists($user);
             if ($verify_exists != 1) {
                 $this->redirect('user-login', 'warning', 'Username or password is incorrect');
             } else {
@@ -100,11 +100,11 @@ class UserController extends Controller
         require $url;
     }
 
-    public function confirm_edit() {
+    public function confirmEdit() {
         if ($this->session->getSession('id') === NULL) {
             $this->forbidden();
         }
-        if (empty(filter_input(INPUT_POST, 'username_input')) OR empty(filter_input(INPUT_POST, 'email_input'))) {
+        if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');
         } else {
             $verify_exists = 0;
@@ -116,7 +116,7 @@ class UserController extends Controller
                 if (filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
                     $check_user->setEmail(filter_input(INPUT_POST, 'email_input'));
                 }
-                $verify_exists = $this->manager->check_user_exists($check_user);
+                $verify_exists = $this->manager->checkUserExists($check_user);
             }
             if ($verify_exists == 0) {
                 $user = new User();
@@ -152,7 +152,7 @@ class UserController extends Controller
     }
 
     public function delete($userId) {
-        if ($this->session->getSession('id') === null || $this->session->getSession('id') !== $userId) {
+        if ($this->session->getSession('id') === NULL || $this->session->getSession('id') !== $userId) {
             $this->forbidden();
         } else {
             $delete = $this->manager->delete($userId);

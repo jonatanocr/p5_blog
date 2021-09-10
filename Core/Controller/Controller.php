@@ -16,7 +16,7 @@ class Controller
         } else {
             $url = 'Location: index.php?action=' . $action;
         }
-        if (!empty($msg_type) AND !empty($msg)) {
+        if (!empty($msg_type) && !empty($msg)) {
             $this->session->setSession($msg_type . '_msg', $msg);
             if (!empty(filter_input(INPUT_POST, 'username_input'))) {
                 $this->session->setSession('form',['username' => filter_input(INPUT_POST, 'username_input')]);
