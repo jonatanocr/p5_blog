@@ -32,24 +32,18 @@ class PostController extends Controller
 
     public function confirmCreate() {
         if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
-            if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
-                $this->redirect('post-create', 'error', 'All fields must be filled');
-            } else {
-                $post = new Post();
-                $post->setTitle(filter_input(INPUT_POST, 'title_input'));
-                $post->setHeader(filter_input(INPUT_POST, 'header_input'));
-                $post->setContent(filter_input(INPUT_POST, 'content_input'));
-                $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
-                $result = $this->manager->create($post);
-                if ($result === 1) {
-                    $this->redirect('post-index', 'success', 'Post created');
-                } else {
-                    $this->redirect('post-create', 'error', 'Fail to create post');
-                }
+            $this->checkEmptyFields(['title_input', 'header_input', 'content_input', 'author_input'], 'post-create');
+            $post = new Post();
+            $post->setTitle(filter_input(INPUT_POST, 'title_input'));
+            $post->setHeader(filter_input(INPUT_POST, 'header_input'));
+            $post->setContent(filter_input(INPUT_POST, 'content_input'));
+            $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
+            if ($this->manager->create($post) === 1) {
+                $this->redirect('post-index', 'success', 'Post created');
             }
-        } else {
-            $this->forbidden();
+            $this->redirect('post-create', 'error', 'Fail to create post');
         }
+        $this->forbidden();
     }
 
     public function index() {
@@ -97,27 +91,22 @@ class PostController extends Controller
 
     public function confirmEdit($postId) {
         if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
-            if (empty(filter_input(INPUT_POST, 'title_input')) || empty(filter_input(INPUT_POST, 'header_input')) || empty(filter_input(INPUT_POST, 'content_input')) || empty(filter_input(INPUT_POST, 'author_input'))) {
-                $this->redirect('post-edit-'.$postId, 'error', 'All fields must be filled');
-            } else {
-                $post = new Post();
-                $post->setId($postId);
-                $post->setTitle(filter_input(INPUT_POST, 'title_input'));
-                $post->setHeader(filter_input(INPUT_POST, 'header_input'));
-                $post->setContent(filter_input(INPUT_POST, 'content_input'));
-                $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
-                $result = $this->manager->update($post);
-                if ($result === 1) {
-                    $session = $this->session;
-                    $this->redirect('post-display-'.$postId, 'success', 'Post updated');
-                } else {
-                    $this->session->setSession('error_msg', 'Fail to update post');
-                    $this->edit($postId);
-                }
+            $this->checkEmptyFields(['title_input', 'header_input', 'content_input', 'author_input'], 'post-edit');
+            $post = new Post();
+            $post->setId($postId);
+            $post->setTitle(filter_input(INPUT_POST, 'title_input'));
+            $post->setHeader(filter_input(INPUT_POST, 'header_input'));
+            $post->setContent(filter_input(INPUT_POST, 'content_input'));
+            $post->setFkAuthor(filter_input(INPUT_POST, 'author_input'));
+            $result = $this->manager->update($post);
+            if ($result === 1) {
+                $session = $this->session;
+                $this->redirect('post-display-'.$postId, 'success', 'Post updated');
             }
-        } else {
-            $this->forbidden();
+            $this->session->setSession('error_msg', 'Fail to update post');
+            $this->edit($postId);
         }
+        $this->forbidden();
     }
 
     public function delete($postId) {

@@ -32,6 +32,14 @@ class Controller
         }
     }
 
+    protected function checkEmptyFields ($fields , $redirect) {
+        foreach ($fields as $field) {
+            if (empty(filter_input(INPUT_POST, $field))) {
+                $this->redirect($redirect, 'error', 'All fields must be filled');
+            }
+        }
+    }
+
     protected function forbidden(){
         header('Location: index.php');
         exit();

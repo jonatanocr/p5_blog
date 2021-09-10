@@ -5,13 +5,13 @@ ob_start();
     <div class="container">
         <p class="post_line_header mt-4 mb-4">
             <input class="post_input" type="text" id="post_input_title" name="title_input" placeholder="Title" required="required"
-                <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')["title"]) . '"':''; ?>
+                <?= (isset($session) && $session->getSession('title_input') !== NULL)?' value="' . htmlspecialchars($session->getSession('title_input')) . '"':''; ?>
             >
         </p>
     </div>
     <div class="container">
         <p class="post_line_header">
-            <select class="form-select" name="author_input" id="" required="required">
+            <select class="form-select" name="author_input" id="">
                 <?php
                 foreach ($authors as $authorId => $username) {
                     if ($authorId == $session->getSession('id')) { ?>
@@ -25,13 +25,11 @@ ob_start();
         </p>
         <p class="post_line_header mt-4">
             <input class="post_input" type="text" id="post_input_header" name="header_input" placeholder="Header" required="required"
-                <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')['header']) . '"':''; ?>
+                <?= (isset($session) && $session->getSession('header_input') !== NULL)?' value="' . htmlspecialchars($session->getSession('header_input')) . '"':''; ?>
             >
         </p>
         <p class="post_line_content mt-4">
-            <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required">
-                <?= (isset($session) && $session->getSession('form') !== NULL)?$session->getSession('form')['content']:''; ?>
-            </textarea>
+            <textarea class="post_input" name="content_input" rows="20" placeholder="Content" required="required"><?= (isset($session) && $session->getSession('content_input') !== NULL)?$session->getSession('content_input'):''; ?></textarea>
         </p>
         <div class="form_submit_div mt-4" id="post_form_submit_div">
             <div class="form_submit_sub_div">
