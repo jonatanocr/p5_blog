@@ -6,7 +6,7 @@ To run this project, install it locally using git:
 
 ```
 git clone https://github.com/jonatanocr/p5_blog.git
-php install
+composer install
 ```
 rename `Core/config/config_exemple.php` file as `config.php` and edit it (by default smtp server is Gmail)
 
