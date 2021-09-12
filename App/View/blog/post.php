@@ -18,6 +18,7 @@ ob_start();
     } ?>
 
     <form action="index.php?action=comment-addComment-<?= $post_data['post']->getId(); ?>" method="post">
+        <input type="hidden" name="token" value="<?= $session->getSession('token') ?? '' ?>">
         <div class="container">
             <p class="post_line_content mt-4">
             <textarea class="post_input" name="content_input" rows="3" placeholder="<?= (isset($session) && $session->getSession('id') !== NULL)?'Write a comment ..."':'Sign in to comment" disabled'; ?>></textarea>

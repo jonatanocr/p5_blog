@@ -31,7 +31,9 @@ class PostController extends Controller
     }
 
     public function confirmCreate() {
-        if ($this->session->getSession('user_type') !== NULL && $this->session->getSession('user_type') === 'admin') {
+        if ($this->session->getSession('user_type') !== NULL &&
+            $this->session->getSession('user_type') === 'admin' &&
+            $this->session->getSession('token') === filter_input(INPUT_POST, 'token')) {
             $this->checkEmptyFields(['title_input', 'header_input', 'content_input', 'author_input'], 'post-create');
             $post = new Post();
             $post->setTitle(filter_input(INPUT_POST, 'title_input'));
@@ -90,7 +92,8 @@ class PostController extends Controller
     }
 
     public function confirmEdit($postId) {
-        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
+        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin' &&
+            $this->session->getSession('token') === filter_input(INPUT_POST, 'token')) {
             $this->checkEmptyFields(['title_input', 'header_input', 'content_input', 'author_input'], 'post-edit');
             $post = new Post();
             $post->setId($postId);
@@ -110,15 +113,15 @@ class PostController extends Controller
     }
 
     public function delete($postId) {
-        if (!$this->session->getSession('user_type') && $this->session->getSession('user_type') !== 'admin') {
-            $this->forbidden();
-        }
-        if ((int)$postId > 0 && $this->manager->delete($postId) === 1) {
-            $this->session->setSession('success_msg', 'Post successfully deleted');
+        if ($this->session->getSession('user_type') && $this->session->getSession('user_type') === 'admin') {
+            if ((int)$postId > 0 && $this->manager->delete($postId) === 1) {
+                $this->session->setSession('success_msg', 'Post successfully deleted');
+                $this->index();
+            }
+            $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
             $this->index();
         }
-        $this->session->setSession('error_msg', 'An error has<br>occurred please try again');
-        $this->index();
+        $this->forbidden();
     }
 
 }

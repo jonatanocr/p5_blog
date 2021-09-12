@@ -89,5 +89,4 @@ class PostManager
             return -1;
         }
     }
-
 }

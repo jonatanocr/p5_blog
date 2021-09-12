@@ -39,8 +39,8 @@ class ContactController extends Controller
         $mail->Password   = $configs['email_password'];
         $mail->AddAddress('buzek.jonatan@gmail.com', 'jo');
         $mail->SetFrom('mailer.ocr@gmail.com', 'mailer.ocr');
-        $mail->Subject = 'Contact from ' . filter_input(INPUT_POST, 'name_input') . ' <' . filter_input(INPUT_POST, 'email_input') . '>';
-        $content = filter_input(INPUT_POST, 'message_input');
+        $mail->Subject = 'Contact from ' . htmlspecialchars(filter_input(INPUT_POST, 'name_input')) . ' <' . htmlspecialchars(filter_input(INPUT_POST, 'email_input')) . '>';
+        $content = htmlspecialchars(filter_input(INPUT_POST, 'message_input'));
         $mail->MsgHTML($content);
         if(!$mail->Send()) {
             $this->redirect('contact-form', 'error', 'An error has occured<br>Please try again');

@@ -7,20 +7,18 @@ ob_start();
     <div class="form-group">
         <label for="name_input">Your name</label>
         <input type="text" class="form-control" id="name_input" name="name_input" size="10" required="required"
-            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')['name']) . '"':''; ?>
+            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('name_input')) . '"':''; ?>
         >
     </div>
     <div class="form-group mt-2">
         <label for="email_input">Your Email</label>
         <input type="email" class="form-control" id="email_input" name="email_input" required="required"
-            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('form')['email']) . '"':''; ?>
+            <?= (isset($session) && $session->getSession('form') !== NULL)?' value="' . htmlspecialchars($session->getSession('email_input')) . '"':''; ?>
         >
     </div>
     <div class="form-group">
         <label for="message_input">Your message</label>
-        <textarea name="message_input" class="form-control" id="message_input" rows="3" required="required">
-            <?= (isset($session) && $session->getSession('form') !== NULL)?htmlspecialchars($session->getSession('form')['message']):''; ?>
-        </textarea>
+        <textarea name="message_input" class="form-control" id="message_input" rows="3" required="required"><?= (isset($session) && $session->getSession('form') !== NULL)?htmlspecialchars($session->getSession('message_input')):''; ?></textarea>
     </div>
     <div class="form_submit_div mt-4">
         <div class="form_submit_sub_div">
@@ -54,4 +52,3 @@ ob_start();
 $page_body = ob_get_clean();
 require ROOT . '/App/View/template.php';
 ?>
-

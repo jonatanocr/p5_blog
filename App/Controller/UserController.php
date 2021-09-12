@@ -73,9 +73,10 @@ class UserController extends Controller
         $user = new User();
         $user->setUsername(filter_input(INPUT_POST, 'username_input'));
         $user = $this->manager->fetch($user);
-        if ($this->manager->checkUserExists($user) == 1 && password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
+        if (is_object($user) && $this->manager->checkUserExists($user) == 1 && password_verify(filter_input(INPUT_POST, 'password_input'), $user->getPassword())) {
             session_start();
             session_regenerate_id();
+            $this->session->setSession('token',bin2hex(random_bytes(32)));
             $this->session->setSession('id', $user->getId());
             $this->session->setSession('username', $user->getUsername());
             $this->session->setSession('user_type', $user->getUserType());
@@ -97,6 +98,9 @@ class UserController extends Controller
     }
 
     public function confirmEdit() {
+        if ($this->session->getSession('token') !== filter_input(INPUT_POST, 'token')) {
+            $this->forbidden();
+        }
         $this->checkIsLogged();
         if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');

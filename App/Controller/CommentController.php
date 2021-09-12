@@ -23,7 +23,7 @@ class CommentController extends Controller
 
     public function addComment($postId) {
         $session = $this->session;
-        if ($this->session->getSession('id') === NULL) {
+        if ($this->session->getSession('id') === NULL || $this->session->getSession('token') !== filter_input(INPUT_POST, 'token')) {
             $this->forbidden();
         }
         if (!empty(filter_input(INPUT_POST, 'content_input'))) {

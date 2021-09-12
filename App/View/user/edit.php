@@ -3,6 +3,7 @@ $page_title = 'Settings';
 ?>
 
 <form class="register_form mt-5" action="index.php?action=user-confirmEdit" method="post">
+    <input type="hidden" name="token" value="<?= $session->getSession('token') ?? '' ?>">
     <input name="action" type="hidden" value="submitSignup">
     <div class="form-group">
         <label for="username_input">Username</label>
