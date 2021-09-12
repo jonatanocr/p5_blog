@@ -25,7 +25,8 @@ class UserController extends Controller
 
     public function confirmRegister() {
         $this->checkEmptyFields(['username_input', 'password_input', 'password2_input', 'email_input'], 'user-register');
-        $this->registrationCheckInputs();
+        $this->registrationCheckInputsPasswords();
+        $this->registrationCheckInputEmail();
         $new_user = new User();
         $new_user->setUsername(filter_input(INPUT_POST, 'username_input'));
         $new_user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
@@ -40,12 +41,16 @@ class UserController extends Controller
         $this->errorUserVerification($verify_exists);
     }
 
-    private function registrationCheckInputs() {
+    private function registrationCheckInputsPasswords() {
         if (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
             $this->redirect('user-register', 'error', 'Passwords mismatch');
         } elseif (strlen(filter_input(INPUT_POST, 'password_input')) < 8) {
             $this->redirect('user-register', 'error', 'The password must have at least 8 characters');
-        } elseif (!filter_var(filter_input(INPUT_POST, 'email_input'), FILTER_VALIDATE_EMAIL)) {
+        }
+    }
+
+    private function registrationCheckInputEmail() {
+        if (!filter_var(filter_input(INPUT_POST, 'email_input'), FILTER_VALIDATE_EMAIL)) {
             $this->redirect('user-register', 'error', 'The email address is not valid');
         }
     }
@@ -86,62 +91,47 @@ class UserController extends Controller
     }
 
     public function edit() {
-        if ($this->session->getSession('id') === NULL) {
-            $this->forbidden();
-        }
+        $this->checkIsLogged();
         $session = $this->session;
         require ROOT . '/App/View/user/edit.php';
     }
 
     public function confirmEdit() {
-        if ($this->session->getSession('id') === NULL) {
-            $this->forbidden();
-        }
+        $this->checkIsLogged();
         if (empty(filter_input(INPUT_POST, 'username_input')) || empty(filter_input(INPUT_POST, 'email_input'))) {
             $this->redirect('user-edit', 'error', 'Username and Email must be filled');
-        } else {
-            $verify_exists = 0;
-            if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username') || filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
-                $check_user = new User();
-                if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username')) {
-                    $check_user->setUsername(filter_input(INPUT_POST, 'username_input'));
-                }
-                if (filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
-                    $check_user->setEmail(filter_input(INPUT_POST, 'email_input'));
-                }
-                $verify_exists = $this->manager->checkUserExists($check_user);
-            }
-            if ($verify_exists == 0) {
-                $user = new User();
-                $user->setId($this->session->getSession('id'));
-                $user = $this->manager->fetch($user);
-                $user->setUsername(filter_input(INPUT_POST, 'username_input'));
-                $user->setEmail(filter_input(INPUT_POST, 'email_input'));
-                $update_psw = 0;
-                if (!empty(filter_input(INPUT_POST, 'password_input'))) {
-                    if (filter_input(INPUT_POST, 'password_input') !== filter_input(INPUT_POST, 'password2_input')) {
-                        $this->redirect('user-edit', 'error', 'Passwords mismatch');
-                    } elseif (strlen(filter_input(INPUT_POST, 'password_input')) < 8) {
-                        $this->redirect('user-edit', 'error', 'The password must have at least 8 characters');
-                    } else {
-                        $user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
-                        $update_psw = 1;
-                    }
-                }
-                $update = $this->manager->update($user, $update_psw);
-                if ($update === 1) {
-                    $this->session->setSession('username', $user->getUsername());
-                    $this->session->setSession('email', $user->getEmail());
-                    $this->redirect('', 'success', 'Account updated');
-                } else {
-                    $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
-                }
-            } elseif ($verify_exists > 0) {
-                $this->redirect('user-edit', 'warning', 'An account already exists with this email or this username address');
-            } else {
-                $this->redirect('user-edit', 'error', 'An error has occured<br>Please try again');
-            }
         }
+        $verify_exists = 0;
+        if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username') || filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
+            $check_user = new User();
+            if (filter_input(INPUT_POST, 'username_input') != $this->session->getSession('username')) {
+                $check_user->setUsername(filter_input(INPUT_POST, 'username_input'));
+            }
+            if (filter_input(INPUT_POST, 'email_input') != $this->session->getSession('email')) {
+                $check_user->setEmail(filter_input(INPUT_POST, 'email_input'));
+            }
+            $verify_exists = $this->manager->checkUserExists($check_user);
+        }
+        if ($verify_exists == 0) {
+            $user = new User();
+            $user->setId($this->session->getSession('id'));
+            $user = $this->manager->fetch($user);
+            $user->setUsername(filter_input(INPUT_POST, 'username_input'));
+            $user->setEmail(filter_input(INPUT_POST, 'email_input'));
+            $update_psw = 0;
+            if (!empty(filter_input(INPUT_POST, 'password_input'))) {
+                $this->registrationCheckInputsPasswords();
+                $user->setPassword(password_hash(filter_input(INPUT_POST, 'password_input'), PASSWORD_DEFAULT));
+                $update_psw = 1;
+            }
+            if ($this->manager->update($user, $update_psw) === 1) {
+                $this->session->setSession('username', $user->getUsername());
+                $this->session->setSession('email', $user->getEmail());
+                $this->redirect('', 'success', 'Account updated');
+            }
+            $this->redirect('user-edit', 'error', 'An error has<br>occurred please try again');
+        }
+        $this->errorUserVerification($verify_exists);
     }
 
     public function delete($userId) {

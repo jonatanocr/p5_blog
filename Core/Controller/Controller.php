@@ -40,6 +40,12 @@ class Controller
         }
     }
 
+    protected function checkIsLogged() {
+        if ($this->session->getSession('id') === NULL) {
+            $this->forbidden();
+        }
+    }
+
     protected function forbidden(){
         header('Location: index.php');
         exit();
