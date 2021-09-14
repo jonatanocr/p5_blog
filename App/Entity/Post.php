@@ -7,9 +7,8 @@ class Post
     /**
      * @var int
      */
-    protected $id;
+    protected $postId;
 
-    // todo change type for date https://www.php.net/manual/en/language.types.declarations.php
     /**
      * @var string
      */
@@ -45,15 +44,15 @@ class Post
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->postId;
     }
 
     /**
-     * @param int $id
+     * @param int $postId
      */
-    public function setId(int $id): void
+    public function setId(int $postId): void
     {
-        $this->id = $id;
+        $this->postId = $postId;
     }
 
     /**
@@ -152,19 +151,13 @@ class Post
         $this->content = $content;
     }
 
-    public function index()
-    {
-        var_dump('index ok');
-    }
-
     /**
      * @return int
      */
     public function getReadingTime(): int
     {
         //Average reading speed for an adult is 200words/min
-        $readingTime = str_word_count($this->content)>200?(str_word_count($this->content)/200):1;
-        return $readingTime;
+        return str_word_count($this->content)>200?(str_word_count($this->content)/200):1;
     }
 
 }

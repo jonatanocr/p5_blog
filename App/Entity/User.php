@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Entity;
-// todo pour toutes les classes revoir getters and setters verifications
+
 class User
 {
     /**
      * @var int
      */
-    protected $id;
+    protected $userId;
 
     /**
      * @var string
@@ -25,11 +25,6 @@ class User
     protected $email;
 
     /**
-     * @var int
-     */
-    protected $user_verified;
-    // todo rename keep verified and type without user_
-    /**
      * @var string
      */
     protected $user_type;
@@ -39,17 +34,15 @@ class User
      */
     public function getId()
     {
-        return $this->id;
+        return $this->userId;
     }
 
     /**
-     * @param int $id
+     * @param int $userId
      */
-    public function setId($id)
+    public function setId(int $userId)
     {
-        if ((int) $id and $id > 0) {
-            $this->id = $id;
-        }
+        $this->userId = $userId;
     }
 
     /**
@@ -98,22 +91,6 @@ class User
     public function setEmail(string $email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserVerified()
-    {
-        return $this->user_verified;
-    }
-
-    /**
-     * @param int $user_verified
-     */
-    public function setUserVerified(int $user_verified)
-    {
-        $this->user_verified = $user_verified;
     }
 
     /**

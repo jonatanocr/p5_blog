@@ -7,9 +7,8 @@ class Comment
     /**
      * @var int
      */
-    protected $id;
+    protected $commentId;
 
-    // todo change type for date https://www.php.net/manual/en/language.types.declarations.php
     /**
      * @var string
      */
@@ -45,15 +44,15 @@ class Comment
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->commentId;
     }
 
     /**
-     * @param int $id
+     * @param int $commentId
      */
-    public function setId(int $id)
+    public function setId(int $commentId)
     {
-        $this->id = $id;
+        $this->commentId = $commentId;
     }
 
     /**
